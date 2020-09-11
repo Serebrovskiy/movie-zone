@@ -1,0 +1,26 @@
+.menu {
+    width: 350px;
+    min-height: 100%;
+    background-color: rgb(50, 50, 50);
+    padding-top: 10px;
+
+}
+
+.menu__container {  
+    position: fixed;    
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+.menu__link {
+    margin: 20px 10px 20px 30px;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ddd;
+}
+
+.menu__link_active {
+    color: rgba(238, 207, 31, 0.932);
+}

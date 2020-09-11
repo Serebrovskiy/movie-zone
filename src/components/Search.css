@@ -1,0 +1,11 @@
+.search {
+    width: 100%;
+    min-height: 100%;
+    background-color: #ddd;
+}
+
+.search__text {
+    font-size: 38px;
+    font-weight: 800;
+    color: rgba(143, 123, 8, 0.911);
+}

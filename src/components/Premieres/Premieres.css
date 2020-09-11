@@ -1,0 +1,24 @@
+.premieres {
+  width: 100%;
+  min-height: 100%;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.premieres__title {
+  font-size: 38px;
+  font-weight: 800;
+  color: rgba(143, 123, 8, 0.911);
+}
+
+.premieres__container {
+  min-width: 600px;
+  min-height: 700px;
+  border: 1px solid rgb(207, 207, 207);
+  display: flex;
+  flex-wrap: wrap;
+  /* padding-left: 130px; */
+}

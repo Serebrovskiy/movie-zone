@@ -1,0 +1,31 @@
+.premieres-item {
+  width: 250px;
+  height: 400px;
+  margin: 30px 30px 30px 30px;   
+  border: 2px solid goldenrod;
+  box-shadow: 3px 3px 5px 4px rgb(197, 197, 197);
+}
+
+.premieres-item:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.premieres-item__image {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  text-decoration: none;
+}
+.premieres-item__name {
+  margin: 8px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #000;
+}
+.premieres-item__date {
+  font-weight: 400;
+  color: #333;
+}
+
+

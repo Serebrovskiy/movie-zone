@@ -1,0 +1,19 @@
+.info-block {
+    width: 350px;
+    min-height: 100%;
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu__container {  
+    position: fixed;    
+}
+
+.info-block__banner {
+    width: 170px;
+    /* height: 400px; */
+    margin: 30px 10px 30px;   
+    border: 2px solid black;
+}
