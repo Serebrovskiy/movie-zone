@@ -1,13 +1,15 @@
 .info-block {
-    width: 350px;
-    min-height: 100%;
+    /* width: 350px;
+    min-height: 100%; */
     background-color: rgb(50, 50, 50);
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    grid-area: InfoBlock;
 }
 
-.menu__container {  
+.info-block__container {  
     position: fixed;    
 }
 

@@ -1,6 +1,8 @@
 .footer {
-    width: 100%;
-    height: 100px;
+    /* width: 100%;
+    height: 100px; */
     background-color: #000;
     /* border: 1px solid gray; */
+
+    grid-area: Footer;
 }

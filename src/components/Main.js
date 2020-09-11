@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './Main.css';
-import NavBar from './NavBar';
-import InfoBlock from './InfoBlock'
 import Reviews from './Reviews/Reviews'
 import ReviewItemPage from './Reviews/ReviewItemPage'
 import Rating from './Rating'
@@ -14,7 +12,7 @@ import { initialPremieresItems, initialReviewItems } from '../utils/utils';
 function Main() {
   return (
     <div className="main">
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
         <Route exact path="/">
           <Redirect from="/" to="/reviews" />
@@ -48,7 +46,7 @@ function Main() {
           <Search />
         </Route>
       </Switch>
-      <InfoBlock />
+      {/* <InfoBlock /> */}
     </div>
   );
 }

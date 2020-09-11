@@ -1,6 +1,26 @@
 .header {
-    width: 100%;
-    height: 100px;
-    background-color: #000;
-    /* border: 1px solid gray; */
+  background-color: #000;
+  grid-area: Header;
+  font-family: "Montserrat";
+  text-align: center;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
 }
+
+.header__title {
+  background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);   
+  background-size: cover;
+  color: transparent;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+  text-transform: uppercase;
+  font-size: 90px;
+  line-height: 0.75;
+  margin: 10px 0;
+}
+
+
+  /* https://i.gifer.com/75yc.gif   огонь*/

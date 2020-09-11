@@ -1,9 +1,18 @@
 .App {
   text-align: center;
-  min-height: 750px;
-
   color: gray;
-  margin: 0 auto;
+  margin: 0;
+
+  width: 100%;
+  min-height: 1050px;
+
+  display: grid;
+  grid-template-columns: 200px auto auto 250px;
+  grid-template-rows: 150px auto 100px;
+  grid-template-areas:
+  "NavBar Header Header InfoBlock"
+    "NavBar Main Main InfoBlock"
+  "NavBar Footer Footer InfoBlock";
 }
 
 .App-logo {
