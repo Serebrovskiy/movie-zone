@@ -12,7 +12,6 @@ import { initialPremieresItems, initialReviewItems } from '../utils/utils';
 function Main() {
   return (
     <div className="main">
-      {/* <NavBar /> */}
       <Switch>
         <Route exact path="/">
           <Redirect from="/" to="/reviews" />
@@ -28,7 +27,6 @@ function Main() {
             data={initialReviewItems}
           />
         </Route>
-
         <Route path="/rating">
           <Rating />
         </Route>
@@ -46,7 +44,6 @@ function Main() {
           <Search />
         </Route>
       </Switch>
-      {/* <InfoBlock /> */}
     </div>
   );
 }

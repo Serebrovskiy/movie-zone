@@ -15,24 +15,22 @@
   "NavBar Footer Footer InfoBlock";
 }
 
-.App-logo {
-  height: 10vmin;
-  pointer-events: none;
-}
+@media screen and (max-width: 900px) {
+  .App {
+    grid-template-columns: 150px auto;
+    grid-template-rows: 100px auto auto 100px;
+    grid-template-areas:
+    "Header Header"
+    "NavBar Main"
+    "InfoBlock Main"
+    "Footer Footer";
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
   }
 }
 
 
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+
+
+

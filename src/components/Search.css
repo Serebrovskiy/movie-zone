@@ -4,8 +4,39 @@
     background-color: #ddd;
 }
 
-.search__text {
+.search__title {
     font-size: 38px;
     font-weight: 800;
     color: rgba(143, 123, 8, 0.911);
+}
+
+.search__input {
+    margin: 5px;
+    width: 350px;
+    height: 30px;
+    background-color:#ddd;
+    border: 1px solid goldenrod;
+}
+
+.search__button {
+    margin: 5px;
+    width: 100px;
+    height: 33px;
+    background-color:#ddd;
+    border: 1px solid goldenrod;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.search__button:hover {
+    cursor: pointer;
+    background-color: goldenrod;
+    color: rgb(50, 50, 50);
+}
+
+.search__text {
+    font-size: 28px;
+    font-weight: 600;
+    color: goldenrod;
 }
