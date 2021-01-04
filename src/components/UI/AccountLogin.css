@@ -1,0 +1,32 @@
+.account-login {
+  height: 150px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 15px 20px 25px; */
+  border-bottom: 1px solid black;
+}
+
+.account-login_input {
+  margin: 5px;
+  width: 100px;
+  background-color: #ddd;
+  border: 1px solid goldenrod;
+}
+
+.account-login_button {
+  margin: 5px;
+  width: 106px;
+  height: 25px;
+  background-color: rgb(50, 50, 50);
+  border: 1px solid goldenrod;
+  color: goldenrod;
+}
+
+.account-login_button:hover {
+  cursor: pointer;
+  background-color: goldenrod;
+  color: rgb(50, 50, 50);
+}

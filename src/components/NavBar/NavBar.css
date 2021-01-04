@@ -1,0 +1,26 @@
+.menu {
+  grid-area: NavBar;
+  background-color: rgb(50, 50, 50);
+  display: flex;
+  flex-direction: column;
+}
+
+.menu__container {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  /* padding: 10px 0 0 10px; */
+  position: fixed;
+}
+
+.menu__link {
+  margin: 20px 10px 20px 45px;
+  font-size: 22px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #ddd;
+}
+
+.menu__link_active {
+  color: rgba(238, 207, 31, 0.932);
+}

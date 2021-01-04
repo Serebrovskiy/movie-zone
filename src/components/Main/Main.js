@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './Main.css';
-import Reviews from './Reviews/Reviews'
-import ReviewItemPage from './Reviews/ReviewItemPage'
-import Rating from './Rating'
-import Premieres from './Premieres/Premieres'
-import PremieresItemPage from './Premieres/PremieresItemPage'
-import Search from './Search'
-import { initialPremieresItems, initialReviewItems } from '../utils/utils';
+import Reviews from '../Reviews/Reviews'
+import ReviewItemPage from '../Reviews/ReviewItemPage'
+import Rating from '../Rating/Rating'
+import Premieres from '../Premieres/Premieres'
+import PremieresItemPage from '../Premieres/PremieresItemPage'
+import Search from '../Search/Search'
+import { initialPremieresItems, initialReviewItems } from '../../utils/utils';
 
 function Main() {
   return (
