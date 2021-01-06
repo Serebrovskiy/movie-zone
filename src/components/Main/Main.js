@@ -7,9 +7,11 @@ import Rating from '../Rating/Rating'
 import Premieres from '../Premieres/Premieres'
 import PremieresItemPage from '../Premieres/PremieresItemPage'
 import Search from '../Search/Search'
+import Admin from '../Admin/Admin'
 import { initialPremieresItems, initialReviewItems } from '../../utils/utils';
 
-function Main() {
+function Main({ onAddPremieres, premieres }) {
+
   return (
     <div className="main">
       <Switch>
@@ -33,15 +35,20 @@ function Main() {
         <Route exact path="/premieres">
           <Premieres
             data={initialPremieresItems}
+            premieres={premieres}
           />
         </Route>
         <Route path="/premieres/:id">
           <PremieresItemPage
             data={initialPremieresItems}
+            premieres={premieres}
           />
         </Route>
         <Route path="/search">
           <Search />
+        </Route>
+        <Route path="/admin">
+          <Admin onAddPremieres={onAddPremieres} />
         </Route>
       </Switch>
     </div>

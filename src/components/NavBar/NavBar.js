@@ -13,6 +13,7 @@ function NavBar() {
         <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>
         <NavLink to="/premieres" className="menu__link" activeClassName="menu__link_active">Премьеры</NavLink>
         <NavLink to="/search" className="menu__link" activeClassName="menu__link_active">Поиск</NavLink>
+        <NavLink to="/admin" className="menu__link" activeClassName="menu__link_active">Админка</NavLink>
       </div>
     </nav>
   );
