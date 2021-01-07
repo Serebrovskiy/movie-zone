@@ -17,6 +17,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('premieres', JSON.stringify(premieres))
+    console.log(premieres)
   }, [premieres])
 
   const addPremieresHandler = ({
@@ -44,13 +45,27 @@ function App() {
     console.log(newPremieres)
   }
 
+  const onRemovePremier = (premier) => {
+    setPremieres(
+      premieres
+        .filter(elem => premier.id !== elem.id)
+        .map(function (elem, index) {
+          elem.id = index;
+          return elem;
+        }));
+  }
+
   return (
     <div className="App">
 
       <Header />
       <BrowserRouter>
         <NavBar />
-        <Main onAddPremieres={addPremieresHandler} premieres={premieres} />
+        <Main
+          onAddPremieres={addPremieresHandler}
+          premieres={premieres}
+          onRemovePremier={onRemovePremier}
+        />
         <InfoBlock />
       </BrowserRouter>
       <Footer />

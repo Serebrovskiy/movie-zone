@@ -3,7 +3,7 @@ import './Premieres.css';
 import PremieresItem from './PremieresItem';
 
 
-function Premieres({ data, premieres }) {
+function Premieres({ data, premieres, onRemovePremier }) {
 
   return (
     <div className="premieres">
@@ -20,6 +20,7 @@ function Premieres({ data, premieres }) {
             <PremieresItem
               item={elem}
               key={elem.id}
+              onRemovePremier={onRemovePremier}
             />
           ).reverse()
 

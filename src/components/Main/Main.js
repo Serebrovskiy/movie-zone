@@ -10,7 +10,7 @@ import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
 import { initialPremieresItems, initialReviewItems } from '../../utils/utils';
 
-function Main({ onAddPremieres, premieres }) {
+function Main({ onAddPremieres, premieres, onRemovePremier }) {
 
   return (
     <div className="main">
@@ -36,6 +36,7 @@ function Main({ onAddPremieres, premieres }) {
           <Premieres
             data={initialPremieresItems}
             premieres={premieres}
+            onRemovePremier={onRemovePremier}
           />
         </Route>
         <Route path="/premieres/:id">
