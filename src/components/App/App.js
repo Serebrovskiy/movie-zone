@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -9,6 +9,15 @@ import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   const [premieres, setPremieres] = useState([]);
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('premieres') || '[]');
+    setPremieres(saved)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('premieres', JSON.stringify(premieres))
+  }, [premieres])
 
   const addPremieresHandler = ({
     name,
