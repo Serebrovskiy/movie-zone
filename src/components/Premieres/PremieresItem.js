@@ -2,10 +2,13 @@ import React from 'react';
 import './PremieresItem.css';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-function PremieresItem({ item }, key) {
+function PremieresItem({ item, onRemovePremier }) {
 
   const { url } = useRouteMatch();
-  console.log(key)
+
+  const handleRemoveClick = () => {
+    onRemovePremier(item)
+  }
 
   return (
     <div className="premieres-item">
@@ -14,6 +17,7 @@ function PremieresItem({ item }, key) {
         <h3 className="premieres-item__name">{item.name || "Премьера"}</h3>
         <p className="premieres-item__date">Дата выхода: {item.date || "1 января"}</p>
       </Link>
+      <button onClick={handleRemoveClick}>Удалить</button>
     </div>
   );
 }
