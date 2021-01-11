@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './Admin.css';
 
 function Admin({ onAddPremieres }) {
-  const [name, setName] = useState('Титаник');
-  const [linkImage, setLinkImage] = useState('https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg');
+  const [name, setName] = useState('');
+  const [linkImage, setLinkImage] = useState('');
   const [date, setDate] = useState('');
-  const [genre, setGenre] = useState('фильм-катастрофа, мелодрама');
-  const [country, setСountry] = useState('США');
-  const [director, setDirector] = useState('Джеймс Кэмерон');
-  const [cast, setСast] = useState('Леонардо Ди Каприо, Кейт Уинслет');
+  const [genre, setGenre] = useState('');
+  const [country, setСountry] = useState('');
+  const [director, setDirector] = useState('');
+  const [cast, setСast] = useState('');
 
 
   function handleChangeInputName(e) {
