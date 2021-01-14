@@ -1,0 +1,154 @@
+.popupAddCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  transition: 0.5s ease;
+}
+
+.popupAddCard_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+}
+
+.popupAddCard__form {
+  position: relative;
+  width: 500px;
+  background-color: #fff;
+  border-radius: 16px;
+  z-index: 2;
+}
+
+.popupAddCard__button-close {
+  position: absolute;
+  top: -33px;
+  right: -26px;
+  width: 32px;
+  height: 32px;
+  background-image: url('../../images/button-close.svg');
+  background-color: transparent;
+  border: none;
+}
+
+.popupAddCard__button-close:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.popupAddCard__button-close:focus {
+  outline: none;
+}
+
+.popupAddCard__title {
+  font-family: Roboto;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  /* margin: 34px 0 0 36px; */
+}
+
+.popupAddCard__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px 0 0;
+}
+
+.popupAddCard__input {
+  margin: 10px 0 0 30px;
+  width: 250px;
+  height: 25px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.popupAddCard__text {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0px 0 4px 20px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.popupAddCard__label {
+  /* border: 1px solid #aaa; */
+  display: flex;
+  align-items: flex-end;
+  text-align: left;
+}
+
+.popupAddCard__button {
+  width: 150px;
+  height: 40px;
+  background-color: #fff;
+  /* border-radius: 50px; */
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  margin: 30px 35px 20px;
+
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.popupAddCard__button:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+.popupAddCard__button:focus {
+  outline: none;
+}
+
+.popupAddCard__button_disabled {
+  background-color: #e6e8eb;
+  color: #b6bcbf;
+}
+
+.popupAddCard__button_disabled:hover {
+  cursor: default;
+  background-color: #e6e8eb;
+}
+
+@media screen and (max-width: 400px) {
+  .popupAddCard {
+    justify-content: flex-start;
+  }
+  .popupAddCard__form {
+    width: 100%;
+    margin-top: 56px;
+  }
+  .popupAddCard__button-close {
+    top: -40px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background-size: 28px;
+  }
+  .popupAddCard__title {
+    margin: 34px 0 0 16px;
+  }
+  .popupAddCard__button {
+    width: 288px;
+    margin: 7px 16px 0;
+    align-self: center;
+  }
+  .popupAddCard__text {
+    margin: 16px auto 100%;
+  }
+}

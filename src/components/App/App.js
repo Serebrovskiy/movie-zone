@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { Switch, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock'
-import { BrowserRouter } from 'react-router-dom';
+import PopupAddCard from '../PopupAddCard/PopupAddCard'
+
 
 function App() {
   const [premieres, setPremieres] = useState([]);
+  const [ratingFilms, setRatingFilms] = useState([]);
+  const [isOpenPopupRating, setIsOpenPopupRating] = useState(false);
+
+  function handlePopupRatingClick() {
+    setIsOpenPopupRating(true);
+  }
+
+  function closePopups() {
+    setIsOpenPopupRating(false);
+  }
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('premieres') || '[]');
@@ -20,6 +32,26 @@ function App() {
     console.log(premieres)
   }, [premieres])
 
+  useEffect(() => {
+    console.log(ratingFilms)
+  }, [ratingFilms])
+
+  const addRatingFilmsHandler = ({
+    name,
+    link,
+    position,
+    id
+  }) => {
+    const newRatingFilms = {
+      name,
+      link,
+      position,
+      id: Date.now()
+    };
+    setRatingFilms((prev) => [...prev, newRatingFilms]);
+    console.log(newRatingFilms)
+  }
+
   const addPremieresHandler = ({
     name,
     link,
@@ -30,7 +62,6 @@ function App() {
     cast,
     id
   }) => {
-
     const newPremieres = {
       name,
       link,
@@ -57,15 +88,23 @@ function App() {
 
   return (
     <div className="App">
-
+      <PopupAddCard
+        isOpen={isOpenPopupRating}
+        onClose={closePopups}
+        onAddRatingFilms={addRatingFilmsHandler}
+      />
       <Header />
       <BrowserRouter>
         <NavBar />
-        <Main
-          onAddPremieres={addPremieresHandler}
-          premieres={premieres}
-          onRemovePremier={onRemovePremier}
-        />
+        <Switch>
+          <Main
+            onAddPremieres={addPremieresHandler}
+            premieres={premieres}
+            onRemovePremier={onRemovePremier}
+            onOpenPopupRating={handlePopupRatingClick}
+            ratingFilms={ratingFilms}
+          />
+        </Switch>
         <InfoBlock />
       </BrowserRouter>
       <Footer />
