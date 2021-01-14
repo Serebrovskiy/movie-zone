@@ -1,9 +1,10 @@
 .main {
-    /* width: 100%;
+  /* width: 100%;
     min-height: 850px; */
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
 
-    grid-area: Main;
+  grid-area: Main;
+  z-index: 1;
 }

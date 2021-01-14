@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import './Main.css';
 import Reviews from '../Reviews/Reviews'
 import ReviewItemPage from '../Reviews/ReviewItemPage'
@@ -10,48 +10,55 @@ import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
 import { initialPremieresItems, initialReviewItems } from '../../utils/utils';
 
-function Main({ onAddPremieres, premieres, onRemovePremier }) {
+function Main({
+  onAddPremieres,
+  premieres,
+  onRemovePremier,
+  onOpenPopupRating,
+  ratingFilms
+}) {
 
   return (
     <div className="main">
-      <Switch>
-        <Route exact path="/">
-          <Redirect from="/" to="/reviews" />
-        </Route>
-        <Route exact path="/reviews">
-          <Reviews
-            data={initialReviewItems}
-          />
-        </Route>
+      <Route exact path="/">
+        <Redirect from="/" to="/reviews" />
+      </Route>
+      <Route exact path="/reviews">
+        <Reviews
+          data={initialReviewItems}
+        />
+      </Route>
 
-        <Route path="/reviews/:id">
-          <ReviewItemPage
-            data={initialReviewItems}
-          />
-        </Route>
-        <Route path="/rating">
-          <Rating />
-        </Route>
-        <Route exact path="/premieres">
-          <Premieres
-            data={initialPremieresItems}
-            premieres={premieres}
-            onRemovePremier={onRemovePremier}
-          />
-        </Route>
-        <Route path="/premieres/:id">
-          <PremieresItemPage
-            data={initialPremieresItems}
-            premieres={premieres}
-          />
-        </Route>
-        <Route path="/search">
-          <Search />
-        </Route>
-        <Route path="/admin">
-          <Admin onAddPremieres={onAddPremieres} />
-        </Route>
-      </Switch>
+      <Route path="/reviews/:id">
+        <ReviewItemPage
+          data={initialReviewItems}
+        />
+      </Route>
+      <Route path="/rating">
+        <Rating
+          onOpenPopupRating={onOpenPopupRating}
+          ratingFilms={ratingFilms}
+        />
+      </Route>
+      <Route exact path="/premieres">
+        <Premieres
+          data={initialPremieresItems}
+          premieres={premieres}
+          onRemovePremier={onRemovePremier}
+        />
+      </Route>
+      <Route path="/premieres/:id">
+        <PremieresItemPage
+          data={initialPremieresItems}
+          premieres={premieres}
+        />
+      </Route>
+      <Route path="/search">
+        <Search />
+      </Route>
+      <Route path="/admin">
+        <Admin onAddPremieres={onAddPremieres} />
+      </Route>
     </div>
   );
 }

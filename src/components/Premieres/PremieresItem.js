@@ -12,7 +12,7 @@ function PremieresItem({ item, onRemovePremier }) {
 
   return (
     <div className="premieres-item">
-      <button class="premieres-item__button-remove" onClick={handleRemoveClick} />
+      <button className="premieres-item__button-remove" onClick={handleRemoveClick} />
       <Link to={`${url}/${item.id}`} style={{ textDecoration: 'none' }}>
         <img className="premieres-item__image" src={item.link || "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"} alt="" />
         <h3 className="premieres-item__name">{item.name || "Премьера"}</h3>
