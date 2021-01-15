@@ -20,17 +20,17 @@
   border: 1px solid rgb(175, 175, 175);
   background-color: #fff;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 31px;
   text-align: center;
-  padding-top: 6px;
+  /* padding-top: 6px; */
   margin-left: 40px;
 }
 
 .rating-card__name {
   font-size: 24px;
   font-weight: 700;
-  margin: 20px 15px;
+  margin: 20px 15px 24px;
   color: #333;
   width: 100px;
 }

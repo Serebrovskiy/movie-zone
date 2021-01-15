@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './PopupAddCard.css';
 
 function PopupAddCard({
   isOpen,
   onClose,
-  onAddRatingFilms
+  onAddRatingFilms,
+  ratingFilms
 }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [position, setPosition] = useState('1');
+  const [isDisabled, setIsDisabled] = React.useState(true);
+  const inputNameRef = useRef('');
+  const inputLinkRef = useRef('');
+
+  function handleCheckValidity() {
+    inputNameRef.current.checkValidity() && inputLinkRef.current.checkValidity()
+      ?
+      setIsDisabled(false) : setIsDisabled(true);
+  }
 
   function handleName(e) {
     setName(e.target.value);
+    handleCheckValidity();
   }
 
   function handleLink(e) {
     setLink(e.target.value);
+    handleCheckValidity();
   }
 
   function handlePosition(e) {
@@ -29,8 +41,8 @@ function PopupAddCard({
     setName('');
     setLink('');
     setPosition('1');
+    onClose();
   }
-
 
   return (
     <div className={`popupAddCard ${isOpen && "popupAddCard_opened"}`}>
@@ -51,8 +63,11 @@ function PopupAddCard({
               type="text"
               name="inputName"
               value={name}
+              ref={inputNameRef}
               onChange={handleName}
               placeholder="Название"
+              minLength="2"
+              maxLength="30"
               required
             />
             <span className="popupAddCard__text">Название</span>
@@ -60,9 +75,10 @@ function PopupAddCard({
           <label className="popupAddCard__label">
             <input
               className="popupAddCard__input"
-              type="text"
+              type="url"
               name="inputPoster"
               value={link}
+              ref={inputLinkRef}
               onChange={handleLink}
               placeholder="Постер"
             />
@@ -76,15 +92,16 @@ function PopupAddCard({
               value={position}
               onChange={handlePosition}
               placeholder="Позиция"
+              min='1'
+              max={ratingFilms.length + 1}
               required
             />
             <span className="popupAddCard__text">Позиция</span>
           </label>
           <button
             type="submit"
-            className={`popupAddCard__button`}// ${isDisabled && "popup__button_disabled"}`}
-            // disabled={isDisabled}
-            onClick={onClose}
+            className={`popupAddCard__button ${isDisabled && "popupAddCard__button_disabled"}`}
+            disabled={isDisabled}
           >
             Добавить
             </button>
