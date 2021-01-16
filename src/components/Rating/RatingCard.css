@@ -44,7 +44,104 @@
   border: 1px solid grey;
 }
 
-@media screen and (max-width: 400px) {
+.rating-card__container-buttons {
+  height: 100%;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rating-card__button-up {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  background-image: url(../../images/arrow-up.png);
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+  margin-right: 10px;
+  border: none;
+  opacity: 0.5;
+}
+
+.rating-card__button-up:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.rating-card__button-up:focus {
+  outline: none;
+}
+
+.rating-card__button-up_disabled {
+  opacity: 0.2;
+}
+
+.rating-card__button-up_disabled:hover {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.rating-card__button-down {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  background-image: url(../../images/arrow-up.png);
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+  margin-right: 10px;
+  border: none;
+  opacity: 0.5;
+  transform: rotate(180deg);
+}
+
+.rating-card__button-down:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.rating-card__button-down:focus {
+  outline: none;
+}
+
+.rating-card__button-down_disabled {
+  opacity: 0.2;
+}
+
+.rating-card__button-down_disabled:hover {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.rating-card__button-delete {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  background-image: url(../../images/button-delete.png);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+  margin-right: 10px;
+  border: none;
+  opacity: 0.4;
+}
+
+.rating-card__button-delete:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.rating-card__button-delete:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 900px) {
   .rating-card {
     width: 300px;
     height: 100px;
@@ -63,6 +160,24 @@
   .rating-card__image {
     width: 90px;
     height: 60px;
+    margin-right: 5px;
+  }
+  .rating-card__button-up {
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
+    margin-right: 5px;
+  }
+  .rating-card__button-down {
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
+    margin-right: 5px;
+  }
+  .rating-card__button-delete {
+    width: 10px;
+    height: 10px;
+    background-size: 10px;
     margin-right: 5px;
   }
 }
