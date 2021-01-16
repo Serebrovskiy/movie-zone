@@ -54,6 +54,7 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 28px;
+  color: rgba(0, 0, 0, 0.8);
   /* margin: 34px 0 0 36px; */
 }
 
@@ -116,13 +117,15 @@
 }
 
 .popupAddCard__button_disabled {
-  background-color: #e6e8eb;
-  color: #b6bcbf;
+  background-color: #fff;
+  color: #ccc;
+  border: 1px solid #ccc;
 }
 
 .popupAddCard__button_disabled:hover {
   cursor: default;
-  background-color: #e6e8eb;
+  background-color: #fff;
+  color: #ccc;
 }
 
 @media screen and (max-width: 400px) {

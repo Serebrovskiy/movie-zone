@@ -48,7 +48,25 @@ function App() {
       position,
       id: Date.now()
     };
-    setRatingFilms((prev) => [...prev, newRatingFilms]);
+
+    //заглушка для картинки
+    if (newRatingFilms.link === '') newRatingFilms.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
+
+    //кастомный метод по вставки элемента в любую часть массива
+    const insert = (arr, index, newItem) => [
+      ...arr.slice(0, index),
+      newItem,
+      ...arr.slice(index)
+    ];
+
+    setRatingFilms(
+      insert(ratingFilms, position - 1, newRatingFilms)
+        .map((elem, index) => {
+          elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+          return elem;
+        })
+    )
+
     console.log(newRatingFilms)
   }
 
@@ -92,6 +110,7 @@ function App() {
         isOpen={isOpenPopupRating}
         onClose={closePopups}
         onAddRatingFilms={addRatingFilmsHandler}
+        ratingFilms={ratingFilms}
       />
       <Header />
       <BrowserRouter>
