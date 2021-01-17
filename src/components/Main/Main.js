@@ -15,7 +15,8 @@ function Main({
   premieres,
   onRemovePremier,
   onOpenPopupRating,
-  ratingFilms
+  ratingCards,
+  onRemoveRatingCard
 }) {
 
   return (
@@ -37,7 +38,8 @@ function Main({
       <Route path="/rating">
         <Rating
           onOpenPopupRating={onOpenPopupRating}
-          ratingFilms={ratingFilms}
+          ratingCards={ratingCards}
+          onRemoveRatingCard={onRemoveRatingCard}
         />
       </Route>
       <Route exact path="/premieres">

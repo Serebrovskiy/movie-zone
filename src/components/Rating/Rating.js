@@ -2,7 +2,7 @@ import React from 'react';
 import './Rating.css';
 import RatingCard from './RatingCard'
 
-function Rating({ onOpenPopupRating, ratingFilms }) {
+function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard }) {
 
 
   // function handlePopup() {
@@ -15,10 +15,11 @@ function Rating({ onOpenPopupRating, ratingFilms }) {
       <button className="rating__button-add" onClick={onOpenPopupRating}>Добавить фильм</button>
       <div className="rating__place">
         {
-          ratingFilms.map(elem =>
+          ratingCards.map(elem =>
             <RatingCard
               item={elem}
               key={elem.id}
+              onRemoveRatingCard={onRemoveRatingCard}
             />
           )
         }
