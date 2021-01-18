@@ -4,8 +4,8 @@ import './PopupAddCard.css';
 function PopupAddCard({
   isOpen,
   onClose,
-  onAddRatingFilms,
-  ratingFilms
+  onAddRatingCards,
+  ratingCards
 }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -37,7 +37,7 @@ function PopupAddCard({
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddRatingFilms({ name, link, position })
+    onAddRatingCards({ name, link, position })
     setName('');
     setLink('');
     setPosition('1');
@@ -93,7 +93,7 @@ function PopupAddCard({
               onChange={handlePosition}
               placeholder="Позиция"
               min='1'
-              max={ratingFilms.length + 1}
+              max={ratingCards.length + 1}
               required
             />
             <span className="popupAddCard__text">Позиция</span>

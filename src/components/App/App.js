@@ -11,7 +11,7 @@ import PopupAddCard from '../PopupAddCard/PopupAddCard'
 
 function App() {
   const [premieres, setPremieres] = useState([]);
-  const [ratingFilms, setRatingFilms] = useState([]);
+  const [ratingCards, setRatingCards] = useState([]);
   const [isOpenPopupRating, setIsOpenPopupRating] = useState(false);
 
   function handlePopupRatingClick() {
@@ -33,16 +33,21 @@ function App() {
   }, [premieres])
 
   useEffect(() => {
-    console.log(ratingFilms)
-  }, [ratingFilms])
+    console.log(ratingCards)
+    // setRatingCards(ratingCards.map((elem, index) => {
+    //   elem.position = index + 1;  
+    //   return elem;
+    // }))
+  }, [ratingCards])
 
-  const addRatingFilmsHandler = ({
+  //добавление карточки рейтинга
+  const addRatingCardsHandler = ({
     name,
     link,
     position,
     id
   }) => {
-    const newRatingFilms = {
+    const newRatingCards = {
       name,
       link,
       position,
@@ -50,7 +55,7 @@ function App() {
     };
 
     //заглушка для картинки
-    if (newRatingFilms.link === '') newRatingFilms.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
+    if (newRatingCards.link === '') newRatingCards.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
 
     //кастомный метод по вставки элемента в любую часть массива
     const insert = (arr, index, newItem) => [
@@ -59,15 +64,26 @@ function App() {
       ...arr.slice(index)
     ];
 
-    setRatingFilms(
-      insert(ratingFilms, position - 1, newRatingFilms)
+    setRatingCards(
+      insert(ratingCards, position - 1, newRatingCards)
         .map((elem, index) => {
           elem.position = index + 1;   //упорядочиваем нумерацию карточек 
           return elem;
         })
     )
 
-    console.log(newRatingFilms)
+    console.log(newRatingCards)
+  }
+
+  //удаление карточки рейтинга
+  const handleRemoveRatingCard = (card) => {
+    setRatingCards(ratingCards
+      .filter(elem => elem.id !== card.id)
+      .map((elem, index) => {
+        elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+        return elem;
+      })
+    )
   }
 
   const addPremieresHandler = ({
@@ -94,7 +110,7 @@ function App() {
     console.log(newPremieres)
   }
 
-  const onRemovePremier = (premier) => {
+  const handleRemovePremier = (premier) => {
     setPremieres(
       premieres
         .filter(elem => premier.id !== elem.id)
@@ -109,8 +125,8 @@ function App() {
       <PopupAddCard
         isOpen={isOpenPopupRating}
         onClose={closePopups}
-        onAddRatingFilms={addRatingFilmsHandler}
-        ratingFilms={ratingFilms}
+        onAddRatingCards={addRatingCardsHandler}
+        ratingCards={ratingCards}
       />
       <Header />
       <BrowserRouter>
@@ -119,9 +135,10 @@ function App() {
           <Main
             onAddPremieres={addPremieresHandler}
             premieres={premieres}
-            onRemovePremier={onRemovePremier}
+            onRemovePremier={handleRemovePremier}
             onOpenPopupRating={handlePopupRatingClick}
-            ratingFilms={ratingFilms}
+            ratingCards={ratingCards}
+            onRemoveRatingCard={handleRemoveRatingCard}
           />
         </Switch>
         <InfoBlock />

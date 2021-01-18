@@ -1,8 +1,11 @@
 import React from 'react';
 import './RatingCard.css';
 
-function RatingCard({ item }) {
+function RatingCard({ item, onRemoveRatingCard }) {
   // console.log(key)
+  const handleRemoveClick = () => {
+    onRemoveRatingCard(item);
+  }
 
   return (
     <div className="rating-card">
@@ -11,7 +14,7 @@ function RatingCard({ item }) {
       <img className="rating-card__image" src={item.link} alt={item.name} />
       <div className="rating-card__container-buttons" >
         <button className="rating-card__button-up" type="button"></button>
-        <button className="rating-card__button-delete" type="button"></button>
+        <button className="rating-card__button-delete" onClick={handleRemoveClick} type="button"></button>
         <button className="rating-card__button-down" type="button"></button>
       </div>
     </div>
