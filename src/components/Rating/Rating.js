@@ -2,7 +2,7 @@ import React from 'react';
 import './Rating.css';
 import RatingCard from './RatingCard'
 
-function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard }) {
+function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRatingCard }) {
 
 
   // function handlePopup() {
@@ -20,6 +20,7 @@ function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard }) {
               item={elem}
               key={elem.id}
               onRemoveRatingCard={onRemoveRatingCard}
+              onUpRatingCard={onUpRatingCard}
             />
           )
         }

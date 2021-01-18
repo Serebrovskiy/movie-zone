@@ -57,7 +57,7 @@ function App() {
     //заглушка для картинки
     if (newRatingCards.link === '') newRatingCards.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
 
-    //кастомный метод по вставки элемента в любую часть массива
+    //кастомный метод для вставки элемента в любую часть массива
     const insert = (arr, index, newItem) => [
       ...arr.slice(0, index),
       newItem,
@@ -84,6 +84,26 @@ function App() {
         return elem;
       })
     )
+  }
+
+  //поднимаем карточу вверх на один пункт
+  const handleUpRatingCard = (card) => {
+
+    //кастомный метод для замены объектов в массиве
+    const templeFun = (arr) => {
+      let arrCopy = {}
+      arrCopy = Object.assign({}, arr[card.position - 2])
+      arr[card.position - 2] = Object.assign({}, arr[card.position - 1])
+      arr[card.position - 1] = Object.assign({}, arrCopy)
+
+      return arr
+    }
+
+    setRatingCards(templeFun(ratingCards)
+      .map((elem, index) => {
+        elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+        return elem;
+      }))
   }
 
   const addPremieresHandler = ({
@@ -139,6 +159,7 @@ function App() {
             onOpenPopupRating={handlePopupRatingClick}
             ratingCards={ratingCards}
             onRemoveRatingCard={handleRemoveRatingCard}
+            onUpRatingCard={handleUpRatingCard}
           />
         </Switch>
         <InfoBlock />
