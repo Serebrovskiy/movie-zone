@@ -14,14 +14,14 @@
 }
 
 .rating__button-add {
-  width: 180px;
-  height: 40px;
+  width: 250px;
+  min-height: 40px;
   background-color: #ddd;
   /* border-radius: 50px; */
   border: 1px solid rgba(0, 0, 0, 0.7);
   font-family: Roboto;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 24px;
   /* display: flex;
   align-items: center;
@@ -39,7 +39,7 @@
 .rating__place {
   width: 80%;
   min-height: 70%;
-  margin: 40px auto;
+  margin: 30px auto;
   border: 1px solid goldenrod;
   border-radius: 10px;
   display: flex;

@@ -37,11 +37,15 @@ function PopupAddCard({
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddRatingCards({ name, link, position })
-    setName('');
-    setLink('');
-    setPosition('1');
-    onClose();
+    if (ratingCards.some(elem => elem.name === name)) {
+      alert('Такой фильм уже есть!')
+    } else {
+      onAddRatingCards({ name, link, position })
+      setName('');
+      setLink('');
+      setPosition('1');
+      onClose();
+    }
   }
 
   return (
