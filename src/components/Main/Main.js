@@ -4,15 +4,15 @@ import './Main.css';
 import Reviews from '../Reviews/Reviews'
 import ReviewItemPage from '../Reviews/ReviewItemPage'
 import Rating from '../Rating/Rating'
-import Premieres from '../Premieres/Premieres'
-import PremieresItemPage from '../Premieres/PremieresItemPage'
+import Films from '../Films/Films'
+import FilmsPage from '../Films/FilmsPage'
 import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
-import { initialPremieresItems, initialReviewItems } from '../../utils/utils';
+import { initialReviewItems } from '../../utils/utils';
 
 function Main({
-  onAddPremieres,
-  premieres,
+  onAddFilm,
+  films,
   onRemovePremier,
   onOpenPopupRating,
   ratingCards,
@@ -46,24 +46,22 @@ function Main({
           onDownRatingCard={onDownRatingCard}
         />
       </Route>
-      <Route exact path="/premieres">
-        <Premieres
-          data={initialPremieresItems}
-          premieres={premieres}
+      <Route exact path="/films">
+        <Films
+          films={films}
           onRemovePremier={onRemovePremier}
         />
       </Route>
-      <Route path="/premieres/:id">
-        <PremieresItemPage
-          data={initialPremieresItems}
-          premieres={premieres}
+      <Route path="/films/:id">
+        <FilmsPage
+          films={films}
         />
       </Route>
       <Route path="/search">
-        <Search />
+        <Search films={films} />
       </Route>
       <Route path="/admin">
-        <Admin onAddPremieres={onAddPremieres} />
+        <Admin onAddFilm={onAddFilm} />
       </Route>
     </div>
   );

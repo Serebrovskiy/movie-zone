@@ -59,7 +59,7 @@ function PopupAddCard({
           className="popupAddCard__button-close"
           onClick={onClose}
         />
-        <h2 className="popupAddCard__title">Добавление фильма в рейтинг</h2>
+        <h2 className="popupAddCard__title">Добавить новый фильм в рейтинг</h2>
         <div className="popupAddCard__container">
           <label className="popupAddCard__label">
             <input

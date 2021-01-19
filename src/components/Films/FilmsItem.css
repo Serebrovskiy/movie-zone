@@ -1,35 +1,39 @@
-.premieres-item {
+.films-item {
   width: 250px;
   height: 400px;
   margin: 30px 30px 30px 30px;
   border: 2px solid goldenrod;
   box-shadow: 3px 3px 5px 4px rgb(197, 197, 197);
   position: relative;
+  animation: showBlock 1s linear forwards;
+  transition: 0.7s ease;
 }
 
-.premieres-item:hover {
+.films-item:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-.premieres-item__image {
+.films-item__image {
   width: 250px;
   height: 300px;
   object-fit: cover;
   text-decoration: none;
 }
-.premieres-item__name {
+.films-item__name {
   margin: 8px;
   font-size: 28px;
   font-weight: 600;
   color: #000;
 }
-.premieres-item__date {
+.films-item__date {
   font-weight: 400;
+  font-size: 18px;
   color: #333;
+  margin: 0;
 }
 
-.premieres-item__button-remove {
+.films-item__button-remove {
   position: absolute;
   top: 14px;
   right: 14px;
@@ -46,7 +50,7 @@
   opacity: 0.7;
 }
 
-.premieres-item__button-remove:hover {
+.films-item__button-remove:hover {
   top: 10px;
   right: 10px;
   cursor: pointer;
@@ -56,6 +60,15 @@
   background-size: 26px;
 }
 
-.premieres-item__button-remove:focus {
+.films-item__button-remove:focus {
   outline: none;
+}
+
+@keyframes showBlock {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
