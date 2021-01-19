@@ -1,4 +1,4 @@
-const premieresDate = () => {
+const filmsDate = () => {
     const someDate = new Date(2020, 8, 3);
 
     let date = someDate.toLocaleString('nu', {
@@ -10,11 +10,11 @@ const premieresDate = () => {
 };
 
 
-export const initialPremieresItems = [
+export const initialFilmsItems = [
     {
         name: 'Довод',
         link: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/526fdb94-fe19-40c1-9bea-20ef8ab0d546/300x450',
-        date: premieresDate(),
+        date: filmsDate(),
         genre: 'фантастика, ужасы, боевик',
         country: 'Великобритания, США',
         director: 'Кристофер Нолан',
@@ -24,7 +24,7 @@ export const initialPremieresItems = [
     {
         name: 'Новые мутанты',
         link: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/0f19f082-64ec-45f6-96f2-51a65111d4bb/300x450',
-        date: premieresDate(),
+        date: filmsDate(),
         genre: 'боевик, фантастика',
         country: 'США',
         director: 'Джош Бун',
@@ -34,7 +34,7 @@ export const initialPremieresItems = [
     {
         name: 'Марсианин',
         link: 'https://www.film.ru/sites/default/files/movies/posters/5444118-764460.jpg',
-        date: premieresDate(),
+        date: filmsDate(),
         genre: 'фантастика, приключения',
         country: 'Великобритания, США, Венгрия',
         director: 'Ридли Скотт',
@@ -44,7 +44,7 @@ export const initialPremieresItems = [
     {
         name: 'Начало',
         link: 'https://st.kp.yandex.net/im/poster/1/3/1/kinopoisk.ru-Inception-1310268--o--.jpg',
-        date: premieresDate(),
+        date: filmsDate(),
         genre: 'фантастика, боевик, триллер',
         country: 'Великобритания, США',
         director: 'Кристофер Нолан',

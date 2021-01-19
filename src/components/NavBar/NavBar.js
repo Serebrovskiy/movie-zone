@@ -11,9 +11,9 @@ function NavBar() {
         <AccountLogin />
         <NavLink exact to="/reviews" className="menu__link" activeClassName="menu__link_active">Обзоры</NavLink>
         <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>
-        <NavLink to="/premieres" className="menu__link" activeClassName="menu__link_active">Премьеры</NavLink>
+        <NavLink to="/films" className="menu__link" activeClassName="menu__link_active">Коллекция</NavLink>
         <NavLink to="/search" className="menu__link" activeClassName="menu__link_active">Поиск</NavLink>
-        <NavLink to="/admin" className="menu__link" activeClassName="menu__link_active">Админка</NavLink>
+        <NavLink to="/admin" className="menu__link" activeClassName="menu__link_active">Управление</NavLink>
       </div>
     </nav>
   );

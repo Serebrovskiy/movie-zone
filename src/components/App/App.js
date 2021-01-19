@@ -10,7 +10,7 @@ import PopupAddCard from '../PopupAddCard/PopupAddCard'
 
 
 function App() {
-  const [premieres, setPremieres] = useState([]);
+  const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
   const [isOpenPopupRating, setIsOpenPopupRating] = useState(false);
 
@@ -23,21 +23,25 @@ function App() {
   }
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('premieres') || '[]');
-    setPremieres(saved)
+    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
+    setFilms(savedFilms
+      .sort(() => Math.random() - 0.5)
+      .map((elem, index) => {
+        elem.id = index;      //переопределяем id элемента в соотвествии с его индексом
+        return elem
+      }));
+    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
+    setRatingCards(savedRatingCards);
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('premieres', JSON.stringify(premieres))
-    console.log(premieres)
-  }, [premieres])
+    localStorage.setItem('films', JSON.stringify(films));
+    console.log(films)
+  }, [films])
 
   useEffect(() => {
+    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
     console.log(ratingCards)
-    // setRatingCards(ratingCards.map((elem, index) => {
-    //   elem.position = index + 1;  
-    //   return elem;
-    // }))
   }, [ratingCards])
 
   //добавление карточки рейтинга
@@ -51,7 +55,7 @@ function App() {
       name,
       link,
       position,
-      id: Date.now()
+      id: Date.now()    //уникальный id
     };
 
     //заглушка для картинки
@@ -125,7 +129,7 @@ function App() {
 
   }
 
-  const addPremieresHandler = ({
+  const addFilmHandler = ({
     name,
     link,
     date,
@@ -135,7 +139,7 @@ function App() {
     cast,
     id
   }) => {
-    const newPremieres = {
+    const newFilm = {
       name,
       link,
       date,
@@ -143,15 +147,15 @@ function App() {
       country,
       director,
       cast,
-      id: premieres.length
+      id: films.length  //???
     };
-    setPremieres((prev) => [...prev, newPremieres]);
-    console.log(newPremieres)
+    setFilms((prev) => [...prev, newFilm]);
+    console.log(newFilm)
   }
 
   const handleRemovePremier = (premier) => {
-    setPremieres(
-      premieres
+    setFilms(
+      films
         .filter(elem => premier.id !== elem.id)
         .map(function (elem, index) {
           elem.id = index;
@@ -172,8 +176,8 @@ function App() {
         <NavBar />
         <Switch>
           <Main
-            onAddPremieres={addPremieresHandler}
-            premieres={premieres}
+            onAddFilm={addFilmHandler}
+            films={films}
             onRemovePremier={handleRemovePremier}
             onOpenPopupRating={handlePopupRatingClick}
             ratingCards={ratingCards}

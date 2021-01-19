@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Admin.css';
 
-function Admin({ onAddPremieres }) {
+function Admin({ onAddFilm }) {
   const [name, setName] = useState('');
   const [linkImage, setLinkImage] = useState('');
   const [date, setDate] = useState('');
@@ -22,9 +22,11 @@ function Admin({ onAddPremieres }) {
   function handleChangeInputDate(e) {
     setDate(new Date(e.target.value)
       .toLocaleString('nu', {
-        month: 'long',
-        day: 'numeric'
-      }));
+        year: 'numeric',
+        // month: 'long',
+        // day: 'numeric'
+      }) + ' г.'
+    );
   }
 
   function handleChangeInputGenre(e) {
@@ -46,7 +48,7 @@ function Admin({ onAddPremieres }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddPremieres({
+    onAddFilm({
       name,
       link: linkImage,
       date,
@@ -68,7 +70,7 @@ function Admin({ onAddPremieres }) {
 
   return (
     <div className="admin">
-      <h1 className="admin__title">Админка</h1>
+      <h1 className="admin__title">Управление данными</h1>
       <form onSubmit={handleSubmit}>
 
         <div className="admin__container">

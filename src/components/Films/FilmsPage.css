@@ -1,4 +1,4 @@
-.premieres-item-page {
+.films-page {
   width: 100%;
   min-height: 100%;
   background-color: #ddd;
@@ -9,11 +9,11 @@
   position: relative;
 }
 
-.premieres-item-page__container {
+.films-page__container {
   margin: 100px 0 0 30px;
 }
 
-.premieres-item-page__image {
+.films-page__image {
   width: 350px;
   height: 500px;
   border: 2px solid goldenrod;
@@ -21,18 +21,18 @@
   object-fit: cover;
 }
 
-.premieres-item-page__list {
+.films-page__list {
   /* width: 360px; */
   list-style: none;
 }
 
-.premieres-item-page__about {
+.films-page__about {
   display: flex;
   text-align: start;
   margin: 30px 0 0;
 }
 
-.premieres-item-page__name {
+.films-page__name {
   margin: 0 0 10px 30px;
   font-size: 42px;
   font-weight: 600;
@@ -40,7 +40,7 @@
   text-align: left;
 }
 
-.premieres-item-page__text {
+.films-page__text {
   font-weight: 400;
   color: #555;
   font-size: 20px;
@@ -48,7 +48,7 @@
   margin: 0;
 }
 
-.premieres-item-page__text-data {
+.films-page__text-data {
   margin: 0;
   font-weight: 500;
   color: #333;
@@ -56,7 +56,7 @@
   max-width: 220px;
 }
 
-.premieres-item-page__button-go-back {
+.films-page__button-go-back {
   position: absolute;
   top: 40px;
   left: 60px;
@@ -67,7 +67,7 @@
   font-weight: 600;
 }
 
-.premieres-item-page__button-go-back:hover {
+.films-page__button-go-back:hover {
   cursor: pointer;
   background-color: goldenrod;
 }
