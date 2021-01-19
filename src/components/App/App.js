@@ -86,7 +86,7 @@ function App() {
     )
   }
 
-  //поднимаем карточу вверх на один пункт
+  //поднимаем карточку вверх на один пункт
   const handleUpRatingCard = (card) => {
 
     //кастомный метод для замены объектов в массиве
@@ -104,6 +104,25 @@ function App() {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
       }))
+  }
+
+  //опускаем карточку вверх на один пункт
+  const handleDownRatingCard = (card) => {
+    const templeFun = (arr) => {
+      let arrCopy = {}
+      arrCopy = Object.assign({}, arr[card.position])
+      arr[card.position] = Object.assign({}, arr[card.position - 1])
+      arr[card.position - 1] = Object.assign({}, arrCopy)
+
+      return arr
+    }
+
+    setRatingCards(templeFun(ratingCards)
+      .map((elem, index) => {
+        elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+        return elem;
+      }))
+
   }
 
   const addPremieresHandler = ({
@@ -160,6 +179,7 @@ function App() {
             ratingCards={ratingCards}
             onRemoveRatingCard={handleRemoveRatingCard}
             onUpRatingCard={handleUpRatingCard}
+            onDownRatingCard={handleDownRatingCard}
           />
         </Switch>
         <InfoBlock />

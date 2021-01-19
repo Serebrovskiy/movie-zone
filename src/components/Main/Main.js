@@ -17,7 +17,8 @@ function Main({
   onOpenPopupRating,
   ratingCards,
   onRemoveRatingCard,
-  onUpRatingCard
+  onUpRatingCard,
+  onDownRatingCard
 }) {
 
   return (
@@ -42,6 +43,7 @@ function Main({
           ratingCards={ratingCards}
           onRemoveRatingCard={onRemoveRatingCard}
           onUpRatingCard={onUpRatingCard}
+          onDownRatingCard={onDownRatingCard}
         />
       </Route>
       <Route exact path="/premieres">

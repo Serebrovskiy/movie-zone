@@ -2,7 +2,7 @@ import React from 'react';
 import './Rating.css';
 import RatingCard from './RatingCard'
 
-function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRatingCard }) {
+function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRatingCard, onDownRatingCard }) {
 
 
   // function handlePopup() {
@@ -11,7 +11,7 @@ function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRating
 
   return (
     <div className="rating">
-      <p className="rating__text">Rating</p>
+      <p className="rating__text">Рейтинг Фильмов</p>
       <button className="rating__button-add" onClick={onOpenPopupRating}>Добавить фильм</button>
       <div className="rating__place">
         {
@@ -19,8 +19,10 @@ function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRating
             <RatingCard
               item={elem}
               key={elem.id}
+              ratingCards={ratingCards}
               onRemoveRatingCard={onRemoveRatingCard}
               onUpRatingCard={onUpRatingCard}
+              onDownRatingCard={onDownRatingCard}
             />
           )
         }

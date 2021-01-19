@@ -1,5 +1,5 @@
 .rating-card {
-  width: 500px;
+  min-width: 550px;
   height: 150px;
   margin: 30px auto 0;
   display: flex;
