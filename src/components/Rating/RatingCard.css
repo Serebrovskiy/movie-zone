@@ -7,6 +7,12 @@
   align-items: center;
   border: 1px solid lightslategray;
   animation: showBlock 1s linear forwards;
+  transition: 0.7s ease;
+}
+
+/* модификатор */
+.rating-card_reduce {
+  height: 85px;
 }
 
 .rating-card:hover {
@@ -33,6 +39,7 @@
   margin: 20px 15px 24px;
   color: #333;
   width: 175px;
+  transition: 0.7s ease;
 }
 
 .rating-card__image {
@@ -40,8 +47,14 @@
   height: 120px;
   margin-right: 10px;
   object-fit: cover;
-
+  transition: 0.7s ease;
   border: 1px solid grey;
+}
+
+.rating-card__image_reduce {
+  width: 100px;
+  height: 60px;
+  transition: 0.7s ease;
 }
 
 .rating-card__container-buttons {
@@ -51,6 +64,14 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  transition: 0.7s ease;
+}
+
+.rating-card__container-buttons_reduce {
+  /* flex-direction: row; */
+  /* min-width: 120px; */
+  /* justify-content: space-evenly; */
+  height: 80%;
 }
 
 .rating-card__button-up {
@@ -65,6 +86,7 @@
   margin-right: 10px;
   border: none;
   opacity: 0.5;
+  transition: 0.7s ease;
 }
 
 .rating-card__button-up:hover {
@@ -98,6 +120,7 @@
   border: none;
   opacity: 0.5;
   transform: rotate(180deg);
+  transition: 0.7s ease;
 }
 
 .rating-card__button-down:hover {
@@ -130,6 +153,7 @@
   margin-right: 10px;
   border: none;
   opacity: 0.4;
+  transition: 0.7s ease;
 }
 
 .rating-card__button-delete:hover {
@@ -139,6 +163,20 @@
 
 .rating-card__button-delete:focus {
   outline: none;
+}
+
+.rating-card_buttons_reduce {
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
+  margin-right: 5px;
+}
+
+.rating-card_buttons-delete_reduce {
+  width: 15px;
+  height: 15px;
+  background-size: 15px;
+  margin-right: 5px;
 }
 
 @media screen and (max-width: 900px) {

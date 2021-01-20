@@ -4,15 +4,19 @@ import RatingCard from './RatingCard'
 
 function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRatingCard, onDownRatingCard }) {
 
+  const [isReduceCards, setIsReduceCards] = React.useState(false);
 
-  // function handlePopup() {
-
-  // }
+  function handleReduceCards() {
+    setIsReduceCards(!isReduceCards);
+  }
 
   return (
     <div className="rating">
       <p className="rating__text">Рейтинг Фильмов</p>
-      <button className="rating__button-add" onClick={onOpenPopupRating}>Добавить фильм</button>
+      <div className="rating__container">
+        <button className="rating__button-add" onClick={onOpenPopupRating}>Добавить фильм</button>
+        <button className={`rating__button-reduce ${isReduceCards && "rating__button-reduce_active"}`} onClick={handleReduceCards} />
+      </div>
       <div className="rating__place">
         {
           ratingCards.map(elem =>
@@ -23,6 +27,7 @@ function Rating({ onOpenPopupRating, ratingCards, onRemoveRatingCard, onUpRating
               onRemoveRatingCard={onRemoveRatingCard}
               onUpRatingCard={onUpRatingCard}
               onDownRatingCard={onDownRatingCard}
+              isReduceCards={isReduceCards}
             />
           )
         }
