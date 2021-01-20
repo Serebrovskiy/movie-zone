@@ -54,15 +54,16 @@
   top: 0px;
 
   background-color: transparent;
-  background-image: url(../../images/reduce-cards.png);
+  background-image: url(../../images/reduce-cards2.png);
   background-size: 33px;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.8;
+  transition: 0.7s ease;
 }
 
 .rating__button-reduce_active {
-  background-image: url(../../images/enlarge-cards.png);
+  background-image: url(../../images/enlarge-cards2.png);
   /* background-color: rgba(82, 241, 234, 0.7); */
 }
 
