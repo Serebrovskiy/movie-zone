@@ -13,6 +13,13 @@
   color: rgba(143, 123, 8, 0.911);
 }
 
+.rating__container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
 .rating__button-add {
   width: 250px;
   min-height: 40px;
@@ -34,6 +41,35 @@
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.7);
   color: #ddd;
+}
+
+.rating__button-reduce {
+  width: 50px;
+  min-height: 40px;
+  background-color: #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  /* margin-left: 50px; */
+  position: absolute;
+  right: 80px;
+  top: 0px;
+
+  background-color: transparent;
+  background-image: url(../../images/reduce-cards.png);
+  background-size: 33px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
+}
+
+.rating__button-reduce_active {
+  background-image: url(../../images/enlarge-cards.png);
+  /* background-color: rgba(82, 241, 234, 0.7); */
+}
+
+.rating__button-reduce:hover {
+  cursor: pointer;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  opacity: 0.5;
 }
 
 .rating__place {
