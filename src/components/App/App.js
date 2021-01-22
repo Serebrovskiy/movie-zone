@@ -58,6 +58,7 @@ function App() {
       id: Date.now()    //уникальный id
     };
 
+    console.log(name)
     //заглушка для картинки
     if (newRatingCards.link === '') newRatingCards.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
 
@@ -153,10 +154,10 @@ function App() {
     console.log(newFilm)
   }
 
-  const handleRemovePremier = (premier) => {
+  const handleRemoveFilm = (film) => {
     setFilms(
       films
-        .filter(elem => premier.id !== elem.id)
+        .filter(elem => film.id !== elem.id)
         .map(function (elem, index) {
           elem.id = index;
           return elem;
@@ -169,6 +170,7 @@ function App() {
         isOpen={isOpenPopupRating}
         onClose={closePopups}
         onAddRatingCards={addRatingCardsHandler}
+        films={films}
         ratingCards={ratingCards}
       />
       <Header />
@@ -178,7 +180,7 @@ function App() {
           <Main
             onAddFilm={addFilmHandler}
             films={films}
-            onRemovePremier={handleRemovePremier}
+            onRemoveFilm={handleRemoveFilm}
             onOpenPopupRating={handlePopupRatingClick}
             ratingCards={ratingCards}
             onRemoveRatingCard={handleRemoveRatingCard}

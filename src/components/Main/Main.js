@@ -13,7 +13,7 @@ import { initialReviewItems } from '../../utils/utils';
 function Main({
   onAddFilm,
   films,
-  onRemovePremier,
+  onRemoveFilm,
   onOpenPopupRating,
   ratingCards,
   onRemoveRatingCard,
@@ -49,7 +49,7 @@ function Main({
       <Route exact path="/films">
         <Films
           films={films}
-          onRemovePremier={onRemovePremier}
+          onRemoveFilm={onRemoveFilm}
         />
       </Route>
       <Route path="/films/:id">

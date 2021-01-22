@@ -3,7 +3,7 @@ import './Films.css';
 import FilmsItem from './FilmsItem';
 
 
-function Films({ films, onRemovePremier }) {
+function Films({ films, onRemoveFilm }) {
 
   return (
     <div className="films">
@@ -14,7 +14,7 @@ function Films({ films, onRemovePremier }) {
             <FilmsItem
               item={elem}
               key={elem.id}
-              onRemovePremier={onRemovePremier}
+              onRemoveFilm={onRemoveFilm}
             />
           )
         }

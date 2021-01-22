@@ -6,8 +6,8 @@ function FilmsPage({ data, films }) {
 
   let { id } = useParams();
   const history = useHistory();
-  console.log(id)
-  console.log(films[id])
+  // console.log(id)
+  // console.log(films[id])
 
   return (
     <div className="films-page">
