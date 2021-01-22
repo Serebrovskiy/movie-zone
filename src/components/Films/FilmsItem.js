@@ -2,12 +2,12 @@ import React from 'react';
 import './FilmsItem.css';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-function FilmsItem({ item, onRemovePremier }) {
+function FilmsItem({ item, onRemoveFilm }) {
 
   const { url } = useRouteMatch();
 
   const handleRemoveClick = () => {
-    onRemovePremier(item)
+    onRemoveFilm(item)
   }
 
   return (
