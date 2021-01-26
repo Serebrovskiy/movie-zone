@@ -21,13 +21,14 @@ function Search({ films }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
   }
 
   return (
     <div className="search">
       <h1 className="search__title">Поиск</h1>
       <input type="text" className="search__input" name="inputSearch" value={value} onChange={handleChangeInput} />
-      <button type="submit" className="search__button" onClick={handleSubmit}>Найти</button>
+      <button type="button" className="search__button" onClick={handleSubmit}>Найти</button>
       <div className="search__result-list">
         {
           valueRes.map(elem =>

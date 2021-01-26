@@ -8,17 +8,19 @@ import Films from '../Films/Films'
 import FilmsPage from '../Films/FilmsPage'
 import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
+import AdminFilms from '../Admin/AdminFilms'
 import { initialReviewItems } from '../../utils/utils';
 
 function Main({
   onAddFilm,
   films,
   onRemoveFilm,
-  onOpenPopupRating,
+  onOpenPopupAddCard,
   ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
-  onDownRatingCard
+  onDownRatingCard,
+  notCheckedFilms,
 }) {
 
   return (
@@ -39,7 +41,7 @@ function Main({
       </Route>
       <Route path="/rating">
         <Rating
-          onOpenPopupRating={onOpenPopupRating}
+          onOpenPopupAddCard={onOpenPopupAddCard}
           ratingCards={ratingCards}
           onRemoveRatingCard={onRemoveRatingCard}
           onUpRatingCard={onUpRatingCard}
@@ -52,6 +54,7 @@ function Main({
           onRemoveFilm={onRemoveFilm}
         />
       </Route>
+      {/* тут похоже проблемка */}
       <Route path="/films/:id">
         <FilmsPage
           films={films}
@@ -61,7 +64,18 @@ function Main({
         <Search films={films} />
       </Route>
       <Route path="/admin">
-        <Admin onAddFilm={onAddFilm} />
+        <Admin
+          notCheckedFilms={notCheckedFilms}
+        />
+      </Route>
+      <Route path="/admin-reviews">
+
+      </Route>
+      <Route path="/admin-films">
+        <AdminFilms
+          onOpenPopupAddCard={onOpenPopupAddCard}
+          notCheckedFilms={notCheckedFilms}
+        />
       </Route>
     </div>
   );

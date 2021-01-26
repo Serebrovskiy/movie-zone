@@ -12,37 +12,23 @@ import PopupAddCard from '../PopupAddCard/PopupAddCard'
 function App() {
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
-  const [isOpenPopupRating, setIsOpenPopupRating] = useState(false);
+  const [notCheckedFilms, setNotCheckedFilms] = useState([]);
+  const [cardChecking, setCardChecking] = useState(null);
+  const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  function handlePopupRatingClick() {
-    setIsOpenPopupRating(true);
+
+  //открываем попап и определяем кто это дедает
+  function handlePopupAddCardClick(isAdminOpened, card) {
+    setIsOpenPopupAddCard(true);
+    setIsAdmin(isAdminOpened);
+    card && setCardChecking(card)
   }
 
   function closePopups() {
-    setIsOpenPopupRating(false);
+    setIsOpenPopupAddCard(false);
+    setCardChecking(null)
   }
-
-  useEffect(() => {
-    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
-    setFilms(savedFilms
-      .sort(() => Math.random() - 0.5)
-      .map((elem, index) => {
-        elem.id = index;      //переопределяем id элемента в соотвествии с его индексом
-        return elem
-      }));
-    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
-    setRatingCards(savedRatingCards);
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('films', JSON.stringify(films));
-    console.log(films)
-  }, [films])
-
-  useEffect(() => {
-    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
-    console.log(ratingCards)
-  }, [ratingCards])
 
   //добавление карточки рейтинга
   const addRatingCardsHandler = ({
@@ -82,8 +68,9 @@ function App() {
 
   //удаление карточки рейтинга
   const handleRemoveRatingCard = (card) => {
+    console.log(card)
     setRatingCards(ratingCards
-      .filter(elem => elem.id !== card.id)
+      .filter(elem => elem.name !== card.name) //раньше было по id, но имя тоже уникальное
       .map((elem, index) => {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
@@ -111,7 +98,7 @@ function App() {
       }))
   }
 
-  //опускаем карточку вверх на один пункт
+  //опускаем карточку вниз на один пункт
   const handleDownRatingCard = (card) => {
     const templeFun = (arr) => {
       let arrCopy = {}
@@ -127,7 +114,6 @@ function App() {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
       }))
-
   }
 
   const addFilmHandler = ({
@@ -138,6 +124,7 @@ function App() {
     country,
     director,
     cast,
+    checked,
     id
   }) => {
     const newFilm = {
@@ -148,6 +135,7 @@ function App() {
       country,
       director,
       cast,
+      checked,
       id: films.length  //???
     };
     setFilms((prev) => [...prev, newFilm]);
@@ -164,14 +152,61 @@ function App() {
         }));
   }
 
+  //обновляем/одобряем фильм
+  const editFilmHandler = (card, remove) => {
+    //если админ нажал "отклонить" удаляем из коллекции и из рейтинга
+    if (remove) {
+      handleRemoveFilm(card);
+      handleRemoveRatingCard(card);
+      closePopups();
+    } else {
+      setFilms(films.map((elem, index) => {
+        if (elem.name === card.name) {
+          card.id = index;
+          return card
+        } else {
+          return elem
+        };
+      }))
+    }
+    setCardChecking(null)
+  }
+
+  useEffect(() => {
+    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
+    setFilms(savedFilms
+      .sort(() => Math.random() - 0.5)
+      .map((elem, index) => {
+        elem.id = index;      //переопределяем id элемента в соотвествии с его индексом
+        return elem
+      }));
+    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
+    setRatingCards(savedRatingCards);
+  }, [])
+
+  useEffect(() => {
+    setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
+    localStorage.setItem('films', JSON.stringify(films));
+    console.log(films)
+  }, [films])
+
+  useEffect(() => {
+    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
+    console.log(ratingCards)
+  }, [ratingCards])
+
   return (
     <div className="App">
       <PopupAddCard
-        isOpen={isOpenPopupRating}
+        isOpen={isOpenPopupAddCard}
         onClose={closePopups}
+        onAddFilm={addFilmHandler}
         onAddRatingCards={addRatingCardsHandler}
         films={films}
         ratingCards={ratingCards}
+        isAdmin={isAdmin}
+        cardChecking={cardChecking}
+        onEditFilm={editFilmHandler}
       />
       <Header />
       <BrowserRouter>
@@ -181,8 +216,9 @@ function App() {
             onAddFilm={addFilmHandler}
             films={films}
             onRemoveFilm={handleRemoveFilm}
-            onOpenPopupRating={handlePopupRatingClick}
+            onOpenPopupAddCard={handlePopupAddCardClick}
             ratingCards={ratingCards}
+            notCheckedFilms={notCheckedFilms}
             onRemoveRatingCard={handleRemoveRatingCard}
             onUpRatingCard={handleUpRatingCard}
             onDownRatingCard={handleDownRatingCard}

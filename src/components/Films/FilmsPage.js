@@ -6,12 +6,15 @@ function FilmsPage({ data, films }) {
 
   let { id } = useParams();
   const history = useHistory();
-  // console.log(id)
-  // console.log(films[id])
+
+  console.log(id)
+  console.log(films)
+  console.log(films[id])
 
   return (
     <div className="films-page">
       <button className="films-page__button-go-back" onClick={() => history.goBack()}>Назад</button>
+      {/* вот тут есть проблемки */}
       <img className="films-page__image" src={films[id].link} alt="" />
       <div className="films-page__container">
         <h3 className="films-page__name">{films[id].name}</h3>
