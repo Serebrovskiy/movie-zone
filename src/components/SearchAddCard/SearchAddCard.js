@@ -79,15 +79,15 @@ function SearchAddCard({
             placeholder="Поиск"
             minLength="2"
             maxLength="30"
-            autocomplete="off"
+            autoComplete="off"
             required
           />
           <span className="searchAddCard__text">Поиск</span>
         </label>
-        <label className="searchAddCard__label">
+        <label className="formAddCard__label">
           <input
-            className="searchAddCard__input"
-            type="number"
+            className="formAddCard__input-range"
+            type="range"
             name="inputPosition"
             value={position}
             onChange={handlePosition}
@@ -95,8 +95,10 @@ function SearchAddCard({
             min='1'
             max={ratingCards.length + 1}
             required
+
+            step="1"
           />
-          <span className="searchAddCard__text">Позиция</span>
+          <span className="formAddCard__text">{position} - Позиция</span>
         </label>
 
         <div className="searchAddCard__result-container">

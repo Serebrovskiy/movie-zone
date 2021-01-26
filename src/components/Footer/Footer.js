@@ -4,7 +4,7 @@ import './Footer.css';
 function Footer() {
   return (
     <div className="footer">
-      Footer
+      <p className="footer__copyright">© 2021 Movie-Zone</p>
     </div>
   );
 }

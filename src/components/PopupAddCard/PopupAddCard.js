@@ -6,9 +6,13 @@ import SearchAddCard from '../SearchAddCard/SearchAddCard'
 function PopupAddCard({
   isOpen,
   onClose,
+  onAddFilm,
   onAddRatingCards,
   films,
-  ratingCards
+  ratingCards,
+  isAdmin,
+  cardChecking,
+  onEditFilm
 }) {
   const [numberSection, setNumberSection] = useState(0);
 
@@ -27,27 +31,29 @@ function PopupAddCard({
           className="popupAddCard__button-close"
           onClick={onClose}
         />
-        <div className="popupAddCard__container-for-section">
-          <input
-            className="popupAddCard__section"
-            type="radio"
-            name="section"
-            id="addNew"
-            value={0}
-            onChange={handleChangeSection}
-            checked={!numberSection}
-          />
-          <input
-            className="popupAddCard__section"
-            type="radio"
-            name="section"
-            id="addFromCollections"
-            value={1}
-            onChange={handleChangeSection}
-          />
-        </div>
+        {!isAdmin &&
+          <div className="popupAddCard__container-for-section">
+            <input
+              className="popupAddCard__section"
+              type="radio"
+              name="section"
+              id="addNew"
+              value={0}
+              onChange={handleChangeSection}
+              checked={!numberSection}
+            />
+            <input
+              className="popupAddCard__section"
+              type="radio"
+              name="section"
+              id="addFromCollections"
+              value={1}
+              onChange={handleChangeSection}
+            />
+          </div>
+        }
         {
-          numberSection
+          (numberSection && !isAdmin)
             ?
             <SearchAddCard
               onClose={onClose}
@@ -58,8 +64,13 @@ function PopupAddCard({
             :
             <FormAddCard
               onClose={onClose}
+              onAddFilm={onAddFilm}
               onAddRatingCards={onAddRatingCards}
+              films={films}
               ratingCards={ratingCards}
+              isAdmin={isAdmin}
+              cardChecking={cardChecking}
+              onEditFilm={onEditFilm}
             />
         }
       </div>
