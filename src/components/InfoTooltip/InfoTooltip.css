@@ -1,0 +1,130 @@
+.infoTooltip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.infoTooltip_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+}
+
+.infoTooltip__form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.infoTooltip__button-close {
+  position: absolute;
+  top: -35px;
+  right: -27px;
+  width: 32px;
+  height: 32px;
+  background-image: url('../../images/button-close.svg');
+  background-color: transparent;
+  border: none;
+}
+
+.infoTooltip__button-close:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.infoTooltip__button-close:focus {
+  outline: none;
+}
+
+.infoTooltip__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 22px;
+  margin: 20px auto;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.infoTooltip__link {
+  text-decoration: none;
+}
+
+.infoTooltip__text {
+  width: 250px;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.7);
+  margin: 10px;
+}
+
+.infoTooltip__text-link {
+  font-size: 18px;
+  line-height: 22px;
+  color: #2f71e5;
+  margin: 12px 0 10px;
+}
+
+.infoTooltip__text-link:hover {
+  cursor: pointer;
+  color: #2f72e5ab;
+}
+
+@media screen and (max-width: 900px) {
+  .infoTooltip__form {
+    width: 320px;
+  }
+  .infoTooltip__button-close {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 32px;
+    height: 32px;
+    background-size: 30px;
+  }
+  .infoTooltip__title {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 34px 0 14px 24px;
+  }
+  .infoTooltip__text-link {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 14px 0 51px 24px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .infoTooltip__button-close {
+    top: -41px;
+    right: 11px;
+    width: 25px;
+    height: 25px;
+    background-size: 25px;
+  }
+  .infoTooltip__title {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 34px 0 14px 24px;
+  }
+  .infoTooltip__text-link {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 14px 0 51px 24px;
+  }
+}

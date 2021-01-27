@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './PopupAddCard.css';
 import FormAddCard from '../FormAddCard/FormAddCard'
 import SearchAddCard from '../SearchAddCard/SearchAddCard'
@@ -12,13 +12,11 @@ function PopupAddCard({
   ratingCards,
   isAdmin,
   cardChecking,
-  onEditFilm
+  onEditFilm,
+  onInfoTooltip,
+  onChangeSection,
+  numberSection
 }) {
-  const [numberSection, setNumberSection] = useState(0);
-
-  function handleChangeSection(e) {
-    setNumberSection(Number(e.target.value));
-  }
 
   return (
     <div className={`popupAddCard ${isOpen && "popupAddCard_opened"}`}>
@@ -39,17 +37,20 @@ function PopupAddCard({
               name="section"
               id="addNew"
               value={0}
-              onChange={handleChangeSection}
+              onChange={() => onChangeSection(0)}
               checked={!numberSection}
             />
+            <label className="popupAddCard__section-label" for="addNew">Добавить новый фильм</label>
             <input
               className="popupAddCard__section"
               type="radio"
               name="section"
               id="addFromCollections"
               value={1}
-              onChange={handleChangeSection}
+              onChange={() => onChangeSection(1)}
+              checked={numberSection}
             />
+            <label className="popupAddCard__section-label" for="addFromCollections">Добавить из коллекции</label>
           </div>
         }
         {
@@ -60,6 +61,7 @@ function PopupAddCard({
               onAddRatingCards={onAddRatingCards}
               films={films}
               ratingCards={ratingCards}
+              onInfoTooltip={onInfoTooltip}
             />
             :
             <FormAddCard
@@ -71,6 +73,7 @@ function PopupAddCard({
               isAdmin={isAdmin}
               cardChecking={cardChecking}
               onEditFilm={onEditFilm}
+              onInfoTooltip={onInfoTooltip}
             />
         }
       </div>

@@ -29,7 +29,7 @@
   background-color: #fff;
   border-radius: 10px;
   z-index: 2;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   transition: 0.5s ease;
 }
 
@@ -53,14 +53,48 @@
 }
 
 .popupAddCard__container-for-section {
+  display: flex;
   width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .popupAddCard__section {
-  width: 30px;
-  height: 30px;
-  margin: 15px 40px;
+  display: none;
+}
+.popupAddCard__section-label {
+  width: 50%;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 34px;
+  -webkit-user-select: none;
+  user-select: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+  padding: 20px 0;
+}
+
+.popupAddCard__section-label:last-child {
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Checked */
+.popupAddCard__section:checked + .popupAddCard__section-label {
+  /* color: #000;
+  font-weight: 600; */
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Hover */
+.popupAddCard__section-label:hover {
+  color: #666;
+}
+
+/* Disabled */
+.popupAddCard__section:disabled + .popupAddCard__section-label {
+  background: #efefef;
+  color: #666;
 }
 
 .popupAddCard__title {

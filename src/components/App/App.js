@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock'
 import PopupAddCard from '../PopupAddCard/PopupAddCard'
+import InfoTooltip from '../InfoTooltip/InfoTooltip'
 
 
 function App() {
@@ -15,20 +16,42 @@ function App() {
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);
   const [cardChecking, setCardChecking] = useState(null);
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
+  const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [infoTooltip, setInfoTooltip] = useState('');
+  const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
 
 
   //открываем попап и определяем кто это дедает
   function handlePopupAddCardClick(isAdminOpened, card) {
     setIsOpenPopupAddCard(true);
     setIsAdmin(isAdminOpened);
-    card && setCardChecking(card)
+    card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку
+  }
+
+  //попап с информацией 
+  function handleInfoClick(message) {
+    console.log(message)
+    setIsOpenPopupInfo(true);
+    setInfoTooltip(message);
   }
 
   function closePopups() {
     setIsOpenPopupAddCard(false);
+    setIsOpenPopupInfo(false)
     setCardChecking(null)
   }
+
+  function closePopupInfo() {
+    setIsOpenPopupInfo(false)
+    setInfoTooltip('');
+  }
+
+  function handleChangeSectionPopupAdd(number) {
+    setNumberSectionPopupAddCard(number);
+    setIsOpenPopupInfo(false)
+  }
+
 
   //добавление карточки рейтинга
   const addRatingCardsHandler = ({
@@ -207,10 +230,21 @@ function App() {
         isAdmin={isAdmin}
         cardChecking={cardChecking}
         onEditFilm={editFilmHandler}
+        onInfoTooltip={handleInfoClick}
+        onChangeSection={handleChangeSectionPopupAdd}
+        numberSection={numberSectionPopupAddCard}
+      />
+      <InfoTooltip
+        isOpen={isOpenPopupInfo}
+        onClose={closePopupInfo}
+        infoTooltip={infoTooltip}
+        isAdmin={isAdmin}
+        onChangeSection={handleChangeSectionPopupAdd}
+        numberSection={numberSectionPopupAddCard}
       />
       <Header />
       <BrowserRouter>
-        <NavBar />
+        <NavBar notCheckedFilms={notCheckedFilms} />
         <Switch>
           <Main
             onAddFilm={addFilmHandler}
