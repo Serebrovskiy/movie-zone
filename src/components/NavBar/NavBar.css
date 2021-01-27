@@ -19,8 +19,19 @@
   font-weight: 600;
   text-decoration: none;
   color: #ddd;
+  position: relative;
 }
 
 .menu__link_active {
   color: rgba(238, 207, 31, 0.932);
+}
+
+.menu__link__notification {
+  height: 6px;
+  background-color: rgba(233, 47, 47, 0.7);
+  border-radius: 50%;
+  padding: 1px 1px;
+  position: absolute;
+  top: 14px;
+  right: 12px;
 }

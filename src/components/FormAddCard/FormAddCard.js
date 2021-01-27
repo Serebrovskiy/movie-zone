@@ -9,7 +9,8 @@ function FormAddCard({
   ratingCards,
   isAdmin,
   cardChecking,
-  onEditFilm
+  onEditFilm,
+  onInfoTooltip
 }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -81,6 +82,7 @@ function FormAddCard({
     e.preventDefault();
 
     if (isAdmin) {
+      //админ проверяет карточку
       if (cardChecking) {
         onEditFilm({
           name,
@@ -96,8 +98,9 @@ function FormAddCard({
         onClose();
 
       } else {
+        //админ добавляет карточку, если такой нет в базе
         if (films.some(elem => elem.name === name)) {
-          alert('Такой фильм уже есть!')
+          onInfoTooltip('Такой фильм уже есть!')
         } else {
           onAddFilm({
             name,
@@ -110,21 +113,14 @@ function FormAddCard({
             checked: true,
             id: Date.now(),
           });
-
-          setName('');
-          setLink('');
-          setDate('');
-          setGenre('');
-          setСountry('');
-          setDirector('');
-          setСast('');
           onClose();
         }
       }
     } else {
-      // тут нужно подумать, если такой фильм есть в коллекции, то нужно предложить его просто добавить, короче разделять инфо-попапом где произошло совпадение
+      //пользователь добавляет карточку, если такой нет в базе
+      //тут нужно подумать, если такой фильм есть в коллекции, то нужно предложить его просто добавить, короче разделять инфо-попапом где произошло совпадение
       if (ratingCards.some(elem => elem.name === name) || films.some(elem => elem.name === name)) {
-        alert('Такой фильм уже есть!')
+        onInfoTooltip('Такой фильм уже есть!')
       } else {
         onAddRatingCards({ name, link, position })
         onAddFilm({
@@ -138,21 +134,21 @@ function FormAddCard({
           checked: false,
           id: Date.now(),
         });
-        setPosition('1');
-        setName('');
-        setLink('');
-        setDate('');
-        setGenre('');
-        setСountry('');
-        setDirector('');
-        setСast('');
         onClose();
       }
     }
+    setPosition('1');
+    setName('');
+    setLink('');
+    setDate('');
+    setGenre('');
+    setСountry('');
+    setDirector('');
+    setСast('');
   }
 
+  //карточка идет на проверку
   useEffect(() => {
-    console.log(cardChecking)
     if (cardChecking) {
       setName(cardChecking.name);
       setDate(cardChecking.date);
@@ -281,22 +277,33 @@ function FormAddCard({
           <span className="formAddCard__text">Актеры</span>
         </label>
 
-        <button
-          type="submit"
-          className={`formAddCard__button ${isDisabled && "formAddCard__button_disabled"}`}
-          disabled={isDisabled}
-        >
-          {cardChecking ? 'Обновить' : 'Добавить'}
-        </button>
-        {cardChecking &&
+        {!cardChecking
+          ?
           <button
-            type="button"
-            className="formAddCard__button formAddCard__button-remove"  //сделать модификатор
-            // disabled={isDisabled}
-            onClick={() => onEditFilm(cardChecking, true)}
+            type="submit"
+            className={`formAddCard__button ${isDisabled && "formAddCard__button_disabled"}`}
+            disabled={isDisabled}
           >
-            Отклонить
+            Добавить
+          </button>
+          :
+          <div className="formAddCard__button-container">
+            <button
+              type="submit"
+              className={`formAddCard__button formAddCard__button-accept ${isDisabled && "formAddCard__button_disabled"}`}
+              disabled={isDisabled}
+            >
+              Принять
+            </button>
+            <button
+              type="button"
+              className="formAddCard__button formAddCard__button-remove"  //сделать модификатор
+              // disabled={isDisabled}
+              onClick={() => onEditFilm(cardChecking, true)}
+            >
+              Отклонить
         </button>
+          </div>
         }
       </div>
     </form>

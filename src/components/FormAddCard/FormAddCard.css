@@ -1,7 +1,7 @@
 .formAddCard__form {
   position: relative;
   min-width: 550px;
-  min-height: 300px;
+  min-height: 500px;
   background-color: #fff;
   border-radius: 10px;
   z-index: 2;
@@ -26,7 +26,7 @@
 }
 
 .formAddCard__input {
-  margin: 10px 0 0 30px;
+  margin: 10px 0 0 50px;
   width: 250px;
   height: 25px;
   background-color: #fff;
@@ -35,9 +35,9 @@
 
 /* Ползунок и его стилизация */
 .formAddCard__input-range {
-  margin: 10px 0 0 30px;
+  margin: 10px 0 0 51px;
   width: 250px;
-  height: 25px;
+  height: 27px;
   background-color: #fff;
   /* border: 1px solid rgba(0, 0, 0, 0.6); */
   -webkit-appearance: none;
@@ -46,12 +46,12 @@
 .formAddCard__input-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: 1px solid #000000;
-  height: 23px;
+  height: 25px;
   width: 16px;
   border-radius: 3px;
   background: #ddd;
   cursor: pointer;
-  /* margin-top: -14px; */
+  margin-top: -8px;
   /* box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; */
 }
 /* для Firefox */
@@ -76,7 +76,7 @@
 }
 .formAddCard__input-range::-webkit-slider-runnable-track {
   width: 100%;
-  height: 25px;
+  height: 12px;
   cursor: pointer;
   /* box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; */
   background: #fff;
@@ -89,7 +89,7 @@
 }
 .formAddCard__input-range::-moz-range-track {
   width: 100%;
-  height: 25px;
+  height: 12px;
   cursor: pointer;
   /* box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; */
   background: #fff;
@@ -98,7 +98,7 @@
 }
 .formAddCard__input-range::-ms-track {
   width: 100%;
-  height: 25px;
+  height: 12px;
   cursor: pointer;
   background: transparent;
   border-color: transparent;
@@ -125,13 +125,19 @@
   text-align: left;
 }
 
+.formAddCard__button-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 .formAddCard__button {
   width: 150px;
   height: 40px;
   background-color: #fff;
   /* border-radius: 50px; */
   border: 1px solid rgba(0, 0, 0, 0.7);
-  margin: 30px 35px 20px;
+  margin: 35px 20px;
 
   font-family: Roboto;
   font-weight: 500;
@@ -142,6 +148,14 @@
   align-self: center;
   justify-content: center;
   color: rgba(0, 0, 0, 0.7);
+}
+
+.formAddCard__button-accept {
+  border: 1px solid rgba(12, 151, 19, 0.7);
+}
+
+.formAddCard__button-remove {
+  border: 1px solid rgba(233, 47, 47, 0.7);
 }
 
 .formAddCard__button:hover {

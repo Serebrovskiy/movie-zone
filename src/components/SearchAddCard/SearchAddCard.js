@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './SearchAddCard.css';
-// import FilmsItem from '../Films/FilmsItem'
 
 function SearchAddCard({
   onClose,
   onAddRatingCards,
   films,
-  ratingCards
+  ratingCards,
+  onInfoTooltip
 }) {
 
   const [name, setName] = useState('');
@@ -51,7 +51,7 @@ function SearchAddCard({
     const link = elem.link;
 
     if (ratingCards.some(elm => elm.name === name)) {
-      alert('Такой фильм уже есть!')
+      onInfoTooltip('Такой фильм уже есть!');
     } else {
       onAddRatingCards({ name, link, position })
       setName('');
