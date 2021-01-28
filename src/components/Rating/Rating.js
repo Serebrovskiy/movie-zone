@@ -2,9 +2,15 @@ import React from 'react';
 import './Rating.css';
 import RatingCard from './RatingCard'
 
-function Rating({ onOpenPopupAddCard, ratingCards, onRemoveRatingCard, onUpRatingCard, onDownRatingCard }) {
+function Rating({
+  onOpenPopupAddCard,
+  ratingCards,
+  onRemoveRatingCard,
+  onUpRatingCard,
+  onDownRatingCard
+}) {
 
-  const [isReduceCards, setIsReduceCards] = React.useState(false);
+  const [isReduceCards, setIsReduceCards] = React.useState(false); //сжатие карочек 
 
   function handleReduceCards() {
     setIsReduceCards(!isReduceCards);

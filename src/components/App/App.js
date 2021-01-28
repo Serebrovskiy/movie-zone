@@ -13,7 +13,7 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip'
 function App() {
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
-  const [notCheckedFilms, setNotCheckedFilms] = useState([]);
+  const [notCheckedFilms, setNotCheckedFilms] = useState([]);   //очень похожие названия
   const [cardChecking, setCardChecking] = useState(null);
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
@@ -82,17 +82,19 @@ function App() {
     position,
     id
   }) => {
-    const newRatingCards = {
+    const newRatingCard = {
       name,
       date,
       link,
       position,
+      new: true,
       id: Date.now()    //уникальный id
     };
 
     console.log(name)
     //заглушка для картинки
-    if (newRatingCards.link === '') newRatingCards.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"
+    newRatingCard.link === '' && (newRatingCard.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg")
+    newRatingCard.date === '' && (newRatingCard.date = "Неизвестно")
 
     //кастомный метод для вставки элемента в любую часть массива
     const insert = (arr, index, newItem) => [
@@ -102,14 +104,14 @@ function App() {
     ];
 
     setRatingCards(
-      insert(ratingCards, position - 1, newRatingCards)
+      insert(ratingCards, position - 1, newRatingCard)
         .map((elem, index) => {
           elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+          (JSON.stringify(newRatingCard) === JSON.stringify(elem)) ? elem.new = true : elem.new = false; //ставим флаг для новой карточки
           return elem;
         })
     )
-
-    console.log(newRatingCards)
+    //console.log(newRatingCard)
   }
 
   //удаление карточки рейтинга

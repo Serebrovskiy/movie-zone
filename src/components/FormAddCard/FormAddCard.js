@@ -179,7 +179,7 @@ function FormAddCard({
             placeholder="Название"
             minLength="2"
             maxLength="40"
-            autoComplete="off"
+            // autoComplete="off"
             pattern="^[а-яА-Я0-9.,!?+\s-]+$"
             required
           />

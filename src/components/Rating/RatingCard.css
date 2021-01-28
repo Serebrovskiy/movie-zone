@@ -8,16 +8,33 @@
   border: 1px solid lightslategray;
   animation: showBlock 1s linear forwards;
   transition: 0.7s ease;
-}
-
-/* модификатор */
-.rating-card_reduce {
-  height: 85px;
+  position: relative;
 }
 
 .rating-card:hover {
   opacity: 0.9;
   cursor: pointer;
+}
+
+/* модификатор сжатия*/
+.rating-card_reduce {
+  height: 85px;
+}
+
+/* модификатор новой карточки*/
+.rating-card_new {
+  border: 1px solid rgba(155, 20, 20, 0.685);
+}
+
+.rating-card_text-new {
+  font-size: 18px;
+  font-weight: 600;
+  font-style: italic;
+  color: rgba(155, 20, 20, 0.685);
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  opacity: 0.9;
 }
 
 .rating-card__number {
