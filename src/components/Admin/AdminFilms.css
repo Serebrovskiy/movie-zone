@@ -46,7 +46,7 @@
 
 .admin-films__card-button {
   width: 350px;
-  height: 40px;
+  min-height: 40px;
   margin-top: 20px;
   font-family: Roboto;
   font-weight: 600;

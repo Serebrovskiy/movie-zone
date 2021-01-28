@@ -25,10 +25,11 @@ function FormAddCard({
   const [isDisabled, setIsDisabled] = React.useState(true);
   const inputNameRef = useRef('');
   const inputLinkRef = useRef('');
+  const inputDateRef = useRef('');
 
 
   function handleCheckValidity() {
-    inputNameRef.current.checkValidity() && inputLinkRef.current.checkValidity() && inputNameRef
+    inputNameRef.current.checkValidity() && inputLinkRef.current.checkValidity() && inputDateRef.current.checkValidity()
       ?
       setIsDisabled(false) : setIsDisabled(true);
   }
@@ -49,7 +50,7 @@ function FormAddCard({
 
   function handleChangeInputDate(e) {
     setDate(new Date(e.target.value)
-      .toLocaleString('nu', {
+      .toLocaleDateString('nu', {  //toLocaleString
         year: 'numeric',
         // month: 'long',
         // day: 'numeric'
@@ -122,7 +123,7 @@ function FormAddCard({
       if (ratingCards.some(elem => elem.name === name) || films.some(elem => elem.name === name)) {
         onInfoTooltip('Такой фильм уже есть!')
       } else {
-        onAddRatingCards({ name, link, position })
+        onAddRatingCards({ name, date, link, position })
         onAddFilm({
           name,
           link,
@@ -177,7 +178,9 @@ function FormAddCard({
             onChange={handleName}
             placeholder="Название"
             minLength="2"
-            maxLength="30"
+            maxLength="40"
+            autoComplete="off"
+            pattern="^[а-яА-Я0-9.,!?+\s-]+$"
             required
           />
           <span className="formAddCard__text">Название</span>
@@ -188,7 +191,8 @@ function FormAddCard({
             type="date"
             className="formAddCard__input"
             name="date"
-            // ref={inputDateRef}
+            // value={date}
+            ref={inputDateRef}
             onChange={handleChangeInputDate}
             placeholder=""
             required

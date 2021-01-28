@@ -33,13 +33,54 @@
   margin-left: 40px;
 }
 
+.rating-card__container-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  transition: 0.7s ease;
+  /* border: 1px solid grey; */
+}
+
+.rating-card__container-center_reduce {
+  margin-top: 0px;
+}
+
 .rating-card__name {
+  /* font-family: none; */
   font-size: 24px;
   font-weight: 700;
-  margin: 20px 15px 24px;
+  line-height: 26px;
   color: #333;
   width: 175px;
   transition: 0.7s ease;
+  margin: 5px;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.rating-card__name_reduce {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.rating-card__date {
+  /* font-family: none; */
+  font-size: 18px;
+  font-weight: 400;
+  color: #333;
+  transition: 0.7s ease;
+  margin: 5px;
+}
+
+.rating-card__date_reduce {
+  font-size: 15px;
+  margin: 0px;
 }
 
 .rating-card__image {

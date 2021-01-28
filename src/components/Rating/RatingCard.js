@@ -26,7 +26,10 @@ function RatingCard({
   return (
     <div className={`rating-card ${isReduceCards && "rating-card_reduce"}`}>
       <p className="rating-card__number">{item.position}</p>
-      <p className="rating-card__name">{item.name}</p>
+      <div className={`rating-card__container-center ${isReduceCards && "rating-card__container-center_reduce"}`}>
+        <p className={`rating-card__name ${isReduceCards && "rating-card__name_reduce"}`}>{item.name}</p>
+        <p className={`rating-card__date ${isReduceCards && "rating-card__date_reduce"}`}>{item.date}</p>
+      </div>
       {/* Если убирать совсем */}
       {/* {!isReduceCards && <img className="rating-card__image" src={item.link} alt={item.name} />} */}
       <img className={`rating-card__image ${isReduceCards && "rating-card__image_reduce"}`} src={item.link} alt={item.name} />

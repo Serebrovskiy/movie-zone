@@ -9,8 +9,8 @@ function SearchAddCard({
   onInfoTooltip
 }) {
 
-  const [name, setName] = useState('');
   const [valueRes, setValueRes] = React.useState([]);
+  const [name, setName] = useState('');
   const [position, setPosition] = useState('1');
   const [hoverCard, setHoverCard] = useState(false);
 
@@ -48,12 +48,13 @@ function SearchAddCard({
     e.preventDefault();
 
     const name = elem.name;
+    const date = elem.date;
     const link = elem.link;
 
     if (ratingCards.some(elm => elm.name === name)) {
       onInfoTooltip('Такой фильм уже есть!');
     } else {
-      onAddRatingCards({ name, link, position })
+      onAddRatingCards({ name, date, link, position })
       setName('');
       setPosition('1');
       setValueRes([]);
@@ -80,6 +81,7 @@ function SearchAddCard({
             minLength="2"
             maxLength="30"
             autoComplete="off"
+            pattern="^[а-яА-Я0-9.,!?+\s-]+$"
             required
           />
           <span className="searchAddCard__text">Поиск</span>
