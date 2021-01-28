@@ -21,6 +21,28 @@ function App() {
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
 
+  useEffect(() => {
+    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
+    setFilms(savedFilms
+      .sort(() => Math.random() - 0.5)
+      .map((elem, index) => {
+        return elem
+      }));
+    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
+
+    setRatingCards(savedRatingCards);
+  }, [])
+
+  useEffect(() => {
+    setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
+    localStorage.setItem('films', JSON.stringify(films));
+    console.log(films)
+  }, [films])
+
+  useEffect(() => {
+    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
+    console.log(ratingCards)
+  }, [ratingCards])
 
   //открываем попап и определяем кто это дедает
   function handlePopupAddCardClick(isAdminOpened, card) {
@@ -31,7 +53,6 @@ function App() {
 
   //попап с информацией 
   function handleInfoClick(message) {
-    console.log(message)
     setIsOpenPopupInfo(true);
     setInfoTooltip(message);
   }
@@ -56,12 +77,14 @@ function App() {
   //добавление карточки рейтинга
   const addRatingCardsHandler = ({
     name,
+    date,
     link,
     position,
     id
   }) => {
     const newRatingCards = {
       name,
+      date,
       link,
       position,
       id: Date.now()    //уникальный id
@@ -139,6 +162,7 @@ function App() {
       }))
   }
 
+  //добавляем фильм в коллекцию
   const addFilmHandler = ({
     name,
     link,
@@ -195,28 +219,7 @@ function App() {
     setCardChecking(null)
   }
 
-  useEffect(() => {
-    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
-    setFilms(savedFilms
-      .sort(() => Math.random() - 0.5)
-      .map((elem, index) => {
-        elem.id = index;      //переопределяем id элемента в соотвествии с его индексом
-        return elem
-      }));
-    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
-    setRatingCards(savedRatingCards);
-  }, [])
 
-  useEffect(() => {
-    setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-    localStorage.setItem('films', JSON.stringify(films));
-    console.log(films)
-  }, [films])
-
-  useEffect(() => {
-    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
-    console.log(ratingCards)
-  }, [ratingCards])
 
   return (
     <div className="App">
@@ -269,3 +272,20 @@ function App() {
 export default App;
 
 
+
+  // useEffect(() => {
+  //   setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
+  //   localStorage.setItem('films', JSON.stringify(films));
+  //   console.log(films)
+
+  //   // if (ratingCards.length === 0) {
+  //   //   console.log('ratingCards.length === 0')
+  //   //   const savedRatingCards = films.map((elem, index) => {
+  //   //     elem.position = index + 1;
+  //   //     return elem;
+  //   //   })
+
+  //   setRatingCards(savedRatingCards);
+  //   console.log(savedRatingCards)
+  //   //}
+  // }, [films])

@@ -22,6 +22,7 @@ function Main({
   onDownRatingCard,
   notCheckedFilms,
 }) {
+  // console.log(films)
 
   return (
     <div className="main">

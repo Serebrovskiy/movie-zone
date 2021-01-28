@@ -40,7 +40,7 @@ function PopupAddCard({
               onChange={() => onChangeSection(0)}
               checked={!numberSection}
             />
-            <label className="popupAddCard__section-label" for="addNew">Добавить новый фильм</label>
+            <label className="popupAddCard__section-label" htmlFor="addNew">Добавить новый фильм</label>
             <input
               className="popupAddCard__section"
               type="radio"
@@ -50,7 +50,7 @@ function PopupAddCard({
               onChange={() => onChangeSection(1)}
               checked={numberSection}
             />
-            <label className="popupAddCard__section-label" for="addFromCollections">Добавить из коллекции</label>
+            <label className="popupAddCard__section-label" htmlFor="addFromCollections">Добавить из коллекции</label>
           </div>
         }
         {
