@@ -55,7 +55,7 @@
 .popupAddCard__container-for-section {
   display: flex;
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 .popupAddCard__section {
@@ -73,6 +73,8 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.8);
   padding: 20px 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .popupAddCard__section-label:last-child {
@@ -81,9 +83,10 @@
 
 /* Checked */
 .popupAddCard__section:checked + .popupAddCard__section-label {
-  /* color: #000;
-  font-weight: 600; */
-  background-color: rgba(0, 0, 0, 0.1);
+  /* color: #000;*/
+  font-weight: 600;
+  background-color: #fff;
+  border-bottom: none;
 }
 
 /* Hover */

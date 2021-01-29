@@ -40,7 +40,7 @@ function PopupAddCard({
               onChange={() => onChangeSection(0)}
               checked={!numberSection}
             />
-            <label className="popupAddCard__section-label" htmlFor="addNew">Добавить новый фильм</label>
+            <label className="popupAddCard__section-label" htmlFor="addNew">Добавить новый</label>
             <input
               className="popupAddCard__section"
               type="radio"

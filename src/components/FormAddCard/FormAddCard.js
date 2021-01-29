@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './FormAddCard.css';
 
 function FormAddCard({
@@ -16,17 +16,29 @@ function FormAddCard({
   const [link, setLink] = useState('');
   const [position, setPosition] = useState('1');
   const [date, setDate] = useState('');
-  const [genre, setGenre] = useState('');
+  const [genre1, setGenre1] = useState('');
+  const [genre2, setGenre2] = useState('');
   const [country, setСountry] = useState('');
   const [director, setDirector] = useState('');
-  const [cast, setСast] = useState('');
-  // const [checked, setСhecked] = useState(false);
+  const [actor1, setActor1] = useState('');
+  const [actor2, setActor2] = useState('');
+  const actors = [];
+  const genres = [];
 
   const [isDisabled, setIsDisabled] = React.useState(true);
   const inputNameRef = useRef('');
   const inputLinkRef = useRef('');
   const inputDateRef = useRef('');
 
+
+  //создаем массивы для жанров и актеров
+  const handleActors = () => {   //  useCallback? 
+    genre1 && genres.push(genre1)
+    genre2 && genres.push(genre2)
+
+    actor1 && actors.push(actor1)
+    actor2 && actors.push(actor2)
+  };
 
   function handleCheckValidity() {
     inputNameRef.current.checkValidity() && inputLinkRef.current.checkValidity() && inputDateRef.current.checkValidity()
@@ -59,8 +71,13 @@ function FormAddCard({
     handleCheckValidity();
   }
 
-  function handleChangeInputGenre(e) {
-    setGenre(e.target.value);
+  function handleChangeInputGenre1(e) {
+    setGenre1(e.target.value);
+    handleCheckValidity();
+  }
+
+  function handleChangeInputGenre2(e) {
+    setGenre2(e.target.value);
     handleCheckValidity();
   }
 
@@ -74,13 +91,19 @@ function FormAddCard({
     handleCheckValidity();
   }
 
-  function handleChangeInputCast(e) {
-    setСast(e.target.value);
+  function handleChangeInputActor1(e) {
+    setActor1(e.target.value);
+    handleCheckValidity();
+  }
+  function handleChangeInputActor2(e) {
+    setActor2(e.target.value);
     handleCheckValidity();
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    handleActors();
 
     if (isAdmin) {
       //админ проверяет карточку
@@ -89,12 +112,12 @@ function FormAddCard({
           name,
           link,
           date,
-          genre,
+          genres,
           country,
           director,
-          cast,
+          actors,
           checked: true,
-          id: Date.now(),
+          // id: Date.now(),  //?
         })
         onClose();
 
@@ -107,46 +130,52 @@ function FormAddCard({
             name,
             link,
             date,
-            genre,
+            genres,
             country,
             director,
-            cast,
+            actors,
             checked: true,
-            id: Date.now(),
+            id: Date.now(), //?
           });
           onClose();
         }
       }
     } else {
       //пользователь добавляет карточку, если такой нет в базе
-      //тут нужно подумать, если такой фильм есть в коллекции, то нужно предложить его просто добавить, короче разделять инфо-попапом где произошло совпадение
       if (ratingCards.some(elem => elem.name === name) || films.some(elem => elem.name === name)) {
         onInfoTooltip('Такой фильм уже есть!')
       } else {
         onAddRatingCards({ name, date, link, position })
+        console.log(actors)
         onAddFilm({
           name,
           link,
           date,
-          genre,
+          genres,
           country,
           director,
-          cast,
+          actors,
           checked: false,
-          id: Date.now(),
+          id: Date.now(), //?
         });
         onClose();
       }
     }
+  }
+
+  //очищаем форму
+  useEffect(() => {
     setPosition('1');
     setName('');
     setLink('');
     setDate('');
-    setGenre('');
+    setGenre1('');
+    setGenre2('');
     setСountry('');
     setDirector('');
-    setСast('');
-  }
+    setActor1('');
+    setActor2('');
+  }, [onClose])
 
   //карточка идет на проверку
   useEffect(() => {
@@ -154,10 +183,12 @@ function FormAddCard({
       setName(cardChecking.name);
       setDate(cardChecking.date);
       setLink(cardChecking.link);
-      setGenre(cardChecking.genre);
+      setGenre1(cardChecking.genres[0]);
+      genre2 && setGenre2(cardChecking.genres[1]);
       setСountry(cardChecking.country);
       setDirector(cardChecking.director);
-      setСast(cardChecking.cast);
+      setActor1(cardChecking.actors[0]);
+      actor2 && setActor2(cardChecking.actors[1]);
     }
   }, [cardChecking])
 
@@ -166,7 +197,7 @@ function FormAddCard({
       className="formAddCard__form"
       onSubmit={handleSubmit}
     >
-      <h2 className="formAddCard__title">Добавить новый фильм в рейтинг</h2>
+      <h2 className="formAddCard__title">Добавить новый фильм {!isAdmin && "в рейтинг"}</h2>
       <div className="formAddCard__container">
         <label className="formAddCard__label">
           <input
@@ -237,13 +268,28 @@ function FormAddCard({
             type="text"
             className="formAddCard__input"
             name="inputAdmin"
-            value={genre}
-            onChange={handleChangeInputGenre}
-            placeholder="фильм-катастрофа, мелодрама"
+            value={genre1}
+            onChange={handleChangeInputGenre1}
+            placeholder="фильм-катастрофа"
             required={isAdmin}
           />
           <span className="formAddCard__text">Жанр</span>
         </label>
+        {
+          (isAdmin && genre1) &&
+          <label className="formAddCard__label">
+            <input
+              type="text"
+              className="formAddCard__input"
+              name="inputAdmin"
+              value={genre2}
+              onChange={handleChangeInputGenre2}
+              placeholder="мелодрама"
+            // required={isAdmin}
+            />
+            <span className="formAddCard__text">+</span>
+          </label>
+        }
         <label className="formAddCard__label">
           <input
             type="text"
@@ -273,13 +319,28 @@ function FormAddCard({
             type="text"
             className="formAddCard__input"
             name="inputAdmin"
-            value={cast}
-            onChange={handleChangeInputCast}
-            placeholder="Леонардо Ди Каприо, Кейт Уинслет"
+            value={actor1}
+            onChange={handleChangeInputActor1}
+            placeholder="Леонардо Ди Каприо"
             required={isAdmin}
           />
           <span className="formAddCard__text">Актеры</span>
         </label>
+        {
+          (isAdmin && actor1) &&
+          <label className="formAddCard__label">
+            <input
+              type="text"
+              className="formAddCard__input"
+              name="inputAdmin"
+              value={actor2}
+              onChange={handleChangeInputActor2}
+              placeholder="Кейт Уинслет"
+            // required={isAdmin}
+            />
+            <span className="formAddCard__text">+</span>
+          </label>
+        }
 
         {!cardChecking
           ?

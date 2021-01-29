@@ -40,6 +40,11 @@
   text-align: left;
 }
 
+.films-page__text-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .films-page__text {
   font-weight: 400;
   color: #555;
@@ -49,7 +54,7 @@
 }
 
 .films-page__text-data {
-  margin: 0;
+  margin: 2px 0;
   font-weight: 500;
   color: #333;
   font-size: 20px;

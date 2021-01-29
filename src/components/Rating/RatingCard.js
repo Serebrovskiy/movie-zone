@@ -25,7 +25,7 @@ function RatingCard({
 
   return (
     <div className={`rating-card ${isReduceCards && "rating-card_reduce"}  ${item.new && "rating-card_new"}`}>
-      {item.new && <p className="rating-card_text-new">NEW!</p>}
+      {item.new && <p className={`rating-card_text-new ${isReduceCards && "rating-card_text-new_reduce"}`} >NEW!</p>}
       <p className="rating-card__number">{item.position}</p>
       <div className={`rating-card__container-center ${isReduceCards && "rating-card__container-center_reduce"}`}>
         <p className={`rating-card__name ${isReduceCards && "rating-card__name_reduce"}`}>{item.name}</p>

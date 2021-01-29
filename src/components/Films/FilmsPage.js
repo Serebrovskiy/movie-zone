@@ -24,7 +24,10 @@ function FilmsPage({ films }) {
           </li>
           <li className="films-page__about">
             <p className="films-page__text">Жанр:</p>
-            <p className="films-page__text-data">{currentFilm.genre}</p>
+            <div className="films-page__text-container">
+              {currentFilm.genres.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
+            </div>
+            {/* <p className="films-page__text-data">{currentFilm.genre}</p> */}
           </li>
           <li className="films-page__about">
             <p className="films-page__text">Страна:</p>
@@ -36,7 +39,10 @@ function FilmsPage({ films }) {
           </li>
           <li className="films-page__about">
             <p className="films-page__text">В ролях:</p>
-            <p className="films-page__text-data">{currentFilm.cast}</p>
+            <div className="films-page__text-container">
+              {currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
+            </div>
+            {/* <p className="films-page__text-data">{currentFilm.actors.join(`, `)}</p> */}
           </li>
         </ul>
       </div>

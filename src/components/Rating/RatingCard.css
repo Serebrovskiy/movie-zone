@@ -35,6 +35,14 @@
   top: -8px;
   left: 12px;
   opacity: 0.9;
+  transition: 0.7s ease;
+}
+
+.rating-card_text-new_reduce {
+  font-size: 14px;
+  font-weight: 500;
+  top: -10px;
+  left: 9px;
 }
 
 .rating-card__number {
