@@ -13,8 +13,8 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip'
 function App() {
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
-  const [notCheckedFilms, setNotCheckedFilms] = useState([]);   //очень похожие названия
-  const [cardChecking, setCardChecking] = useState(null);
+  const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
+  const [cardChecking, setCardChecking] = useState(null);  //карточка которую мы проверяем
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -169,10 +169,10 @@ function App() {
     name,
     link,
     date,
-    genre,
+    genres,
     country,
     director,
-    cast,
+    actors,
     checked,
     id
   }) => {
@@ -180,10 +180,10 @@ function App() {
       name,
       link,
       date,
-      genre,
+      genres,
       country,
       director,
-      cast,
+      actors,
       checked,
       id: films.length  //???
     };
@@ -211,7 +211,7 @@ function App() {
     } else {
       setFilms(films.map((elem, index) => {
         if (elem.name === card.name) {
-          card.id = index;
+          card.id = index;    // id карточки присваивается её номер индекса, чтобы восстановить исходный
           return card
         } else {
           return elem
