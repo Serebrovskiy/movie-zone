@@ -20,7 +20,7 @@ function FilmsPage({ films }) {
         <ul className="films-page__list">
           <li className="films-page__about">
             <p className="films-page__text">Премьера:</p>
-            <p className="films-page__text-data">{currentFilm.date}</p>
+            <p className="films-page__text-data">{currentFilm.date} г.</p>
           </li>
           <li className="films-page__about">
             <p className="films-page__text">Жанр:</p>
