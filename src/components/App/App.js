@@ -174,7 +174,7 @@ function App() {
     director,
     actors,
     checked,
-    id
+    //id
   }) => {
     const newFilm = {
       name,
@@ -185,6 +185,7 @@ function App() {
       director,
       actors,
       checked,
+      totalRange: 99,
       id: films.length  //???
     };
     setFilms((prev) => [...prev, newFilm]);
@@ -203,6 +204,7 @@ function App() {
 
   //обновляем/одобряем фильм
   const editFilmHandler = (card, remove) => {
+    console.log('editFilmHandler')
     //если админ нажал "отклонить" удаляем из коллекции и из рейтинга
     if (remove) {
       handleRemoveFilm(card);
@@ -220,8 +222,6 @@ function App() {
     }
     setCardChecking(null)
   }
-
-
 
   return (
     <div className="App">

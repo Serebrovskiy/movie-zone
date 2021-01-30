@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './FormAddCard.css';
 
 function FormAddCard({
@@ -61,13 +61,14 @@ function FormAddCard({
   }
 
   function handleChangeInputDate(e) {
-    setDate(new Date(e.target.value)
-      .toLocaleDateString('nu', {  //toLocaleString
-        year: 'numeric',
-        // month: 'long',
-        // day: 'numeric'
-      }) + ' г.'
-    );
+    // setDate(new Date(e.target.value)
+    //   .toLocaleDateString('nu', {  //toLocaleString
+    //     year: 'numeric',
+    //     // month: 'long',
+    //     // day: 'numeric'
+    //   }) + ' г.'
+    // );
+    setDate(e.target.value);
     handleCheckValidity();
   }
 
@@ -83,7 +84,7 @@ function FormAddCard({
 
   function handleChangeInputCountry(e) {
     setСountry(e.target.value);
-    handleCheckValidity();
+    // handleCheckValidity();
   }
 
   function handleChangeInputDirector(e) {
@@ -97,7 +98,7 @@ function FormAddCard({
   }
   function handleChangeInputActor2(e) {
     setActor2(e.target.value);
-    handleCheckValidity();
+    // handleCheckValidity();
   }
 
   function handleSubmit(e) {
@@ -179,16 +180,21 @@ function FormAddCard({
 
   //карточка идет на проверку
   useEffect(() => {
+    // console.log(genre1)
+    // console.log(cardChecking)
     if (cardChecking) {
       setName(cardChecking.name);
       setDate(cardChecking.date);
       setLink(cardChecking.link);
-      setGenre1(cardChecking.genres[0]);
-      genre2 && setGenre2(cardChecking.genres[1]);
+      // setGenre1(genres.length !== 0 ? cardChecking.genres[0] : '');
+      cardChecking.genres[0] && setGenre1(cardChecking.genres[0]);
+      cardChecking.genres[1] && setGenre2(cardChecking.genres[1]);
+      // setGenre2(cardChecking.genres[1]);
       setСountry(cardChecking.country);
       setDirector(cardChecking.director);
-      setActor1(cardChecking.actors[0]);
-      actor2 && setActor2(cardChecking.actors[1]);
+      cardChecking.actors[0] && setActor1(cardChecking.actors[0]);
+      cardChecking.actors[1] && setActor2(cardChecking.actors[1]);
+      // setActor2(cardChecking.actors[1]);
     }
   }, [cardChecking])
 
@@ -219,13 +225,16 @@ function FormAddCard({
         </label>
         <label className="formAddCard__label">
           <input
-            type="date"
+            // type="date"
+            type="text"
             className="formAddCard__input"
             name="date"
-            // value={date}
+            value={date}
             ref={inputDateRef}
             onChange={handleChangeInputDate}
-            placeholder=""
+            minLength="4"
+            maxLength="4"
+            placeholder="2000"
             required
           />
           <span className="formAddCard__text">Год премьеры</span>
