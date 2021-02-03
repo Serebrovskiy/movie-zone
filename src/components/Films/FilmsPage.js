@@ -1,18 +1,28 @@
 import React from 'react';
 import './FilmsPage.css';
 import { useParams, useHistory } from 'react-router-dom';
+import * as api from '../../utils/Api';
 
-function FilmsPage({ films }) {
+function FilmsPage({ films, handleGetFilms }) {
 
   let { id } = useParams();
   const history = useHistory();
+  let currentFilm = []
   console.log(id)
-  console.log(films)
+  //console.log(films)
 
   //грубая заглшка, films приходит пустой, то берем массив из localStorage
   films.length === 0 && (films = JSON.parse(localStorage.getItem('films')));
-  const currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм   Number(id)
-  console.log(currentFilm)
+
+  if (films.length !== 0) {
+    currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм   Number(id)
+  } else {
+    console.log('api')
+    api.getFilms().then(res => {
+      currentFilm = res.filter(elem => id === elem._id)[0]
+    })
+    console.log(currentFilm)
+  }
 
   return (
     <div className="films-page">

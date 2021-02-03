@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import './Main.css';
 import Reviews from '../Reviews/Reviews'
@@ -21,8 +21,15 @@ function Main({
   onUpRatingCard,
   onDownRatingCard,
   notCheckedFilms,
+  handleGetFilms
 }) {
-  // console.log(films)
+
+  // useEffect(() => {
+  //   console.log('useEffect')
+  //   handleGetFilms();
+  // }, [])
+
+  console.log(ratingCards)
 
   return (
     <div className="main">
@@ -59,6 +66,7 @@ function Main({
       <Route path="/films/:id">
         <FilmsPage
           films={films}
+          handleGetFilms={handleGetFilms}
         />
       </Route>
       <Route path="/search">

@@ -1,23 +1,37 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Switch, BrowserRouter } from 'react-router-dom';
+import { Switch, useLocation, useHistory } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
-import InfoBlock from '../InfoBlock/InfoBlock'
-import PopupAddCard from '../PopupAddCard/PopupAddCard'
-import InfoTooltip from '../InfoTooltip/InfoTooltip'
+import InfoBlock from '../InfoBlock/InfoBlock';
+import PopupAddCard from '../PopupAddCard/PopupAddCard';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Register from '../Register/Register';
+import Login from '../Login/Login';
+import AccountLogin from '../UI/AccountLogin';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
 
 
 function App() {
+  const { pathname } = useLocation(); //расположение текущей странице
+  const history = useHistory();
+
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
   const [cardChecking, setCardChecking] = useState(null);  //карточка которую мы проверяем
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
+  const [isOpenPopupLogin, setIsOpenPopupLogin] = React.useState(false);
+  const [isOpenPopupRegister, setIsOpenPopupRegister] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [messageError, setMessageError] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({});
   const [isAdmin, setIsAdmin] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
@@ -27,6 +41,7 @@ function App() {
   const handleGetFilms = useCallback(() => {
     api.getFilms()
       .then(res => {
+        console.log('handleGetFilms')
         setFilms(res
           .sort(() => Math.random() - 0.5)
           .map(film => ({
@@ -83,6 +98,19 @@ function App() {
     card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку
   }
 
+  //попап авторизации
+  function handleLoginClick() {
+    setIsOpenPopupLogin(true);
+    setIsOpenPopupRegister(false);
+    setIsOpenPopupInfo(false);
+  }
+
+  //попап регистрации 
+  function handleRegisterClick() {
+    setIsOpenPopupRegister(true);
+    setIsOpenPopupLogin(false);
+  }
+
   //попап с информацией 
   function handleInfoClick(message) {
     setIsOpenPopupInfo(true);
@@ -92,6 +120,8 @@ function App() {
   function closePopups() {
     setIsOpenPopupAddCard(false);
     setIsOpenPopupInfo(false)
+    setIsOpenPopupLogin(false);
+    setIsOpenPopupRegister(false);
     setCardChecking(null)
   }
 
@@ -104,6 +134,76 @@ function App() {
     setNumberSectionPopupAddCard(number);
     setIsOpenPopupInfo(false)
   }
+
+
+
+  function handleRegister(password, email, name) {
+    auth
+      .register(password, email, name)
+      .then((res) => {
+        if (res.statusCode !== 400) {
+          history.push('/');
+          handleInfoClick();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessageError(err.message);
+      });
+  }
+
+  function handleLogin(password, email) {
+    return auth
+      .authorize(password, email)
+      .then((data) => {
+        if (!data) {
+          throw new Error('Что-то пошло не так!');
+        }
+        if (data.token) {
+          setLoggedIn(true);
+          localStorage.setItem('token', data.token);
+          tokenCheck();
+        }
+      })
+      .then(() => {
+        history.push('/saved-news')
+      })
+      .catch((err) => {
+        setMessageError(err.message);
+      });
+  }
+
+  function tokenCheck() {
+    if (localStorage.token) {
+      auth.getContent(localStorage.token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            //history.push('/saved-news');
+            //handleGetSavedArticles();
+            closePopups();
+          } else {
+            localStorage.removeItem('token')
+            setLoggedIn(false)
+            setCurrentUser({})
+          }
+        })
+        .catch(err => console.error(err));
+    }
+  }
+
+  //выходим из аккаунта
+  function onSignOut() {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    // history.push('/');
+  }
+
+  //сбрасываем ошибки попапах
+  const messageErrorReset = useCallback(() => {
+    setMessageError('');
+  }, [isOpenPopupLogin, isOpenPopupRegister]);
+
 
 
   //добавление карточки рейтинга
@@ -243,35 +343,9 @@ function App() {
       .catch((err) => console.error(err));
 
     // handleGetFilms();
-
-
-    // const newFilm = {
-    //   name,
-    //   link,
-    //   date,
-    //   genres,
-    //   country,
-    //   director,
-    //   actors,
-    //   checked,
-    //   totalRange: 99,
-    //   id: films.length  //???
-    // };
-    // setFilms((prev) => [...prev, newFilm]);
-    // console.log(newFilm)
   }
 
   //удаляем фильм из коллекции
-  // const handleRemoveFilm = (film) => {
-  //   setFilms(
-  //     films
-  //       .filter(elem => film.id !== elem.id)
-  //       .map(function (elem, index) {
-  //         elem.id = index;
-  //         return elem;
-  //       }));
-  // }
-
   const handleRemoveFilm = (film) => {
     console.log(film)
     api
@@ -312,31 +386,7 @@ function App() {
 
   return (
     <div className="App">
-      <PopupAddCard
-        isOpen={isOpenPopupAddCard}
-        onClose={closePopups}
-        onAddFilm={addFilmHandler}
-        onAddRatingCards={addRatingCardsHandler}
-        films={films}
-        ratingCards={ratingCards}
-        isAdmin={isAdmin}
-        cardChecking={cardChecking}
-        onEditFilm={editFilmHandler}
-        onInfoTooltip={handleInfoClick}
-        onChangeSection={handleChangeSectionPopupAdd}
-        numberSection={numberSectionPopupAddCard}
-      />
-      <InfoTooltip
-        isOpen={isOpenPopupInfo}
-        onClose={closePopupInfo}
-        infoTooltip={infoTooltip}
-        isAdmin={isAdmin}
-        onChangeSection={handleChangeSectionPopupAdd}
-        numberSection={numberSectionPopupAddCard}
-      />
-      <Header />
-      <BrowserRouter>
-        <NavBar notCheckedFilms={notCheckedFilms} />
+      <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <Main
             onAddFilm={addFilmHandler}
@@ -348,12 +398,69 @@ function App() {
             onRemoveRatingCard={handleRemoveRatingCard}
             onUpRatingCard={handleUpRatingCard}
             onDownRatingCard={handleDownRatingCard}
+            handleGetFilms={handleGetFilms}
           />
         </Switch>
+        <NavBar
+          notCheckedFilms={notCheckedFilms}
+          onLogin={handleLoginClick}
+        />
         <InfoBlock />
-      </BrowserRouter>
-      <Footer />
 
+        <Login
+          isOpen={isOpenPopupLogin}
+          onClose={closePopups}
+          onChangePopup={handleRegisterClick}
+          onLogin={handleLogin}
+          messageError={messageError}
+          messageErrorReset={messageErrorReset}
+        />
+        <Register
+          isOpen={isOpenPopupRegister}
+          onClose={closePopups}
+          onChangePopup={handleLoginClick}
+          onInfoTooltip={handleInfoClick}
+          onRegister={handleRegister}
+          messageError={messageError}
+          messageErrorReset={messageErrorReset}
+        />
+
+        <PopupAddCard
+          isOpen={isOpenPopupAddCard}
+          onClose={closePopups}
+          onAddFilm={addFilmHandler}
+          onAddRatingCards={addRatingCardsHandler}
+          films={films}
+          ratingCards={ratingCards}
+          isAdmin={isAdmin}
+          cardChecking={cardChecking}
+          onEditFilm={editFilmHandler}
+          onInfoTooltip={handleInfoClick}
+          onChangeSection={handleChangeSectionPopupAdd}
+          numberSection={numberSectionPopupAddCard}
+        />
+        <InfoTooltip
+          isOpen={isOpenPopupInfo}
+          onClose={closePopupInfo}
+          infoTooltip={infoTooltip}
+          isAdmin={isAdmin}
+          onChangeSection={handleChangeSectionPopupAdd}
+          numberSection={numberSectionPopupAddCard}
+        />
+        <ProtectedRoute
+          // exact path="/saved-news"
+          loggedIn={loggedIn}
+          currentUser={currentUser}
+          pathname={pathname}
+          // savedArticleList={savedArticles}
+          // onDeleteSavedArticle={handleDeleteSavedArticle}
+          // component={Footer}
+          onLogin={handleLoginClick}
+          onChangePopup={handleLoginClick}
+        />
+        <Header />
+        <Footer />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

@@ -18,8 +18,10 @@
 
 .account-login_button {
   margin: 5px;
-  width: 106px;
-  height: 25px;
+  /* width: 106px;
+  height: 25px; */
+  width: 100px;
+  height: 50px;
   background-color: rgb(50, 50, 50);
   border: 1px solid goldenrod;
   color: goldenrod;
