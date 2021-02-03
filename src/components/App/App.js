@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Switch, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
@@ -8,6 +8,7 @@ import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock'
 import PopupAddCard from '../PopupAddCard/PopupAddCard'
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
+import * as api from '../../utils/Api';
 
 
 function App() {
@@ -21,21 +22,52 @@ function App() {
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
 
+
+  // useEffect(() => {
+  const handleGetFilms = useCallback(() => {
+    api.getFilms()
+      .then(res => {
+        setFilms(res
+          .sort(() => Math.random() - 0.5)
+          .map(film => ({
+            id: film._id,
+            name: film.name,
+            date: film.date,
+            link: film.link,
+            genres: film.genres,
+            country: film.country,
+            director: film.director,
+            actors: film.actors,
+            checked: film.checked,
+          })));
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+
   useEffect(() => {
-    const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
-    setFilms(savedFilms
-      .sort(() => Math.random() - 0.5)
-      .map((elem, index) => {
-        return elem
-      }));
+    //  const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
+
+    // setFilms(savedFilms
+    //   .sort(() => Math.random() - 0.5)
+    //   .map((elem, index) => {
+    //     return elem
+    //   }));
     const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
 
     setRatingCards(savedRatingCards);
+
+    handleGetFilms();
+
+    // api.getFilms()
+    //   .then(res => console.log(res))
+    //   .catch((err) => console.error(err));
   }, [])
 
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-    localStorage.setItem('films', JSON.stringify(films));
+    // localStorage.setItem('films', JSON.stringify(films));
+    //handleGetFilms();
     console.log(films)
   }, [films])
 
@@ -114,6 +146,7 @@ function App() {
     //console.log(newRatingCard)
   }
 
+
   //удаление карточки рейтинга
   const handleRemoveRatingCard = (card) => {
     console.log(card)
@@ -126,9 +159,9 @@ function App() {
     )
   }
 
+
   //поднимаем карточку вверх на один пункт
   const handleUpRatingCard = (card) => {
-
     //кастомный метод для замены объектов в массиве
     const templeFun = (arr) => {
       let arrCopy = {}
@@ -167,42 +200,90 @@ function App() {
   //добавляем фильм в коллекцию
   const addFilmHandler = ({
     name,
-    link,
     date,
+    link,
     genres,
     country,
     director,
     actors,
     checked,
-    //id
+    id
   }) => {
-    const newFilm = {
-      name,
-      link,
-      date,
-      genres,
-      country,
-      director,
-      actors,
-      checked,
-      totalRange: 99,
-      id: films.length  //???
-    };
-    setFilms((prev) => [...prev, newFilm]);
-    console.log(newFilm)
+
+    api
+      .createFilm(
+        name,
+        date,
+        link,
+        genres || [],
+        country || '',
+        director || '',
+        actors || '',
+        checked || false,
+        //id //= films.length
+      )
+      .then((res) => {
+        console.log(res)
+
+        const newFilm = {
+          name: res.name,
+          date: res.date,
+          link: res.link,
+          genres: res.genres,
+          country: res.country,
+          director: res.director,
+          actors: res.actors,
+          checked: res.checked,
+          id: res._id
+        }
+        setFilms([...films, newFilm]);
+
+
+      })
+      .catch((err) => console.error(err));
+
+    // handleGetFilms();
+
+
+    // const newFilm = {
+    //   name,
+    //   link,
+    //   date,
+    //   genres,
+    //   country,
+    //   director,
+    //   actors,
+    //   checked,
+    //   totalRange: 99,
+    //   id: films.length  //???
+    // };
+    // setFilms((prev) => [...prev, newFilm]);
+    // console.log(newFilm)
   }
+
+  //удаляем фильм из коллекции
+  // const handleRemoveFilm = (film) => {
+  //   setFilms(
+  //     films
+  //       .filter(elem => film.id !== elem.id)
+  //       .map(function (elem, index) {
+  //         elem.id = index;
+  //         return elem;
+  //       }));
+  // }
 
   const handleRemoveFilm = (film) => {
-    setFilms(
-      films
-        .filter(elem => film.id !== elem.id)
-        .map(function (elem, index) {
-          elem.id = index;
-          return elem;
-        }));
+    console.log(film)
+    api
+      .deleteFilm(film.id)
+      .then((filmForDelete) => {
+        const newFilms = films.filter((elem) => elem.id === film.id ? null : filmForDelete);
+        setFilms(newFilms);
+      })
+      .catch((err) => console.error(err));
   }
 
-  //обновляем/одобряем фильм
+  //удаляем или одобряем/обновляем фильм
   const editFilmHandler = (card, remove) => {
     console.log('editFilmHandler')
     //если админ нажал "отклонить" удаляем из коллекции и из рейтинга
@@ -211,16 +292,22 @@ function App() {
       handleRemoveRatingCard(card);
       closePopups();
     } else {
-      setFilms(films.map((elem, index) => {
-        if (elem.name === card.name) {
-          card.id = index;    // id карточки присваивается её номер индекса, чтобы восстановить исходный
-          return card
-        } else {
-          return elem
-        };
-      }))
+
+      api.updateFilm(card)
+        .then(film => console.log(film))
+
+      // setFilms(films.map((elem, index) => {
+      //   if (elem.name === card.name) {
+      //     card.id = index;    // id карточки присваивается её номер индекса, чтобы восстановить исходный
+      //     return card
+      //   } else {
+      //     return elem
+      //   };
+      // }))
+
     }
     setCardChecking(null)
+    handleGetFilms();
   }
 
   return (
