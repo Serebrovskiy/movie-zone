@@ -4,11 +4,11 @@ import './NavBar.css';
 import AccountLogin from '../UI/AccountLogin'
 
 
-function NavBar({ notCheckedFilms }) {
+function NavBar({ notCheckedFilms, onLogin }) {
   return (
     <nav className="menu">
       <div className="menu__container">
-        <AccountLogin />
+        <AccountLogin onLogin={onLogin} />
         <NavLink exact to="/reviews" className="menu__link" activeClassName="menu__link_active">Обзоры</NavLink>
         <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>
         <NavLink to="/films" className="menu__link" activeClassName="menu__link_active">Коллекция</NavLink>

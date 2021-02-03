@@ -111,14 +111,14 @@ function FormAddCard({
       if (cardChecking) {
         onEditFilm({
           name,
-          link,
           date,
+          link,
           genres,
           country,
           director,
           actors,
           checked: true,
-          // id: Date.now(),  //?
+          id: cardChecking.id //: Date.now(),  //?
         })
         onClose();
 
@@ -129,13 +129,14 @@ function FormAddCard({
         } else {
           onAddFilm({
             name,
-            link,
             date,
+            link,
             genres,
             country,
             director,
             actors,
             checked: true,
+            totalRange: 0,
             id: Date.now(), //?
           });
           onClose();
@@ -150,8 +151,8 @@ function FormAddCard({
         console.log(actors)
         onAddFilm({
           name,
-          link,
           date,
+          link,
           genres,
           country,
           director,

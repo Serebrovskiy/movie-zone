@@ -1,15 +1,28 @@
 import React from 'react';
 import './FilmsPage.css';
 import { useParams, useHistory } from 'react-router-dom';
+import * as api from '../../utils/Api';
 
-function FilmsPage({ films }) {
+function FilmsPage({ films, handleGetFilms }) {
 
   let { id } = useParams();
   const history = useHistory();
+  let currentFilm = []
+  console.log(id)
+  //console.log(films)
 
   //грубая заглшка, films приходит пустой, то берем массив из localStorage
   films.length === 0 && (films = JSON.parse(localStorage.getItem('films')));
-  const currentFilm = films.filter(elem => Number(id) === elem.id)[0];  //получаем актуальный фильм
+
+  if (films.length !== 0) {
+    currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм   Number(id)
+  } else {
+    console.log('api')
+    api.getFilms().then(res => {
+      currentFilm = res.filter(elem => id === elem._id)[0]
+    })
+    console.log(currentFilm)
+  }
 
   return (
     <div className="films-page">
@@ -27,7 +40,7 @@ function FilmsPage({ films }) {
             <div className="films-page__text-container">
               {currentFilm.genres.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
             </div>
-            {/* <p className="films-page__text-data">{currentFilm.genre}</p> */}
+            {/*old <p className="films-page__text-data">{currentFilm.genre}</p> */}
           </li>
           <li className="films-page__about">
             <p className="films-page__text">Страна:</p>
@@ -42,7 +55,7 @@ function FilmsPage({ films }) {
             <div className="films-page__text-container">
               {currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
             </div>
-            {/* <p className="films-page__text-data">{currentFilm.actors.join(`, `)}</p> */}
+            {/*old <p className="films-page__text-data">{currentFilm.actors.join(`, `)}</p> */}
           </li>
         </ul>
       </div>
