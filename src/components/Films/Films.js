@@ -5,6 +5,8 @@ import FilmsItem from './FilmsItem';
 
 function Films({ films, onRemoveFilm }) {
 
+  //console.log(films)
+
   return (
     <div className="films">
       <h1 className="films__title">Коллекция фильмов</h1>

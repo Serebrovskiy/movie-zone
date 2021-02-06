@@ -14,6 +14,7 @@ export const getFilms = () => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
+      // Authorization: `Bearer ${token}`
     },
   })
     .then(getResponse)
@@ -28,13 +29,15 @@ export const createFilm = (
   director,
   actors,
   checked,
-  id
+  //id
+  token
 ) => {
   return fetch(`${BASE_URL_API}/films`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       name,
@@ -45,35 +48,49 @@ export const createFilm = (
       director,
       actors,
       checked,
-      id
+      //id
     })
   })
     .then(getResponse)
 };
 
-export const deleteFilm = (filmId) => {
-  console.log(filmId)
+export const deleteFilm = (filmId, token) => {
+  // console.log(filmId)
   return fetch(`${BASE_URL_API}/films/${filmId}`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     }
   })
     .then(getResponse)
 };
 
-export const updateFilm = (
-  film
-) => {
-  console.log(film.name)
+export const updateFilm = (film, token) => {
+  // console.log(film.name)
   return fetch(`${BASE_URL_API}/films/${film.id}`, {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(film)
+  })
+    .then(getResponse)
+};
+
+export const updateUser = (ratingFilm, userId, token) => {
+  console.log(ratingFilm)
+  return fetch(`${BASE_URL_API}/users/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(ratingFilm)
   })
     .then(getResponse)
 };

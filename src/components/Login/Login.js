@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Login.css';
 import Popup from '../Popup/Popup';
 import ValidationForm from '../../utils/ValidationForm';
@@ -25,9 +25,7 @@ function Login({
     onLogin(values.password, values.email);
   }
 
-  React.useEffect(() => {
-    resetForm();
-  }, [isOpen]);
+  useEffect(resetForm, [isOpen])
 
   return (
     < >

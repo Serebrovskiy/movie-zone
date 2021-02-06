@@ -148,7 +148,7 @@ function FormAddCard({
         onInfoTooltip('Такой фильм уже есть!')
       } else {
         onAddRatingCards({ name, date, link, position })
-        console.log(actors)
+        // console.log(actors)
         onAddFilm({
           name,
           date,
@@ -251,7 +251,7 @@ function FormAddCard({
               onChange={handlePosition}
               placeholder="Позиция"
               min='1'
-              max={ratingCards.length + 1}
+              max={ratingCards && ratingCards.length + 1}
               step="1"
               required
             />

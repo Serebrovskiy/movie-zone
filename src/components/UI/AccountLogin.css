@@ -16,7 +16,7 @@
   border: 1px solid goldenrod;
 }
 
-.account-login_button {
+.account-login_button-enter {
   margin: 5px;
   /* width: 106px;
   height: 25px; */
@@ -27,8 +27,33 @@
   color: goldenrod;
 }
 
-.account-login_button:hover {
+.account-login_button-enter:hover {
   cursor: pointer;
   background-color: goldenrod;
   color: rgb(50, 50, 50);
+}
+
+.account-login_button-out {
+  margin: 5px;
+  /* width: 106px;
+  height: 25px; */
+  width: 100px;
+  height: 25px;
+  background-color: rgb(50, 50, 50);
+  border: 1px solid goldenrod;
+  color: goldenrod;
+}
+
+.account-login_button-out:hover {
+  cursor: pointer;
+  background-color: goldenrod;
+  color: rgb(50, 50, 50);
+}
+
+.account-login_user-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 18px;
+  margin: 5px;
 }

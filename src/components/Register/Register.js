@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Register.css';
 import Popup from '../Popup/Popup';
 import ValidationForm from '../../utils/ValidationForm';
@@ -26,9 +26,7 @@ function Register({
     onRegister(values.password, values.email, values.name);
   }
 
-  React.useEffect(() => {
-    resetForm();
-  }, [isOpen]);
+  useEffect(resetForm, [isOpen])
 
   return (
     < >
