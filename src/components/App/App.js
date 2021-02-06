@@ -8,17 +8,18 @@ import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock';
 import PopupAddCard from '../PopupAddCard/PopupAddCard';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import AccountLogin from '../UI/AccountLogin';
+// import AccountLogin from '../UI/AccountLogin';
+// import Reviews from '../Reviews/Reviews'
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
 
 
 function App() {
-  const { pathname } = useLocation(); //расположение текущей странице
+  // const { pathname } = useLocation(); //расположение текущей странице
   const history = useHistory();
 
   const [films, setFilms] = useState([]);
@@ -37,15 +38,14 @@ function App() {
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
 
 
-  // useEffect(() => {
+  //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
-    api.getFilms()
+    api.getFilms()  //localStorage.token
       .then(res => {
-        console.log('handleGetFilms')
+        // console.log(res)
         setFilms(res
           .sort(() => Math.random() - 0.5)
           .map(film => ({
-            id: film._id,
             name: film.name,
             date: film.date,
             link: film.link,
@@ -54,41 +54,52 @@ function App() {
             director: film.director,
             actors: film.actors,
             checked: film.checked,
+            id: film._id,
+            owner: film.owner
           })));
       })
       .catch((err) => console.error(err));
   }, []);
 
+  //получаем юзера и его карточки рейтинга
+  const handleGetUser = useCallback(() => {
+    {
+      auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
+        .then(res => {
+          console.log(res)
+          setCurrentUser(res);
+          res.ratingFilms && setRatingCards(res.ratingFilms);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, []);
+
 
   useEffect(() => {
-    //  const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
 
-    // setFilms(savedFilms
-    //   .sort(() => Math.random() - 0.5)
-    //   .map((elem, index) => {
-    //     return elem
-    //   }));
-    const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
+    // const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
+    // setRatingCards(savedRatingCards);
 
-    setRatingCards(savedRatingCards);
+    !ratingCards && setRatingCards([]);
 
     handleGetFilms();
+    tokenCheck();
 
-    // api.getFilms()
-    //   .then(res => console.log(res))
-    //   .catch((err) => console.error(err));
+    console.log('loggedIn - ' + loggedIn)
+    console.log(currentUser)
   }, [])
 
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-    // localStorage.setItem('films', JSON.stringify(films));
+
     //handleGetFilms();
-    console.log(films)
+    // console.log(films)
   }, [films])
 
   useEffect(() => {
-    localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
-    console.log(ratingCards)
+    // localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
+
+    // console.log(ratingCards)
   }, [ratingCards])
 
   //открываем попап и определяем кто это дедает
@@ -136,22 +147,27 @@ function App() {
   }
 
 
-
+  //регистрация пользователя
   function handleRegister(password, email, name) {
     auth
       .register(password, email, name)
       .then((res) => {
         if (res.statusCode !== 400) {
-          history.push('/');
-          handleInfoClick();
+          //history.push('/');
+          handleInfoClick('Вы успешно зарегистрировались!');
+
         }
       })
+      // .then(() => {
+      //   handleLoginClick(); 
+      // })
       .catch((err) => {
         console.error(err);
         setMessageError(err.message);
       });
   }
 
+  //авторизация пользователя
   function handleLogin(password, email) {
     return auth
       .authorize(password, email)
@@ -166,7 +182,7 @@ function App() {
         }
       })
       .then(() => {
-        history.push('/saved-news')
+        history.push('/films')
       })
       .catch((err) => {
         setMessageError(err.message);
@@ -179,8 +195,8 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            //history.push('/saved-news');
-            //handleGetSavedArticles();
+            //history.push('/');
+            handleGetUser();
             closePopups();
           } else {
             localStorage.removeItem('token')
@@ -196,15 +212,24 @@ function App() {
   function onSignOut() {
     localStorage.removeItem('token');
     setLoggedIn(false);
-    // history.push('/');
+    history.push('/');
+    setRatingCards([]);
   }
 
-  //сбрасываем ошибки попапах
+  //сбрасываем ошибки в попапах
   const messageErrorReset = useCallback(() => {
     setMessageError('');
   }, [isOpenPopupLogin, isOpenPopupRegister]);
 
 
+  //обновление карточек рейтинга в Api
+  function handleRatingCardsApi(ratingList) {
+    api.updateUser(ratingList, currentUser._id, localStorage.token)
+      .then(res => {
+        console.log(res)
+        setRatingCards(res)
+      });
+  }
 
   //добавление карточки рейтинга
   const addRatingCardsHandler = ({
@@ -235,30 +260,28 @@ function App() {
       ...arr.slice(index)
     ];
 
-    setRatingCards(
-      insert(ratingCards, position - 1, newRatingCard)
-        .map((elem, index) => {
-          elem.position = index + 1;   //упорядочиваем нумерацию карточек 
-          (JSON.stringify(newRatingCard) === JSON.stringify(elem)) ? elem.new = true : elem.new = false; //ставим флаг для новой карточки
-          return elem;
-        })
-    )
-    //console.log(newRatingCard)
-  }
+    const ratingList = insert(ratingCards, position - 1, newRatingCard)
+      .map((elem, index) => {
+        elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+        (JSON.stringify(newRatingCard) === JSON.stringify(elem)) ? elem.new = true : elem.new = false; //ставим флаг для новой карточки
+        return elem;
+      })
 
+    handleRatingCardsApi(ratingList);
+  }
 
   //удаление карточки рейтинга
   const handleRemoveRatingCard = (card) => {
-    console.log(card)
-    setRatingCards(ratingCards
+
+    const ratingList = ratingCards
       .filter(elem => elem.name !== card.name) //раньше было по id, но имя тоже уникальное
       .map((elem, index) => {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
       })
-    )
-  }
 
+    handleRatingCardsApi(ratingList);
+  }
 
   //поднимаем карточку вверх на один пункт
   const handleUpRatingCard = (card) => {
@@ -272,11 +295,13 @@ function App() {
       return arr
     }
 
-    setRatingCards(templeFun(ratingCards)
+    const ratingList = templeFun(ratingCards)
       .map((elem, index) => {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
-      }))
+      })
+
+    handleRatingCardsApi(ratingList);
   }
 
   //опускаем карточку вниз на один пункт
@@ -290,11 +315,13 @@ function App() {
       return arr
     }
 
-    setRatingCards(templeFun(ratingCards)
+    const ratingList = templeFun(ratingCards)
       .map((elem, index) => {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
-      }))
+      })
+
+    handleRatingCardsApi(ratingList);
   }
 
   //добавляем фильм в коллекцию
@@ -307,7 +334,7 @@ function App() {
     director,
     actors,
     checked,
-    id
+    //id
   }) => {
 
     api
@@ -321,6 +348,7 @@ function App() {
         actors || '',
         checked || false,
         //id //= films.length
+        localStorage.token,
       )
       .then((res) => {
         console.log(res)
@@ -334,6 +362,7 @@ function App() {
           director: res.director,
           actors: res.actors,
           checked: res.checked,
+          owner: res.owner,
           id: res._id
         }
         setFilms([...films, newFilm]);
@@ -348,8 +377,7 @@ function App() {
   //удаляем фильм из коллекции
   const handleRemoveFilm = (film) => {
     console.log(film)
-    api
-      .deleteFilm(film.id)
+    api.deleteFilm(film.id, localStorage.token)
       .then((filmForDelete) => {
         const newFilms = films.filter((elem) => elem.id === film.id ? null : filmForDelete);
         setFilms(newFilms);
@@ -367,8 +395,11 @@ function App() {
       closePopups();
     } else {
 
-      api.updateFilm(card)
-        .then(film => console.log(film))
+      api.updateFilm(card, localStorage.token)  //недоделано! 
+        .then(film => {
+          console.log(film)
+        })
+        .catch((err) => console.error(err));
 
       // setFilms(films.map((elem, index) => {
       //   if (elem.name === card.name) {
@@ -378,7 +409,6 @@ function App() {
       //     return elem
       //   };
       // }))
-
     }
     setCardChecking(null)
     handleGetFilms();
@@ -404,6 +434,9 @@ function App() {
         <NavBar
           notCheckedFilms={notCheckedFilms}
           onLogin={handleLoginClick}
+          onSignOut={onSignOut}
+          loggedIn={loggedIn}
+          currentUser={currentUser}
         />
         <InfoBlock />
 
@@ -446,18 +479,19 @@ function App() {
           isAdmin={isAdmin}
           onChangeSection={handleChangeSectionPopupAdd}
           numberSection={numberSectionPopupAddCard}
+          isOpenPopupAddCard={isOpenPopupAddCard}
         />
-        <ProtectedRoute
+        {/* <ProtectedRoute
           // exact path="/saved-news"
           loggedIn={loggedIn}
           currentUser={currentUser}
           pathname={pathname}
-          // savedArticleList={savedArticles}
-          // onDeleteSavedArticle={handleDeleteSavedArticle}
-          // component={Footer}
-          onLogin={handleLoginClick}
-          onChangePopup={handleLoginClick}
-        />
+        // savedArticleList={savedArticles}
+        // onDeleteSavedArticle={handleDeleteSavedArticle}
+        // component={Reviews}
+        // onLogin={handleLoginClick}
+        // onChangePopup={handleLoginClick}
+        /> */}
         <Header />
         <Footer />
       </CurrentUserContext.Provider>
@@ -485,3 +519,13 @@ export default App;
   //   console.log(savedRatingCards)
   //   //}
   // }, [films])
+
+
+      //  const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
+    // setFilms(savedFilms
+    //   .sort(() => Math.random() - 0.5)
+    //   .map((elem, index) => {
+    //     return elem
+    //   }));
+
+      // localStorage.setItem('films', JSON.stringify(films));

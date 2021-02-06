@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react'; //, { useEffect }
 import { Route, Redirect } from 'react-router-dom';
 import './Main.css';
 import Reviews from '../Reviews/Reviews'
@@ -29,7 +29,7 @@ function Main({
   //   handleGetFilms();
   // }, [])
 
-  console.log(ratingCards)
+  // console.log(ratingCards)
 
   return (
     <div className="main">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Popup.css';
 
 function Popup({
@@ -16,9 +16,11 @@ function Popup({
   children
 }) {
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(messageErrorReset, 2000);
   }, [messageError]);
+
+  //useEffect(messageErrorReset, [messageError])
 
   return (
     < >
@@ -33,7 +35,7 @@ function Popup({
               type="submit"
               className={`popup__button ${isDisabled && "popup__button_disabled"}`}
               disabled={isDisabled}
-              onClick={messageError ? onInfoTooltip : null}
+              onClick={messageError ? () => onInfoTooltip('непонятно что тут') : null}
             >
               {buttonName}
             </button>

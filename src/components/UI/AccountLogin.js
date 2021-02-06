@@ -1,12 +1,19 @@
 import React from 'react';
 import './AccountLogin.css';
 
-function AccountLogin({ onLogin }) {
+function AccountLogin({ onLogin, onSignOut, loggedIn, currentUser }) {
   return (
     <form className="account-login">
-      {/* <input type="text" className="account-login_input" name="inputLogin" />
-      <input type="text" className="account-login_input" name="inputPassword" /> */}
-      <button type="button" className="account-login_button" onClick={onLogin}>войти</button>
+      {
+        loggedIn
+          ?
+          <>
+            <p className="account-login_user-name">{currentUser.name}</p>
+            <button type="button" className="account-login_button-out" onClick={onSignOut}>выйти</button>
+          </>
+          :
+          <button type="button" className="account-login_button-enter" onClick={onLogin}>войти</button>
+      }
     </form>
   );
 }

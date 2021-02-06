@@ -28,7 +28,7 @@ function Rating({
           ratingCards.map(elem =>
             <RatingCard
               item={elem}
-              key={elem.id}
+              key={elem._id}
               ratingCards={ratingCards}
               onRemoveRatingCard={onRemoveRatingCard}
               onUpRatingCard={onUpRatingCard}
