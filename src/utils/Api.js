@@ -1,6 +1,7 @@
 const BASE_URL_API = 'http://localhost:3001'
 
 const getResponse = (res) => {
+  console.log(res)
   if (res.ok) {
     return res.json();
   } else {
@@ -91,6 +92,18 @@ export const updateUser = (ratingFilm, userId, token) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(ratingFilm)
+  })
+    .then(getResponse)
+};
+
+export const getUsers = (token) => {
+  return fetch(`${BASE_URL_API}/users`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
   })
     .then(getResponse)
 };

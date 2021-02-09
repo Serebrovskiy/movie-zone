@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Switch, useLocation, useHistory } from 'react-router-dom';
+import { Switch, useLocation, useHistory, useParams } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -8,23 +8,23 @@ import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock';
 import PopupAddCard from '../PopupAddCard/PopupAddCard';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-// import AccountLogin from '../UI/AccountLogin';
-// import Reviews from '../Reviews/Reviews'
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
+import Rating from "../Rating/Rating";
 
 
 function App() {
-  // const { pathname } = useLocation(); //расположение текущей странице
+  const { pathname } = useLocation(); //расположение текущей странице
   const history = useHistory();
 
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
+  const [users, setUsers] = useState([]);
   const [cardChecking, setCardChecking] = useState(null);  //карточка которую мы проверяем
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
@@ -36,7 +36,12 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
+  //const [viewedUser, setViewedUser] = React.useState({});  //пока не надо 
 
+
+  useEffect(() => {
+    console.log(pathname)
+  }, [pathname])
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
@@ -61,7 +66,7 @@ function App() {
       .catch((err) => console.error(err));
   }, []);
 
-  //получаем юзера и его карточки рейтинга
+  //получаем текущего юзера и его карточки рейтинга
   const handleGetUser = useCallback(() => {
     {
       auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
@@ -74,26 +79,46 @@ function App() {
     }
   }, []);
 
+  //ищем юзера по его id
+  // const handleGetUsers = (userId) => {
+  //   api.getUsers(localStorage.token)
+  //     .then(res => {
+  //       setViewedUser(res.find(user => user._id === userId))
+  //     })
+  //     .catch((err) => console.error(err));
+  // }
+
+  // получаем всех пользователей
+  const handleGetUsers = () => {
+    api.getUsers(localStorage.token)
+      .then(res => {
+        setUsers(res)
+      })
+      .catch((err) => console.error(err));
+  }
+
 
   useEffect(() => {
 
-    // const savedRatingCards = JSON.parse(localStorage.getItem('ratingCards') || '[]');
-    // setRatingCards(savedRatingCards);
-
-    !ratingCards && setRatingCards([]);
-
+    handleGetUsers()
     handleGetFilms();
     tokenCheck();
 
+    !ratingCards && setRatingCards([]);
+
     console.log('loggedIn - ' + loggedIn)
     console.log(currentUser)
+    console.log(films)
+    console.log(users)
+
   }, [])
+
 
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
 
     //handleGetFilms();
-    // console.log(films)
+    console.log(films)
   }, [films])
 
   useEffect(() => {
@@ -104,9 +129,11 @@ function App() {
 
   //открываем попап и определяем кто это дедает
   function handlePopupAddCardClick(isAdminOpened, card) {
+
     setIsOpenPopupAddCard(true);
-    setIsAdmin(isAdminOpened);
-    card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку
+    setIsAdmin(isAdminOpened);  //это лишнее, нужно исправить
+    card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку   //не понял этот коммент
+    console.log(pathname)
   }
 
   //попап авторизации
@@ -138,6 +165,7 @@ function App() {
 
   function closePopupInfo() {
     setIsOpenPopupInfo(false)
+    setIsOpenPopupRegister(false);
     setInfoTooltip('');
   }
 
@@ -148,9 +176,9 @@ function App() {
 
 
   //регистрация пользователя
-  function handleRegister(password, email, name) {
+  function handleRegister(password, email, userName) {
     auth
-      .register(password, email, name)
+      .register(password, email, userName)
       .then((res) => {
         if (res.statusCode !== 400) {
           //history.push('/');
@@ -214,13 +242,13 @@ function App() {
     setLoggedIn(false);
     history.push('/');
     setRatingCards([]);
+    setCurrentUser({})
   }
 
   //сбрасываем ошибки в попапах
   const messageErrorReset = useCallback(() => {
     setMessageError('');
   }, [isOpenPopupLogin, isOpenPopupRegister]);
-
 
   //обновление карточек рейтинга в Api
   function handleRatingCardsApi(ratingList) {
@@ -388,7 +416,7 @@ function App() {
   //удаляем или одобряем/обновляем фильм
   const editFilmHandler = (card, remove) => {
     console.log('editFilmHandler')
-    //если админ нажал "отклонить" удаляем из коллекции и из рейтинга
+    //если админ нажал "отклонить"(remove) удаляем из коллекции и из рейтинга
     if (remove) {
       handleRemoveFilm(card);
       handleRemoveRatingCard(card);
@@ -417,20 +445,6 @@ function App() {
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
-        <Switch>
-          <Main
-            onAddFilm={addFilmHandler}
-            films={films}
-            onRemoveFilm={handleRemoveFilm}
-            onOpenPopupAddCard={handlePopupAddCardClick}
-            ratingCards={ratingCards}
-            notCheckedFilms={notCheckedFilms}
-            onRemoveRatingCard={handleRemoveRatingCard}
-            onUpRatingCard={handleUpRatingCard}
-            onDownRatingCard={handleDownRatingCard}
-            handleGetFilms={handleGetFilms}
-          />
-        </Switch>
         <NavBar
           notCheckedFilms={notCheckedFilms}
           onLogin={handleLoginClick}
@@ -438,7 +452,6 @@ function App() {
           loggedIn={loggedIn}
           currentUser={currentUser}
         />
-        <InfoBlock />
 
         <Login
           isOpen={isOpenPopupLogin}
@@ -457,7 +470,6 @@ function App() {
           messageError={messageError}
           messageErrorReset={messageErrorReset}
         />
-
         <PopupAddCard
           isOpen={isOpenPopupAddCard}
           onClose={closePopups}
@@ -471,6 +483,7 @@ function App() {
           onInfoTooltip={handleInfoClick}
           onChangeSection={handleChangeSectionPopupAdd}
           numberSection={numberSectionPopupAddCard}
+          pathname={pathname}
         />
         <InfoTooltip
           isOpen={isOpenPopupInfo}
@@ -480,19 +493,30 @@ function App() {
           onChangeSection={handleChangeSectionPopupAdd}
           numberSection={numberSectionPopupAddCard}
           isOpenPopupAddCard={isOpenPopupAddCard}
+          isOpenLogin={handleLoginClick}
         />
-        {/* <ProtectedRoute
-          // exact path="/saved-news"
-          loggedIn={loggedIn}
-          currentUser={currentUser}
-          pathname={pathname}
-        // savedArticleList={savedArticles}
-        // onDeleteSavedArticle={handleDeleteSavedArticle}
-        // component={Reviews}
-        // onLogin={handleLoginClick}
-        // onChangePopup={handleLoginClick}
-        /> */}
         <Header />
+
+        <Main
+          onAddFilm={addFilmHandler}
+          films={films}
+          users={users}
+          onRemoveFilm={handleRemoveFilm}
+          onEditFilm={editFilmHandler}
+          onOpenPopupAddCard={handlePopupAddCardClick}
+          ratingCards={ratingCards}
+          notCheckedFilms={notCheckedFilms}
+          onRemoveRatingCard={handleRemoveRatingCard}
+          onUpRatingCard={handleUpRatingCard}
+          onDownRatingCard={handleDownRatingCard}
+          handleGetFilms={handleGetFilms}
+          pathname={pathname}
+          currentUser={currentUser}
+          loggedIn={loggedIn}
+          isOpenLogin={handleLoginClick}
+        />
+
+        <InfoBlock />
         <Footer />
       </CurrentUserContext.Provider>
     </div>

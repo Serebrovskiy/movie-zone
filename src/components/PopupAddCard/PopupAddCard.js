@@ -15,7 +15,8 @@ function PopupAddCard({
   onEditFilm,
   onInfoTooltip,
   onChangeSection,
-  numberSection
+  numberSection,
+  pathname
 }) {
 
   return (
@@ -29,7 +30,8 @@ function PopupAddCard({
           className="popupAddCard__button-close"
           onClick={onClose}
         />
-        {!isAdmin &&
+        {
+          (pathname === "/rating") &&  //!isAdmin &&
           <div className="popupAddCard__container-for-section">
             <input
               className="popupAddCard__section"
@@ -74,6 +76,7 @@ function PopupAddCard({
               cardChecking={cardChecking}
               onEditFilm={onEditFilm}
               onInfoTooltip={onInfoTooltip}
+              pathname={pathname}
             />
         }
       </div>

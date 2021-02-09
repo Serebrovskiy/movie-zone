@@ -8,7 +8,7 @@ function AccountLogin({ onLogin, onSignOut, loggedIn, currentUser }) {
         loggedIn
           ?
           <>
-            <p className="account-login_user-name">{currentUser.name}</p>
+            <p className="account-login_user-name">{currentUser.userName}</p>
             <button type="button" className="account-login_button-out" onClick={onSignOut}>выйти</button>
           </>
           :

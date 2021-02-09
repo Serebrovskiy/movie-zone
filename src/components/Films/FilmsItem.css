@@ -14,6 +14,10 @@
   opacity: 0.8;
 }
 
+.films-item_not-checked {
+  border: 1px solid rgb(218, 60, 32);
+}
+
 .films-item__image {
   width: 250px;
   height: 300px;
@@ -77,6 +81,37 @@
 }
 
 .films-item__button-remove:focus {
+  outline: none;
+}
+
+.films-item__button-edit {
+  position: absolute;
+  top: 14px;
+  right: 45px;
+
+  background-image: url(../../images/pen.svg);
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #000;
+  /* border-radius: 50%; */
+  opacity: 0.6;
+}
+
+.films-item__button-edit:hover {
+  top: 10px;
+  right: 41px;
+  cursor: pointer;
+  opacity: 0.8;
+  width: 30px;
+  height: 30px;
+  background-size: 16px;
+}
+
+.films-item__button-edit:focus {
   outline: none;
 }
 

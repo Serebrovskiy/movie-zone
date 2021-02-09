@@ -9,7 +9,9 @@ function InfoTooltip({
   isAdmin,
   onChangeSection,
   numberSection,
-  isOpenPopupAddCard
+  isOpenPopupAddCard,
+  isOpenLogin
+
 }) {
   return (
     <div className={`infoTooltip ${isOpen && "infoTooltip_opened"}`}>
@@ -19,9 +21,14 @@ function InfoTooltip({
         {(!isAdmin && !numberSection && isOpenPopupAddCard) &&   //не админ и не в разделе выбора фильма из базы
           <>
             <p className="infoTooltip__text">Вы можете выбрать фильм из уже имеющейся коллекции.</p>
-            <p className="infoTooltip__text-link" onClick={() => onChangeSection(1)}>Перейти к выбору</p>
+            <button type="button" className="infoTooltip__button" onClick={() => onChangeSection(1)}>Перейти к выбору</button>
           </>
         }
+        {
+          (infoTooltip === 'Вы успешно зарегистрировались!') &&
+          <button type="button" className="infoTooltip__button" onClick={isOpenLogin}>Авторизоваться</button>
+        }
+
         {/* <Link className="infoTooltip__link" onClick={onLogin} to="/"> </Link> */}
       </div>
     </div>

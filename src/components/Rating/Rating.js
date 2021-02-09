@@ -7,7 +7,8 @@ function Rating({
   ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
-  onDownRatingCard
+  onDownRatingCard,
+  pathname
 }) {
 
   const [isReduceCards, setIsReduceCards] = React.useState(false); //сжатие карочек 
@@ -18,7 +19,7 @@ function Rating({
 
   return (
     <div className="rating">
-      <p className="rating__text">Рейтинг Фильмов</p>
+      <p className="rating__text">Ваш рейтинг фильмов</p>
       <div className="rating__container">
         <button className="rating__button-add" onClick={() => onOpenPopupAddCard(false)}>Добавить фильм</button>
         <button className={`rating__button-reduce ${isReduceCards && "rating__button-reduce_active"}`} onClick={handleReduceCards} />
@@ -34,6 +35,7 @@ function Rating({
               onUpRatingCard={onUpRatingCard}
               onDownRatingCard={onDownRatingCard}
               isReduceCards={isReduceCards}
+              pathname={pathname}
             />
           )
         }

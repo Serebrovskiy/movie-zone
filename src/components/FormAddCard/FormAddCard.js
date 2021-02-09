@@ -10,8 +10,10 @@ function FormAddCard({
   isAdmin,
   cardChecking,
   onEditFilm,
-  onInfoTooltip
+  onInfoTooltip,
+  pathname
 }) {
+
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [position, setPosition] = useState('1');
@@ -352,8 +354,8 @@ function FormAddCard({
           </label>
         }
 
-        {!cardChecking
-          ?
+        {
+          ((pathname === "/admin-films" || pathname === "/rating") && !cardChecking) &&
           <button
             type="submit"
             className={`formAddCard__button ${isDisabled && "formAddCard__button_disabled"}`}
@@ -361,7 +363,9 @@ function FormAddCard({
           >
             Добавить
           </button>
-          :
+        }
+        {
+          (pathname === "/admin-films" && cardChecking) &&
           <div className="formAddCard__button-container">
             <button
               type="submit"
@@ -378,6 +382,18 @@ function FormAddCard({
             >
               Отклонить
         </button>
+          </div>
+        }
+        {
+          (pathname === "/films" && cardChecking) &&
+          <div className="formAddCard__button-container">
+            <button
+              type="submit"
+              className={`formAddCard__button formAddCard__button-accept ${isDisabled && "formAddCard__button_disabled"}`}
+              disabled={isDisabled}
+            >
+              Обновить
+            </button>
           </div>
         }
       </div>
