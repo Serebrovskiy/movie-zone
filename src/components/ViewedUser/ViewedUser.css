@@ -24,10 +24,27 @@
   background-color: goldenrod;
 }
 
+.viewed-user__container-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.viewed-user_avatar {
+  width: 170px;
+  height: 100px;
+  margin: 40px 50px 10px 0;
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid goldenrod;
+}
+
 .viewed-user__title {
   font-size: 38px;
   font-weight: 800;
-  color: rgba(143, 123, 8, 0.911);
+  color: rgba(0, 0, 0, 0.7);
+  margin: 5px auto 16px 0;
 }
 
 .viewed-user__container {
@@ -38,7 +55,7 @@
 }
 
 .viewed-user__button-follow {
-  width: 250px;
+  width: 170px;
   min-height: 40px;
   background-color: #ddd;
   /* border-radius: 50px; */
@@ -54,11 +71,21 @@ justify-content: center; */
   color: rgba(0, 0, 0, 0.7);
 }
 
+.viewed-user__button-follow:focus {
+  outline: none;
+  /* border: 1px solid #347eff;
+  margin-left: -1px; */
+}
+
 .viewed-user__button-follow:hover {
   cursor: pointer;
   /* background-color: goldenrod; */
   background-color: rgba(0, 0, 0, 0.7);
   color: #ddd;
+}
+
+.viewed-user__button-follow_gold {
+  border: 2px solid goldenrod;
 }
 
 .viewed-user__rating {

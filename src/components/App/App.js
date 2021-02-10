@@ -8,13 +8,11 @@ import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock';
 import PopupAddCard from '../PopupAddCard/PopupAddCard';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
-import Rating from "../Rating/Rating";
 
 
 function App() {
@@ -78,7 +76,7 @@ function App() {
         setFollowings(res.followings)
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [history]);
 
   //ищем юзера по его id
   // const handleGetUsers = (userId) => {
@@ -101,7 +99,7 @@ function App() {
 
   useEffect(() => {
 
-    handleGetUsers()
+    handleGetUsers();
     handleGetFilms();
     tokenCheck();
 
@@ -448,11 +446,15 @@ function App() {
   const handleUserFollowings = (userId, comand) => {
     let newFollowings = followings;
 
-    comand //какую кнопку нажали 
-      ?
+    if (comand) { //какую кнопку нажали 
+      handleInfoClick('Вы успешно подписались')
       newFollowings.push(userId) //добавляем 
-      :
+    } else {
+      handleInfoClick('Вы отписались')
       newFollowings = followings.filter(id => id !== userId) //удаляем
+    }
+
+
 
     api.userAddFollowing(newFollowings, currentUser._id, localStorage.token)
       .then((res) => {
@@ -461,6 +463,16 @@ function App() {
       .catch((err) => console.error(err));
 
     console.log(followings)
+  }
+
+  //обновление аватара в настройках 
+  const handleUpdateAvatar = (link) => {
+    api.setAvatar(link, currentUser._id, localStorage.token)
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.error(err));
+    handleGetUser();
   }
 
   return (
@@ -537,6 +549,7 @@ function App() {
           isOpenLogin={handleLoginClick}
           onUserFollowings={handleUserFollowings}
           followings={followings}
+          onUpdateAvatar={handleUpdateAvatar}
         />
 
         <InfoBlock />

@@ -121,3 +121,17 @@ export const userAddFollowing = (followings, userId, token) => {  //followings
   })
     .then(getResponse)
 };
+
+export const setAvatar = (avatar, userId, token) => {
+  console.log(avatar)
+  return fetch(`${BASE_URL_API}/users/avatar/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ avatar })
+  })
+    .then(getResponse)
+}

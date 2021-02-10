@@ -3,36 +3,46 @@ import { useParams, useHistory } from 'react-router-dom';
 import './ViewedUser.css';
 import RatingCard from '../Rating/RatingCard'
 
-function ViewedUser({ users, ratingCards, onUserFollowings, followings }) {
+function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn, isOpenLogin }) {
   const history = useHistory();
   let { _id } = useParams();
-  console.log(_id)
-  console.log(users)
+  // console.log(_id)
+  // console.log(users)
 
   const viewedUser = users.find(elem => elem._id === _id); //определяем просматриваемого пользователя
-  console.log(viewedUser)
+  // console.log(viewedUser)
 
   return (
     <div className="viewed-user">
       <button className="viewed-user__button-go-back" onClick={() => history.goBack()}>Назад</button>
-      <p className="viewed-user__title">{viewedUser.userName}</p>
-      <div className="viewed-user__container">
-        {followings.some(id => id === viewedUser._id) //отрисовываем пользователя в зависимости от наличия подписки
-          ?
-          <button
-            className="viewed-user__button-follow"
-            onClick={() => onUserFollowings(viewedUser._id, false)}
-          >
-            Отписаться
+      <div className="viewed-user__container-top">
+        <img
+          className="viewed-user_avatar"
+          src={viewedUser.avatar || 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'}
+          alr={viewedUser.userName}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
+          <h2 className="viewed-user__title">{viewedUser.userName}</h2>
+          <div className="viewed-user__container">
+            {followings.some(id => id === viewedUser._id) //отрисовываем пользователя в зависимости от наличия подписки
+              ?
+              <button
+                className="viewed-user__button-follow"
+                onClick={() => onUserFollowings(viewedUser._id, false)}
+              >
+                Отписаться
           </button>
-          :
-          <button
-            className="viewed-user__button-follow"
-            onClick={() => onUserFollowings(viewedUser._id, true)}
-          >
-            Подписаться
+              :
+              <button
+                className="viewed-user__button-follow viewed-user__button-follow_gold"
+                // ({loggedIn ? onClick={() => onUserFollowings(viewedUser._id, true)} : onClick={() => onUserFollowings(viewedUser._id, true)}})
+                onClick={() => { loggedIn ? onUserFollowings(viewedUser._id, true) : isOpenLogin() }}
+              >
+                Подписаться
             </button>
-        }
+            }
+          </div>
+        </div>
       </div>
       <div className="viewed-user__rating">
         {

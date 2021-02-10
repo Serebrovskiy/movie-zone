@@ -12,6 +12,7 @@ import Admin from '../Admin/Admin'
 import AdminFilms from '../Admin/AdminFilms'
 import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
+import SettingProfile from '../SettingProfile/SettingProfile'
 
 import { initialReviewItems } from '../../utils/utils';
 
@@ -33,7 +34,8 @@ function Main({
   loggedIn,
   isOpenLogin,
   onUserFollowings,
-  followings
+  followings,
+  onUpdateAvatar
 }) {
 
   // useEffect(() => {
@@ -68,6 +70,14 @@ function Main({
           isOpenLogin={isOpenLogin}
           users={users}
           followings={followings}
+        />
+        <ProtectedRoute
+          exact path="/setting-profile"
+          component={SettingProfile}
+          loggedIn={loggedIn}
+          currentUser={currentUser}
+          onUpdateAvatar={onUpdateAvatar}
+
         />
         <Route exact path="/">
           <Redirect from="/" to="/films" />
@@ -126,6 +136,8 @@ function Main({
             ratingCards={ratingCards}
             onUserFollowings={onUserFollowings}
             followings={followings}
+            loggedIn={loggedIn}
+            isOpenLogin={isOpenLogin}
           />
         </Route>
       </Switch>
