@@ -1,6 +1,7 @@
 import React from 'react'; //, { useEffect }
 import { Route, Redirect, Switch } from 'react-router-dom';
 import './Main.css';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Reviews from '../Reviews/Reviews'
 import ReviewItemPage from '../Reviews/ReviewItemPage'
 import Rating from '../Rating/Rating'
@@ -10,7 +11,8 @@ import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
 import AdminFilms from '../Admin/AdminFilms'
 import ViewedUser from '../ViewedUser/ViewedUser'
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Following from '../Following/Following'
+
 import { initialReviewItems } from '../../utils/utils';
 
 function Main({
@@ -29,8 +31,9 @@ function Main({
   pathname,
   currentUser,
   loggedIn,
-  isOpenLogin
-
+  isOpenLogin,
+  onUserFollowings,
+  followings
 }) {
 
   // useEffect(() => {
@@ -38,7 +41,7 @@ function Main({
   //   handleGetFilms();
   // }, [])
 
-  console.log(loggedIn)
+  // console.log(loggedIn)
 
   return (
     <div className="main">
@@ -55,6 +58,16 @@ function Main({
           onRemoveRatingCard={onRemoveRatingCard}
           onUpRatingCard={onUpRatingCard}
           onDownRatingCard={onDownRatingCard}
+        />
+        <ProtectedRoute
+          exact path="/following"
+          component={Following}
+          loggedIn={loggedIn}
+          currentUser={currentUser}
+          pathname={pathname}
+          isOpenLogin={isOpenLogin}
+          users={users}
+          followings={followings}
         />
         <Route exact path="/">
           <Redirect from="/" to="/films" />
@@ -111,6 +124,8 @@ function Main({
           <ViewedUser
             users={users}
             ratingCards={ratingCards}
+            onUserFollowings={onUserFollowings}
+            followings={followings}
           />
         </Route>
       </Switch>

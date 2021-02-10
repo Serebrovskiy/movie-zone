@@ -22,7 +22,7 @@ function Login({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onLogin(values.password, values.email);
+    onLogin(values.password, values.email.toLowerCase());
   }
 
   useEffect(resetForm, [isOpen])

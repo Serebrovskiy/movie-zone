@@ -107,3 +107,17 @@ export const getUsers = (token) => {
   })
     .then(getResponse)
 };
+
+export const userAddFollowing = (followings, userId, token) => {  //followings
+  console.log(userId)
+  return fetch(`${BASE_URL_API}/users/followings/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(followings) //followings
+  })
+    .then(getResponse)
+};

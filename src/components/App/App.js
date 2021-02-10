@@ -25,6 +25,7 @@ function App() {
   const [ratingCards, setRatingCards] = useState([]);
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
   const [users, setUsers] = useState([]);
+  const [followings, setFollowings] = useState([]);
   const [cardChecking, setCardChecking] = useState(null);  //карточка которую мы проверяем
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
@@ -36,6 +37,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
+
   //const [viewedUser, setViewedUser] = React.useState({});  //пока не надо 
 
 
@@ -68,15 +70,14 @@ function App() {
 
   //получаем текущего юзера и его карточки рейтинга
   const handleGetUser = useCallback(() => {
-    {
-      auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
-        .then(res => {
-          console.log(res)
-          setCurrentUser(res);
-          res.ratingFilms && setRatingCards(res.ratingFilms);
-        })
-        .catch((err) => console.error(err));
-    }
+    auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
+      .then(res => {
+        console.log(res)
+        setCurrentUser(res);
+        res.ratingFilms && setRatingCards(res.ratingFilms);
+        setFollowings(res.followings)
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   //ищем юзера по его id
@@ -141,6 +142,7 @@ function App() {
     setIsOpenPopupLogin(true);
     setIsOpenPopupRegister(false);
     setIsOpenPopupInfo(false);
+    console.log(followings)
   }
 
   //попап регистрации 
@@ -442,6 +444,25 @@ function App() {
     handleGetFilms();
   }
 
+  //подписка на пользователя
+  const handleUserFollowings = (userId, comand) => {
+    let newFollowings = followings;
+
+    comand //какую кнопку нажали 
+      ?
+      newFollowings.push(userId) //добавляем 
+      :
+      newFollowings = followings.filter(id => id !== userId) //удаляем
+
+    api.userAddFollowing(newFollowings, currentUser._id, localStorage.token)
+      .then((res) => {
+        setFollowings(res)
+      })
+      .catch((err) => console.error(err));
+
+    console.log(followings)
+  }
+
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
@@ -514,6 +535,8 @@ function App() {
           currentUser={currentUser}
           loggedIn={loggedIn}
           isOpenLogin={handleLoginClick}
+          onUserFollowings={handleUserFollowings}
+          followings={followings}
         />
 
         <InfoBlock />

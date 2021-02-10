@@ -23,7 +23,7 @@ function Register({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegister(values.password, values.email, values.userName);
+    onRegister(values.password, values.email.toLowerCase(), values.userName);
   }
 
   useEffect(resetForm, [isOpen])

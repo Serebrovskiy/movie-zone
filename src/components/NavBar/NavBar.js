@@ -14,10 +14,11 @@ function NavBar({ notCheckedFilms, onLogin, onSignOut, loggedIn, currentUser }) 
           loggedIn={loggedIn}
           currentUser={currentUser}
         />
-        <NavLink exact to="/reviews" className="menu__link" activeClassName="menu__link_active">Обзоры</NavLink>
         {loggedIn && <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>}
+        {loggedIn && <NavLink to="/following" className="menu__link" activeClassName="menu__link_active">Подписки</NavLink>}
         <NavLink to="/films" className="menu__link" activeClassName="menu__link_active">Коллекция</NavLink>
         <NavLink to="/search" className="menu__link" activeClassName="menu__link_active">Поиск</NavLink>
+        <NavLink exact to="/reviews" className="menu__link" activeClassName="menu__link_active">Обзоры</NavLink>
         <NavLink to="/admin" className="menu__link" activeClassName="menu__link_active">Управление
         {notCheckedFilms.length !== 0 && <span className="menu__link__notification">&nbsp;</span>}
         </NavLink>
