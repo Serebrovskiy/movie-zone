@@ -13,7 +13,7 @@
 
 .rating-card:hover {
   opacity: 0.9;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* модификатор сжатия*/

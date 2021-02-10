@@ -1,7 +1,7 @@
 .formAddCard__form {
   position: relative;
   min-width: 550px;
-  min-height: 500px;
+  min-height: 460px;
   background-color: #fff;
   border-radius: 10px;
   z-index: 2;
@@ -150,6 +150,28 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
+.formAddCard__button:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+.formAddCard__button:focus {
+  outline: none;
+}
+
+.formAddCard__button_disabled {
+  background-color: #fff;
+  color: #ccc;
+  border: 1px solid #ccc;
+}
+
+.formAddCard__button_disabled:hover {
+  cursor: default;
+  background-color: #fff;
+  color: #ccc;
+}
+
 .formAddCard__button-accept {
   border: 1px solid rgba(12, 151, 19, 0.7);
 }
@@ -168,27 +190,6 @@
   cursor: pointer;
   background-color: rgba(233, 47, 47, 0.7);
   color: #fff;
-}
-
-/* .formAddCard__button:hover {
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-} */
-.formAddCard__button:focus {
-  outline: none;
-}
-
-.formAddCard__button_disabled {
-  background-color: #fff;
-  color: #ccc;
-  border: 1px solid #ccc;
-}
-
-.formAddCard__button_disabled:hover {
-  cursor: default;
-  background-color: #fff;
-  color: #ccc;
 }
 
 @media screen and (max-width: 400px) {

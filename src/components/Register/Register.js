@@ -23,7 +23,7 @@ function Register({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegister(values.password, values.email, values.name);
+    onRegister(values.password, values.email.toLowerCase(), values.userName);
   }
 
   useEffect(resetForm, [isOpen])
@@ -72,14 +72,14 @@ function Register({
           <p className="register__input-title">Имя</p>
           <input
             type="text"
-            name="name"
+            name="userName"
             className="register__input"
             placeholder="Введите имя"
             minLength="3"
             maxLength="30"
             pattern="^[a-zA-Z0-9а-яА-Я\s-]+$"
             onChange={handleChange}
-            value={values.name || ''}
+            value={values.userName || ''}
             required />
           <span className="register__error-text">{errors.name}</span>
         </div>

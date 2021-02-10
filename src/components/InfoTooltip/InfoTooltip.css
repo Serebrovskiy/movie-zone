@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   padding: 30px 0;
-  width: 400px;
+  min-width: 400px;
   background-color: #fff;
   border-radius: 8px;
   z-index: 2;
@@ -57,7 +57,7 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 22px;
-  margin: 20px auto;
+  margin: 20px 40px;
   color: rgba(0, 0, 0, 0.8);
 }
 
@@ -73,16 +73,22 @@
   margin: 10px;
 }
 
-.infoTooltip__text-link {
-  font-size: 18px;
-  line-height: 22px;
-  color: #2f71e5;
-  margin: 12px 0 10px;
+.infoTooltip__button {
+  height: 40px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  margin: 20px 0 5px;
+  padding: 12px;
+  background-color: #fff;
 }
 
-.infoTooltip__text-link:hover {
+.infoTooltip__button:hover {
   cursor: pointer;
-  color: #2f72e5ab;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
 }
 
 @media screen and (max-width: 900px) {
@@ -102,7 +108,7 @@
     line-height: 24px;
     margin: 34px 0 14px 24px;
   }
-  .infoTooltip__text-link {
+  .infoTooltip__button {
     font-size: 16px;
     line-height: 20px;
     margin: 14px 0 51px 24px;
@@ -122,7 +128,7 @@
     line-height: 24px;
     margin: 34px 0 14px 24px;
   }
-  .infoTooltip__text-link {
+  .infoTooltip__button {
     font-size: 16px;
     line-height: 20px;
     margin: 14px 0 51px 24px;

@@ -3,9 +3,7 @@ import './Films.css';
 import FilmsItem from './FilmsItem';
 
 
-function Films({ films, onRemoveFilm }) {
-
-  //console.log(films)
+function Films({ films, onRemoveFilm, onOpenPopupAddCard }) {
 
   return (
     <div className="films">
@@ -17,6 +15,7 @@ function Films({ films, onRemoveFilm }) {
               item={elem}
               key={elem.id}
               onRemoveFilm={onRemoveFilm}
+              onOpenPopupAddCard={onOpenPopupAddCard}
             />
           )
         }

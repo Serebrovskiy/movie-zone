@@ -1,14 +1,14 @@
 // export const BASE_URL = 'https://api.dipl.students.nomoreparties.space';
 import { BASE_URL_API } from './config';
 
-export const register = (password, email, name) => {
+export const register = (password, email, userName) => {
   return fetch(`${BASE_URL_API}/signup`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ password, email, name })
+    body: JSON.stringify({ password, email, userName })
   })
     .then((res) => {
       if (res.status === 409) {

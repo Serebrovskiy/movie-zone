@@ -1,6 +1,7 @@
 const BASE_URL_API = 'http://localhost:3001'
 
 const getResponse = (res) => {
+  console.log(res)
   if (res.ok) {
     return res.json();
   } else {
@@ -94,3 +95,43 @@ export const updateUser = (ratingFilm, userId, token) => {
   })
     .then(getResponse)
 };
+
+export const getUsers = (token) => {
+  return fetch(`${BASE_URL_API}/users`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+  })
+    .then(getResponse)
+};
+
+export const userAddFollowing = (followings, userId, token) => {  //followings
+  console.log(userId)
+  return fetch(`${BASE_URL_API}/users/followings/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(followings) //followings
+  })
+    .then(getResponse)
+};
+
+export const setAvatar = (avatar, userId, token) => {
+  console.log(avatar)
+  return fetch(`${BASE_URL_API}/users/avatar/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ avatar })
+  })
+    .then(getResponse)
+}

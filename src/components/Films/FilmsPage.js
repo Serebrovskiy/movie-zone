@@ -1,18 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './FilmsPage.css';
-import { useParams, useHistory } from 'react-router-dom';
-import * as api from '../../utils/Api';
+import { useParams, useHistory, Link, useRouteMatch } from 'react-router-dom';
+import ViewedUser from '../ViewedUser/ViewedUser';
 
-function FilmsPage({ films, handleGetFilms }) {
+function FilmsPage({
+  films,
+  handleGetFilms,
+  users,
+  currentUser
+}) {
+  //const [viewedUser, setViewedUser] = React.useState({});
+  //const [currentFilm, setCurrentFilm] = React.useState({});
 
   let { id } = useParams();
   const history = useHistory();
 
   let currentFilm;
 
+  console.log(users)
+
   if (films.length !== 0) {
-    currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм   Number(id)
+    currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
+    // setCurrentFilm(films.filter(elem => id === elem.id)[0])
   }
+
+  const viewedUser = users.find(elem => elem._id === currentFilm.owner);
+
+  // useEffect(() => {
+  //   if (films.length !== 0) {
+  //     // currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
+  //     //  setCurrentFilm(films.filter(elem => id === elem.id)[0])
+  //   }
+  //   setViewedUser(users.find(elem => elem._id === currentFilm.owner));
+  // }, [])
+
+  //получаем юзера который создал карточку
+  console.log(id)
+  console.log(currentFilm)
+  console.log(currentUser)
+  console.log(viewedUser)
   //как то не очень работает
   // else {
   //   showFilms()
@@ -44,7 +70,6 @@ function FilmsPage({ films, handleGetFilms }) {
             <div className="films-page__text-container">
               {currentFilm && currentFilm.genres.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
             </div>
-            {/*old <p className="films-page__text-data">{currentFilm.genre}</p> */}
           </li>
           <li className="films-page__about">
             <p className="films-page__text">Страна:</p>
@@ -59,7 +84,17 @@ function FilmsPage({ films, handleGetFilms }) {
             <div className="films-page__text-container">
               {currentFilm && currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
             </div>
-            {/*old <p className="films-page__text-data">{currentFilm.actors.join(`, `)}</p> */}
+          </li>
+          <li className="films-page__about">
+            <p className="films-page__text">Опубликовал:</p>
+            <div className="films-page__text-container">
+              {/* надо придумать защиту если юзера по каким то причинам нет */}
+
+
+              <Link to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} style={{ textDecoration: 'none' }}>
+                <p className="films-page__text-data films-page__text-data_link-user" >{currentFilm && viewedUser ? viewedUser.userName : "Movie-zone"}</p>
+              </Link>
+            </div>
           </li>
         </ul>
       </div>

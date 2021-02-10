@@ -2,17 +2,14 @@ import React from 'react';
 import './FilmsItem.css';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-function FilmsItem({ item, onRemoveFilm }) {
+function FilmsItem({ item, onRemoveFilm, onOpenPopupAddCard }) {
 
   const { url } = useRouteMatch();
 
-  const handleRemoveClick = () => {
-    onRemoveFilm(item)
-  }
-
   return (
-    <div className="films-item">
-      <button className="films-item__button-remove" onClick={handleRemoveClick} />
+    <div className={`films-item ${!item.checked && "films-item_not-checked"}`}>
+      <button className="films-item__button-remove" onClick={() => onRemoveFilm(item)} />
+      <button className="films-item__button-edit" onClick={() => onOpenPopupAddCard(true, item)} />
       <Link to={`${url}/${item.id}`} style={{ textDecoration: 'none' }}>
         <img className="films-item__image" src={item.link || "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"} alt="" />
         <div className="films-item__container">
