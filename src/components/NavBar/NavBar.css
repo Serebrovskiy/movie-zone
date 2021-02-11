@@ -26,7 +26,7 @@
   color: rgba(238, 207, 31, 0.932);
 }
 
-.menu__link__notification {
+.menu__link_notification {
   height: 6px;
   background-color: rgba(233, 47, 47, 0.7);
   border-radius: 50%;
@@ -34,4 +34,14 @@
   position: absolute;
   top: 14px;
   right: 12px;
+}
+
+.menu__link_followings {
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  color: rgba(221, 221, 221, 0.9);
+  border-radius: 50%;
+  border: 1px solid rgba(221, 221, 221, 0.5);
+  padding: 1px 8px 3px;
 }

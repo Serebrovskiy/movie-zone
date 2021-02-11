@@ -1,7 +1,6 @@
 const BASE_URL_API = 'http://localhost:3001'
 
 const getResponse = (res) => {
-  console.log(res)
   if (res.ok) {
     return res.json();
   } else {
@@ -109,7 +108,6 @@ export const getUsers = (token) => {
 };
 
 export const userAddFollowing = (followings, userId, token) => {  //followings
-  console.log(userId)
   return fetch(`${BASE_URL_API}/users/followings/${userId}`, {
     method: 'PATCH',
     headers: {

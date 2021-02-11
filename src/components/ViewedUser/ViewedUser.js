@@ -19,7 +19,7 @@ function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn
         <img
           className="viewed-user_avatar"
           src={viewedUser.avatar || 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'}
-          alr={viewedUser.userName}
+          alt={viewedUser.userName}
         />
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
           <h2 className="viewed-user__title">{viewedUser.userName}</h2>

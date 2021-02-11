@@ -54,8 +54,9 @@
 
 .account-login_button-out:hover {
   cursor: pointer;
-  background-color: goldenrod;
-  color: rgb(50, 50, 50);
+  /* background-color: goldenrod; */
+  color: #fff;
+  /* border: 1px solid #aaa; */
 }
 
 .account-login_user-name {
