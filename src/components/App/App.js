@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Switch, useLocation, useHistory, useParams } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -35,9 +35,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
-
   //const [viewedUser, setViewedUser] = React.useState({});  //пока не надо 
-
 
   useEffect(() => {
     console.log(pathname)
@@ -67,7 +65,7 @@ function App() {
   }, []);
 
   //получаем текущего юзера и его карточки рейтинга
-  const handleGetUser = useCallback(() => {
+  const handleGetCurrentUser = useCallback(() => {
     auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
       .then(res => {
         console.log(res)
@@ -78,15 +76,6 @@ function App() {
       .catch((err) => console.error(err));
   }, [history]);
 
-  //ищем юзера по его id
-  // const handleGetUsers = (userId) => {
-  //   api.getUsers(localStorage.token)
-  //     .then(res => {
-  //       setViewedUser(res.find(user => user._id === userId))
-  //     })
-  //     .catch((err) => console.error(err));
-  // }
-
   // получаем всех пользователей
   const handleGetUsers = () => {
     api.getUsers(localStorage.token)
@@ -96,11 +85,9 @@ function App() {
       .catch((err) => console.error(err));
   }
 
-
   useEffect(() => {
-
-    handleGetUsers();
-    handleGetFilms();
+    handleGetUsers();  // обновляем список юзеров
+    handleGetFilms();  // обновляем список фильмов
     tokenCheck();
 
     !ratingCards && setRatingCards([]);
@@ -109,20 +96,16 @@ function App() {
     console.log(currentUser)
     console.log(films)
     console.log(users)
-
   }, [])
 
 
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-
     //handleGetFilms();
     console.log(films)
   }, [films])
 
   useEffect(() => {
-    // localStorage.setItem('ratingCards', JSON.stringify(ratingCards));
-
     // console.log(ratingCards)
   }, [ratingCards])
 
@@ -174,7 +157,6 @@ function App() {
     setIsOpenPopupInfo(false)
   }
 
-
   //регистрация пользователя
   function handleRegister(password, email, userName) {
     auth
@@ -224,7 +206,9 @@ function App() {
           if (res) {
             setLoggedIn(true);
             //history.push('/');
-            handleGetUser();
+            handleGetCurrentUser();
+            handleGetUsers(); // обновляем список юзеров
+            console.log(users)
             closePopups();
           } else {
             localStorage.removeItem('token')
@@ -242,7 +226,8 @@ function App() {
     setLoggedIn(false);
     history.push('/');
     setRatingCards([]);
-    setCurrentUser({})
+    setCurrentUser({});
+    setFollowings([]);
   }
 
   //сбрасываем ошибки в попапах
@@ -428,15 +413,6 @@ function App() {
           console.log(film)
         })
         .catch((err) => console.error(err));
-
-      // setFilms(films.map((elem, index) => {
-      //   if (elem.name === card.name) {
-      //     card.id = index;    // id карточки присваивается её номер индекса, чтобы восстановить исходный
-      //     return card
-      //   } else {
-      //     return elem
-      //   };
-      // }))
     }
     setCardChecking(null)
     handleGetFilms();
@@ -454,15 +430,11 @@ function App() {
       newFollowings = followings.filter(id => id !== userId) //удаляем
     }
 
-
-
     api.userAddFollowing(newFollowings, currentUser._id, localStorage.token)
       .then((res) => {
         setFollowings(res)
       })
       .catch((err) => console.error(err));
-
-    console.log(followings)
   }
 
   //обновление аватара в настройках 
@@ -472,8 +444,17 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => console.error(err));
-    handleGetUser();
+    handleGetCurrentUser();
   }
+
+  //закрытие попапа щелчком вне формы
+  React.useEffect(() => {
+    const handleMouseClose = (evt) => {
+      if (evt.target.classList.contains("infoTooltip_opened")) closePopupInfo();
+    }
+    document.addEventListener("mousedown", handleMouseClose);
+    return () => document.removeEventListener("mousedown", handleMouseClose);
+  }, []);
 
   return (
     <div className="App">
@@ -484,6 +465,7 @@ function App() {
           onSignOut={onSignOut}
           loggedIn={loggedIn}
           currentUser={currentUser}
+          followings={followings}
         />
 
         <Login
@@ -560,7 +542,6 @@ function App() {
 }
 
 export default App;
-
 
 
   // useEffect(() => {

@@ -26,18 +26,22 @@ function Rating({
       </div>
       <div className="rating__place">
         {
-          ratingCards.map(elem =>
-            <RatingCard
-              item={elem}
-              key={elem._id}
-              ratingCards={ratingCards}
-              onRemoveRatingCard={onRemoveRatingCard}
-              onUpRatingCard={onUpRatingCard}
-              onDownRatingCard={onDownRatingCard}
-              isReduceCards={isReduceCards}
-              pathname={pathname}
-            />
-          )
+          ratingCards.length === 0
+            ?
+            <p className="following__place-text" >У вас еще нет фильмов в рейтинге</p>
+            :
+            ratingCards.map(elem =>
+              <RatingCard
+                item={elem}
+                key={elem._id}
+                ratingCards={ratingCards}
+                onRemoveRatingCard={onRemoveRatingCard}
+                onUpRatingCard={onUpRatingCard}
+                onDownRatingCard={onDownRatingCard}
+                isReduceCards={isReduceCards}
+                pathname={pathname}
+              />
+            )
         }
       </div>
     </div>

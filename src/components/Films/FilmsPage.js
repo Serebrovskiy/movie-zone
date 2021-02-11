@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './FilmsPage.css';
 import { useParams, useHistory, Link, useRouteMatch } from 'react-router-dom';
-import ViewedUser from '../ViewedUser/ViewedUser';
 
 function FilmsPage({
   films,
@@ -24,7 +23,7 @@ function FilmsPage({
     // setCurrentFilm(films.filter(elem => id === elem.id)[0])
   }
 
-  const viewedUser = users.find(elem => elem._id === currentFilm.owner);
+  const viewedUser = users.find(elem => elem._id === currentFilm.owner);  //получаем юзера которого просматриваем
 
   // useEffect(() => {
   //   if (films.length !== 0) {

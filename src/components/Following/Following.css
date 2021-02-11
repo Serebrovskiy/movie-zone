@@ -25,6 +25,13 @@
   /* padding-left: 100px; */
 }
 
+.following__text {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 200px auto;
+}
+
 @media screen and (max-width: 1600px) {
   .following__container {
     /* padding-left: 60px; */
