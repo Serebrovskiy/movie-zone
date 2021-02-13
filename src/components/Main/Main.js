@@ -35,7 +35,8 @@ function Main({
   isOpenLogin,
   onUserFollowings,
   followings,
-  onUpdateAvatar
+  onUpdateAvatar,
+  isUserAdmin
 }) {
 
   // useEffect(() => {
@@ -79,6 +80,13 @@ function Main({
           onUpdateAvatar={onUpdateAvatar}
 
         />
+        <ProtectedRoute
+          path="/admin"
+          component={Admin}
+          loggedIn={loggedIn}
+          notCheckedFilms={notCheckedFilms}
+        />
+
         <Route exact path="/">
           <Redirect from="/" to="/films" />
         </Route>
@@ -100,6 +108,7 @@ function Main({
             films={films}
             onRemoveFilm={onRemoveFilm}
             onOpenPopupAddCard={onOpenPopupAddCard}
+            isUserAdmin={isUserAdmin}
           />
         </Route>
         {/* тут похоже проблемка */}
@@ -114,11 +123,11 @@ function Main({
         <Route path="/search">
           <Search films={films} />
         </Route>
-        <Route path="/admin">
+        {/* <Route path="/admin">
           <Admin
             notCheckedFilms={notCheckedFilms}
           />
-        </Route>
+        </Route> */}
         <Route path="/admin-reviews">
         </Route>
         <Route path="/admin-films">

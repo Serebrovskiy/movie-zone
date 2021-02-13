@@ -1,11 +1,23 @@
 import React, { useRef, useState } from 'react';
 
 import './SettingProfile.css';
+import * as getImageGoogle from '../../utils/ApiGoogle';
 
 function SettingProfile({ loggedIn, currentUser, onUpdateAvatar }) {
   const [avatar, setAvatar] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const inputAvatarRef = useRef('');
+
+  const [response, setResponse] = useState('');
+
+  function start() {
+
+    getImageGoogle.getImageGoogle('Марсианин ', "2015")
+      .then(res => {
+        console.log(res)
+        setResponse(res)
+      })
+  }
 
   function handleCheckValidity() {
     inputAvatarRef.current.checkValidity()

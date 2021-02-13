@@ -26,6 +26,7 @@ function FormAddCard({
   const [actor2, setActor2] = useState('');
   const actors = [];
   const genres = [];
+  const [isShowInputs, setIsShowInputs] = useState(false);
 
   const [isDisabled, setIsDisabled] = React.useState(true);
   const inputNameRef = useRef('');
@@ -103,11 +104,16 @@ function FormAddCard({
     // handleCheckValidity();
   }
 
+  function handleShowInputs() {
+    setIsShowInputs(!isShowInputs)
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
     handleActors();
 
+    //админ
     if (isAdmin) {
       //админ проверяет карточку
       if (cardChecking) {
@@ -123,7 +129,6 @@ function FormAddCard({
           id: cardChecking.id //: Date.now(),  //?
         })
         onClose();
-
       } else {
         //админ добавляет карточку, если такой нет в базе
         if (films.some(elem => elem.name === name)) {
@@ -144,24 +149,24 @@ function FormAddCard({
           onClose();
         }
       }
+      //пользователь
     } else {
       //пользователь добавляет карточку, если такой нет в базе
       if (ratingCards.some(elem => elem.name === name) || films.some(elem => elem.name === name)) {
         onInfoTooltip('Такой фильм уже есть!')
       } else {
-        onAddRatingCards({ name, date, link, position })
-        // console.log(actors)
-        onAddFilm({
+        onAddRatingCards({
           name,
           date,
           link,
+          position,
           genres,
           country,
           director,
           actors,
           checked: false,
           id: Date.now(), //?
-        });
+        })
         onClose();
       }
     }
@@ -202,10 +207,14 @@ function FormAddCard({
   }, [cardChecking])
 
   return (
+
     <form
-      className="formAddCard__form"
+      // определяем размеры формы
+      className={`formAddCard__form ${(!isShowInputs) && "formAddCard__form_hidden"} 
+    ${(pathname === "/admin-films") && "formAddCard__form_admin"}`}
       onSubmit={handleSubmit}
     >
+      {/* <form className="formAddCard__form" onSubmit={handleSubmit} > */}
       <h2 className="formAddCard__title">Добавить новый фильм {!isAdmin && "в рейтинг"}</h2>
       <div className="formAddCard__container">
         <label className="formAddCard__label">
@@ -261,7 +270,8 @@ function FormAddCard({
             {!isAdmin && <span className="formAddCard__required">*</span>}
           </label>
         }
-        <label className="formAddCard__label">
+        {/* ${(!isAdmin && !isShowInputs)} */}
+        <label className={`formAddCard__label  ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
           <input
             className="formAddCard__input"
             type="url"
@@ -275,7 +285,7 @@ function FormAddCard({
           <span className="formAddCard__text">Ссылка на постер</span>
         </label>
 
-        <label className="formAddCard__label">
+        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -302,7 +312,7 @@ function FormAddCard({
             <span className="formAddCard__text">+</span>
           </label>
         }
-        <label className="formAddCard__label">
+        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -314,7 +324,7 @@ function FormAddCard({
           />
           <span className="formAddCard__text">Страна</span>
         </label>
-        <label className="formAddCard__label">
+        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -326,7 +336,7 @@ function FormAddCard({
           />
           <span className="formAddCard__text">Режиссер</span>
         </label>
-        <label className="formAddCard__label">
+        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -354,6 +364,15 @@ function FormAddCard({
           </label>
         }
 
+        {!isAdmin &&
+          <button
+            type="button"
+            className={`formAddCard__button-show-inputs ${"formAddCard__button-show-inputs_off"}`}
+            onClick={handleShowInputs}
+          >
+            {isShowInputs ? "Скрыть параметры" : "Дополнительные параметры"}
+          </button>
+        }
         {
           ((pathname === "/admin-films" || pathname === "/rating") && !cardChecking) &&
           <button

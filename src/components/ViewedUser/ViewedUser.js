@@ -2,6 +2,10 @@ import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import './ViewedUser.css';
 import RatingCard from '../Rating/RatingCard'
+import instIcon from '../../images/inst_icon.png';
+import youTubeIcon from '../../images/youTube_icon.png';
+import vkIcon from '../../images/vk_icon.png';
+import fbIcon from '../../images/fb_icon.png';
 
 function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn, isOpenLogin }) {
   const history = useHistory();
@@ -23,8 +27,30 @@ function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn
         />
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
           <h2 className="viewed-user__title">{viewedUser.userName}</h2>
+          <ul className="viewed-user__icon-list">
+            <li className="viewed-user__icon-item">
+              {/* <a href="#" className="viewed-user__column-link" target="_blank" rel="noreferrer"> */}
+              <img className="viewed-user__social-icon" src={instIcon} alt="instagram" />
+              {/* </a> */}
+            </li>
+            <li className="viewed-user__icon-item">
+              {/* <a href="#" className="viewed-user__column-link" target="_blank" rel="noreferrer"> */}
+              <img className="viewed-user__social-icon" src={youTubeIcon} alt="youtube" />
+              {/* </a> */}
+            </li>
+            <li className="viewed-user__icon-item">
+              {/* <a href="#" className="viewed-user__column-link" target="_blank" rel="noreferrer"> */}
+              <img className="viewed-user__social-icon" src={vkIcon} alt="vk" />
+              {/* </a> */}
+            </li>
+            <li className="viewed-user__icon-item">
+              {/* <a href="#" className="viewed-user__column-link" target="_blank" rel="noreferrer"> */}
+              <img className="viewed-user__social-icon" src={fbIcon} alt="facebook" />
+              {/* </a> */}
+            </li>
+          </ul>
           <div className="viewed-user__container">
-            {followings.some(id => id === viewedUser._id) //отрисовываем пользователя в зависимости от наличия подписки
+            {followings.some(id => id === viewedUser._id) //отрисовываем кнопку в зависимости от наличия подписки
               ?
               <button
                 className="viewed-user__button-follow"
@@ -51,7 +77,6 @@ function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn
               item={elem}
               key={elem._id}
               ratingCards={ratingCards}
-
             />
           )
         }

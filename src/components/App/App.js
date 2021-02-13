@@ -13,6 +13,8 @@ import Login from '../Login/Login';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
+import * as getImageGoogle from '../../utils/ApiGoogle';
+// import { verifiedEmails } from '../../../verified_emails';
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
   const history = useHistory();
 
   const [films, setFilms] = useState([]);
+  const [filmsCopy, setFilmsCopy] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
   const [users, setUsers] = useState([]);
@@ -32,13 +35,18 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);  //это надо исправить, не корректно 
+  const [isUserAdmin, setIsUserAdmin] = useState(false); //если пользователь админ
   const [infoTooltip, setInfoTooltip] = useState('');
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
   //const [viewedUser, setViewedUser] = React.useState({});  //пока не надо 
 
   useEffect(() => {
     console.log(pathname)
+    pathname === '/reviews' && setFilms(films.map(elem => {
+      elem.totalRange = 0;
+      return elem
+    }));
   }, [pathname])
 
   //получаем фильмы коллекции
@@ -70,8 +78,9 @@ function App() {
       .then(res => {
         console.log(res)
         setCurrentUser(res);
-        res.ratingFilms && setRatingCards(res.ratingFilms);
-        setFollowings(res.followings)
+        res.ratingFilms && setRatingCards(res.ratingFilms);  //забираем рейтинг фильмов
+        setFollowings(res.followings)  //забираем подписки
+        checkingAdminByEmail(res.email) //проверяем админ или нет
       })
       .catch((err) => console.error(err));
   }, [history]);
@@ -109,7 +118,7 @@ function App() {
     // console.log(ratingCards)
   }, [ratingCards])
 
-  //открываем попап и определяем кто это дедает
+  //открываем попап и определяем кто это дедает - точнее откуда
   function handlePopupAddCardClick(isAdminOpened, card) {
 
     setIsOpenPopupAddCard(true);
@@ -123,7 +132,6 @@ function App() {
     setIsOpenPopupLogin(true);
     setIsOpenPopupRegister(false);
     setIsOpenPopupInfo(false);
-    console.log(followings)
   }
 
   //попап регистрации 
@@ -209,6 +217,9 @@ function App() {
             handleGetCurrentUser();
             handleGetUsers(); // обновляем список юзеров
             console.log(users)
+
+            topRatingFilms()
+
             closePopups();
           } else {
             localStorage.removeItem('token')
@@ -228,12 +239,20 @@ function App() {
     setRatingCards([]);
     setCurrentUser({});
     setFollowings([]);
+    setIsUserAdmin(false)
   }
-
   //сбрасываем ошибки в попапах
   const messageErrorReset = useCallback(() => {
     setMessageError('');
   }, [isOpenPopupLogin, isOpenPopupRegister]);
+
+
+  //проверка является ли юзер админом
+  function checkingAdminByEmail(userEmail) {
+    //используем переменную окружения
+    process.env.REACT_APP_VERIFIED_EMAILS.includes(userEmail)
+      && setIsUserAdmin(true)
+  }
 
   //обновление карточек рейтинга в Api
   function handleRatingCardsApi(ratingList) {
@@ -250,37 +269,69 @@ function App() {
     date,
     link,
     position,
-    id
+    genres,
+    country,
+    director,
+    actors,
+    checked,
+    id,
   }) => {
-    const newRatingCard = {
-      name,
-      date,
-      link,
-      position,
-      new: true,
-      id: Date.now()    //уникальный id
-    };
 
-    console.log(name)
-    //заглушка для картинки
-    newRatingCard.link === '' && (newRatingCard.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg")
-    newRatingCard.date === '' && (newRatingCard.date = "Неизвестно")
+    async function addRatingCard() {
+      //получаем ссылку на картинку из googleApi
+      let promise = new Promise((resolve, reject) => {
+        getImageGoogle.getImageGoogle(name, date)
+          .then(res => {
+            return {
+              name,
+              date,
+              link: link || res,   //прикрепляем ссылку
+              position,
+              new: true,
+              id: Date.now()    //уникальный id
+            };
+          })
+          .then(res => resolve(res))
+      });
 
-    //кастомный метод для вставки элемента в любую часть массива
-    const insert = (arr, index, newItem) => [
-      ...arr.slice(0, index),
-      newItem,
-      ...arr.slice(index)
-    ];
+      let newRatingCard = await promise; // будет ждать, пока промис не выполнится
 
-    const ratingList = insert(ratingCards, position - 1, newRatingCard)
-      .map((elem, index) => {
-        elem.position = index + 1;   //упорядочиваем нумерацию карточек 
-        (JSON.stringify(newRatingCard) === JSON.stringify(elem)) ? elem.new = true : elem.new = false; //ставим флаг для новой карточки
-        return elem;
+      console.log(newRatingCard);
+
+      //заглушка для картинки
+      newRatingCard.link === '' && (newRatingCard.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg")
+      newRatingCard.date === '' && (newRatingCard.date = "Неизвестно")
+
+      //кастомный метод для вставки элемента в любую часть массива
+      const insert = (arr, index, newItem) => [
+        ...arr.slice(0, index),
+        newItem,
+        ...arr.slice(index)
+      ];
+
+      const ratingList = insert(ratingCards, position - 1, newRatingCard)
+        .map((elem, index) => {
+          elem.position = index + 1;   //упорядочиваем нумерацию карточек 
+          (JSON.stringify(newRatingCard) === JSON.stringify(elem)) ? elem.new = true : elem.new = false; //ставим флаг для новой карточки
+          return elem;
+        })
+
+      handleRatingCardsApi(ratingList);
+
+      //дублируем карточку фильма в коллекцию
+      addFilmHandler({
+        name,
+        date,
+        link: link || newRatingCard.link,
+        genres,
+        country,
+        director,
+        actors,
+        checked,
+        //id
       })
-
-    handleRatingCardsApi(ratingList);
+    }
+    addRatingCard();
   }
 
   //удаление карточки рейтинга
@@ -292,7 +343,6 @@ function App() {
         elem.position = index + 1;   //упорядочиваем нумерацию карточек 
         return elem;
       })
-
     handleRatingCardsApi(ratingList);
   }
 
@@ -337,7 +387,7 @@ function App() {
     handleRatingCardsApi(ratingList);
   }
 
-  //добавляем фильм в коллекцию
+  //добавляем фильм только в коллекцию, для админа
   const addFilmHandler = ({
     name,
     date,
@@ -375,11 +425,11 @@ function App() {
           director: res.director,
           actors: res.actors,
           checked: res.checked,
+          totalRange: res.totalRange,
           owner: res.owner,
           id: res._id
         }
         setFilms([...films, newFilm]);
-
 
       })
       .catch((err) => console.error(err));
@@ -456,6 +506,38 @@ function App() {
     return () => document.removeEventListener("mousedown", handleMouseClose);
   }, []);
 
+  function topRatingFilms() {
+    console.log(films)
+    // console.log(filmsCopy)
+    console.log(users)
+    setFilmsCopy(films)
+
+    if (films && users) {
+      setFilms(
+        films.map(film => {
+          // elem.totalRange = 0;
+          users.forEach(user => {
+            user.ratingFilms.forEach(ratingFilm => {
+              if (film.name === ratingFilm.name) {
+                console.log('Yahooooo!!!  ')
+                console.log('film.name - ' + film.name)
+                console.log('ratingFilm.name - ' + ratingFilm.name)
+                console.log('user.userName - ' + user.userName)
+                console.log('---------')
+                //формула по которой определяется общий/топ рейтинг фильмов
+                film.totalRange += ((11 - ratingFilm.position) * (user.ratingFilms.length / 10));
+
+              }
+            })
+          })
+          return film
+        })
+      )
+    }
+  }
+  //  
+
+
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
@@ -466,6 +548,7 @@ function App() {
           loggedIn={loggedIn}
           currentUser={currentUser}
           followings={followings}
+          isUserAdmin={isUserAdmin}
         />
 
         <Login
@@ -532,6 +615,7 @@ function App() {
           onUserFollowings={handleUserFollowings}
           followings={followings}
           onUpdateAvatar={handleUpdateAvatar}
+          isUserAdmin={isUserAdmin}
         />
 
         <InfoBlock />
