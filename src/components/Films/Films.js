@@ -3,7 +3,7 @@ import './Films.css';
 import FilmsItem from './FilmsItem';
 
 
-function Films({ films, onRemoveFilm, onOpenPopupAddCard }) {
+function Films({ films, onRemoveFilm, onOpenPopupAddCard, isUserAdmin }) {
 
   return (
     <div className="films">
@@ -16,6 +16,7 @@ function Films({ films, onRemoveFilm, onOpenPopupAddCard }) {
               key={elem.id}
               onRemoveFilm={onRemoveFilm}
               onOpenPopupAddCard={onOpenPopupAddCard}
+              isUserAdmin={isUserAdmin}
             />
           )
         }

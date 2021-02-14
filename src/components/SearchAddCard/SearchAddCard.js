@@ -54,7 +54,7 @@ function SearchAddCard({
     if (ratingCards.some(elm => elm.name === name)) {
       onInfoTooltip('Такой фильм уже есть!');
     } else {
-      onAddRatingCards({ name, date, link, position })
+      onAddRatingCards({ name, date, link, position }, true)
       setName('');
       setPosition('1');
       setValueRes([]);

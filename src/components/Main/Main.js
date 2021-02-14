@@ -13,6 +13,7 @@ import AdminFilms from '../Admin/AdminFilms'
 import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
 import SettingProfile from '../SettingProfile/SettingProfile'
+import RatingTop from '../RatingTop/RatingTop'
 
 import { initialReviewItems } from '../../utils/utils';
 
@@ -35,7 +36,8 @@ function Main({
   isOpenLogin,
   onUserFollowings,
   followings,
-  onUpdateAvatar
+  onUpdateAvatar,
+  isUserAdmin
 }) {
 
   // useEffect(() => {
@@ -79,6 +81,13 @@ function Main({
           onUpdateAvatar={onUpdateAvatar}
 
         />
+        <ProtectedRoute
+          path="/admin"
+          component={Admin}
+          loggedIn={loggedIn}
+          notCheckedFilms={notCheckedFilms}
+        />
+
         <Route exact path="/">
           <Redirect from="/" to="/films" />
         </Route>
@@ -94,12 +103,12 @@ function Main({
             data={initialReviewItems}
           />
         </Route>
-
         <Route exact path="/films">
           <Films
             films={films}
             onRemoveFilm={onRemoveFilm}
             onOpenPopupAddCard={onOpenPopupAddCard}
+            isUserAdmin={isUserAdmin}
           />
         </Route>
         {/* тут похоже проблемка */}
@@ -111,14 +120,18 @@ function Main({
             currentUser={currentUser}
           />
         </Route>
+
+        <Route path="/rating-top">
+          <RatingTop films={films} />
+        </Route>
         <Route path="/search">
           <Search films={films} />
         </Route>
-        <Route path="/admin">
+        {/* <Route path="/admin">
           <Admin
             notCheckedFilms={notCheckedFilms}
           />
-        </Route>
+        </Route> */}
         <Route path="/admin-reviews">
         </Route>
         <Route path="/admin-films">

@@ -32,8 +32,8 @@
 }
 
 .viewed-user_avatar {
-  width: 170px;
-  height: 100px;
+  width: 200px;
+  height: 150px;
   margin: 40px 50px 10px 0;
   object-fit: cover;
   object-position: center;
@@ -44,7 +44,35 @@
   font-size: 38px;
   font-weight: 800;
   color: rgba(0, 0, 0, 0.7);
-  margin: 5px auto 16px 0;
+  margin: 5px auto 5px 0;
+}
+
+.viewed-user__icon-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  margin: 10px 0 15px 5px;
+  padding: 0;
+}
+
+.viewed-user__icon-list :last-child {
+  margin-right: 0px;
+}
+
+.viewed-user__icon-item {
+  margin-right: 15px;
+}
+
+.viewed-user__social-icon {
+  width: 30px;
+  height: 30px;
+  opacity: 0.6;
+}
+
+.viewed-user__social-icon:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 .viewed-user__container {
@@ -90,7 +118,7 @@ justify-content: center; */
 
 .viewed-user__rating {
   width: 90%;
-  min-height: 70%;
+  /* min-height: 70%; */
   margin: 30px auto;
   border: 1px solid darkslateblue;
   border-radius: 10px;

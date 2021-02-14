@@ -1,6 +1,7 @@
 .rating-card {
-  min-width: 550px;
-  height: 150px;
+  min-width: 570px;
+  /* высоту надо убрать совсем т.к если сделать мин то карторчка не будет сжиматься */
+  min-height: 150px;
   margin: 30px auto 0;
   display: flex;
   justify-content: space-between;
@@ -14,11 +15,13 @@
 .rating-card:hover {
   opacity: 0.9;
   /* cursor: pointer; */
+  /* height: 200px; */
+  transition: 0.7s ease;
 }
 
 /* модификатор сжатия*/
 .rating-card_reduce {
-  height: 85px;
+  min-height: 85px;
 }
 
 /* модификатор новой карточки*/
@@ -78,7 +81,7 @@
   font-weight: 700;
   line-height: 26px;
   color: #333;
-  width: 175px;
+  width: 220px;
   transition: 0.7s ease;
   margin: 5px;
 
@@ -111,10 +114,15 @@
 .rating-card__image {
   width: 180px;
   height: 120px;
-  margin-right: 10px;
+  margin: 15px 10px 15px 0;
   object-fit: cover;
   transition: 0.7s ease;
   border: 1px solid grey;
+}
+
+.rating-card__image:hover {
+  height: 180px;
+  transition: 0.7s ease;
 }
 
 .rating-card__image_reduce {

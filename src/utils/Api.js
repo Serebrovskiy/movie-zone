@@ -68,13 +68,13 @@ export const deleteFilm = (filmId, token) => {
 };
 
 export const updateFilm = (film, token) => {
-  // console.log(film.name)
+  console.log(film.name)
   return fetch(`${BASE_URL_API}/films/${film.id}`, {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      // Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(film)
   })
@@ -95,13 +95,13 @@ export const updateUser = (ratingFilm, userId, token) => {
     .then(getResponse)
 };
 
-export const getUsers = (token) => {
+export const getUsers = () => {
   return fetch(`${BASE_URL_API}/users`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      //    Authorization: `Bearer ${token}`
     },
   })
     .then(getResponse)
