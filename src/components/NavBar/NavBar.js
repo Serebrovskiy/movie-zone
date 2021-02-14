@@ -27,6 +27,7 @@ function NavBar({
         {followings.length !== 0 && <span className="menu__link_followings">{followings.length}</span>}
         </NavLink>}
         <NavLink to="/films" className="menu__link" activeClassName="menu__link_active">Коллекция</NavLink>
+        <NavLink to="/rating-top" className="menu__link" activeClassName="menu__link_active">ТОП-10</NavLink>
         <NavLink to="/search" className="menu__link" activeClassName="menu__link_active">Поиск</NavLink>
         <NavLink exact to="/reviews" className="menu__link" activeClassName="menu__link_active">Обзоры</NavLink>
         {isUserAdmin &&

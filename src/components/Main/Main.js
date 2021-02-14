@@ -13,6 +13,7 @@ import AdminFilms from '../Admin/AdminFilms'
 import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
 import SettingProfile from '../SettingProfile/SettingProfile'
+import RatingTop from '../RatingTop/RatingTop'
 
 import { initialReviewItems } from '../../utils/utils';
 
@@ -102,7 +103,6 @@ function Main({
             data={initialReviewItems}
           />
         </Route>
-
         <Route exact path="/films">
           <Films
             films={films}
@@ -119,6 +119,10 @@ function Main({
             handleGetFilms={handleGetFilms}
             currentUser={currentUser}
           />
+        </Route>
+
+        <Route path="/rating-top">
+          <RatingTop films={films} />
         </Route>
         <Route path="/search">
           <Search films={films} />

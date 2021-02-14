@@ -43,17 +43,52 @@ function App() {
 
   useEffect(() => {
     console.log(pathname)
-    pathname === '/reviews' && setFilms(films.map(elem => {
-      elem.totalRange = 0;
-      return elem
-    }));
+    //обнуление totalRange
+    // pathname === '/reviews' && setFilms(films.map(elem => {
+    //   elem.totalRange = 0;
+    //   return elem
+    // }));
   }, [pathname])
+
+
+
+  //   const updateFunction = useCallback(() => {
+  //   console.log(pathname)
+  //   Promise.all([api.getUsers(), api.getFilms()])
+  //     .then(res => {
+  //       setUsers(res[0])
+  //     })
+  //     .then(res => {
+  //       topRatingFilms(res[0])
+  //     })
+  //     .then(res => {
+  //       setFilms(res[1]
+  //         .sort(() => Math.random() - 0.5)
+  //         .map(film => ({
+  //           name: film.name,
+  //           date: film.date,
+  //           link: film.link,
+  //           genres: film.genres,
+  //           country: film.country,
+  //           director: film.director,
+  //           actors: film.actors,
+  //           checked: film.checked,
+  //           totalRange: film.totalRange,
+  //           id: film._id,
+  //           owner: film.owner
+  //         })));
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [])
+
+
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
+    console.log('handleGetFilms')
     api.getFilms()  //localStorage.token
       .then(res => {
-        // console.log(res)
+        console.log(res)
         setFilms(res
           .sort(() => Math.random() - 0.5)
           .map(film => ({
@@ -65,6 +100,7 @@ function App() {
             director: film.director,
             actors: film.actors,
             checked: film.checked,
+            totalRange: film.totalRange,
             id: film._id,
             owner: film.owner
           })));
@@ -87,17 +123,23 @@ function App() {
 
   // получаем всех пользователей
   const handleGetUsers = () => {
+    console.log('handleGetUsers')
     api.getUsers(localStorage.token)
       .then(res => {
         setUsers(res)
+
+        topRatingFilms(res)
+
       })
       .catch((err) => console.error(err));
   }
 
   useEffect(() => {
     handleGetUsers();  // обновляем список юзеров
-    handleGetFilms();  // обновляем список фильмов
+    handleGetCurrentUser();
+
     tokenCheck();
+    handleGetFilms();  // обновляем список фильмов
 
     !ratingCards && setRatingCards([]);
 
@@ -214,11 +256,12 @@ function App() {
           if (res) {
             setLoggedIn(true);
             //history.push('/');
+            handleGetFilms();
             handleGetCurrentUser();
             handleGetUsers(); // обновляем список юзеров
             console.log(users)
-
-            topRatingFilms()
+            //  handleGetFilms();  // обновляем список фильмов
+            //   topRatingFilms();  // обновляем Топ-10
 
             closePopups();
           } else {
@@ -260,6 +303,8 @@ function App() {
       .then(res => {
         console.log(res)
         setRatingCards(res)
+        //  topRatingFilms(res);
+
       });
   }
 
@@ -275,7 +320,7 @@ function App() {
     actors,
     checked,
     id,
-  }) => {
+  }, fromSearch) => {
 
     async function addRatingCard() {
       //получаем ссылку на картинку из googleApi
@@ -318,8 +363,7 @@ function App() {
 
       handleRatingCardsApi(ratingList);
 
-      //дублируем карточку фильма в коллекцию
-      addFilmHandler({
+      const newCard = {
         name,
         date,
         link: link || newRatingCard.link,
@@ -328,10 +372,29 @@ function App() {
         director,
         actors,
         checked,
-        //id
-      })
+      }
+
+      !fromSearch &&
+        addFilmHandler(newCard)
+      // addFilmHandler({ //дублируем карточку фильма в коллекцию
+      //   name,
+      //   date,
+      //   link: link || newRatingCard.link,
+      //   genres,
+      //   country,
+      //   director,
+      //   actors,
+      //   checked,
+      //   //id
+      // })
+      // topRatingFilms();
+      // handleGetFilms(); 
     }
     addRatingCard();
+    //handleGetCurrentUser();
+    handleGetUsers();
+    handleGetFilms();
+
   }
 
   //удаление карточки рейтинга
@@ -435,6 +498,8 @@ function App() {
       .catch((err) => console.error(err));
 
     // handleGetFilms();
+
+
   }
 
   //удаляем фильм из коллекции
@@ -461,6 +526,7 @@ function App() {
       api.updateFilm(card, localStorage.token)  //недоделано! 
         .then(film => {
           console.log(film)
+
         })
         .catch((err) => console.error(err));
     }
@@ -506,37 +572,77 @@ function App() {
     return () => document.removeEventListener("mousedown", handleMouseClose);
   }, []);
 
-  function topRatingFilms() {
-    console.log(films)
-    // console.log(filmsCopy)
+
+
+  //const topRatingFilms = useCallback(() => {
+  function topRatingFilms(newUsers) {
+
+    console.log('topRatingFilms')
     console.log(users)
+    console.log(newUsers)
+    console.log(films)
     setFilmsCopy(films)
 
-    if (films && users) {
-      setFilms(
-        films.map(film => {
-          // elem.totalRange = 0;
-          users.forEach(user => {
-            user.ratingFilms.forEach(ratingFilm => {
-              if (film.name === ratingFilm.name) {
-                console.log('Yahooooo!!!  ')
-                console.log('film.name - ' + film.name)
-                console.log('ratingFilm.name - ' + ratingFilm.name)
-                console.log('user.userName - ' + user.userName)
-                console.log('---------')
-                //формула по которой определяется общий/топ рейтинг фильмов
-                film.totalRange += ((11 - ratingFilm.position) * (user.ratingFilms.length / 10));
 
-              }
-            })
+    if (films.length !== 0 && users.length !== 0) {
+      let newArr = films.map(film => {
+        film.totalRange = 0;
+        newUsers.forEach(user => {
+          user.ratingFilms.forEach(ratingFilm => {
+            if (film.name === ratingFilm.name) {
+              console.log('film.name - ' + film.name)
+              console.log('user.name - ' + user.userName)
+              //формула по которой определяется общий/топ рейтинг фильмов
+              film.totalRange += ((11 - ratingFilm.position) * (user.ratingFilms.length / 10));
+            }
+            console.log('film.totalRange - ' + film.totalRange)
           })
-          return film
         })
+        // film.totalRange.toFixed(2);
+        // async function f() {
+        //  let promise = new Promise((resolve, reject) => {
+        api.updateFilm(film).then(res => console.log(res));
+        //  });
+        //   let newFilm = await promise;
+        // console.log(newFilm)
+        return film
+      }
+
+        // return f()
       )
+
+      console.log(newArr)
+      setFilms(newArr)
+      // setFilms(
+      //   films.map(film => {
+      //     film.totalRange = 0;
+      //     users.forEach(user => {
+      //       user.ratingFilms.forEach(ratingFilm => {
+      //         if (film.name === ratingFilm.name) {
+      //           console.log('film.name - ' + film.name)
+      //           console.log('user.name - ' + user.userName)
+      //           //формула по которой определяется общий/топ рейтинг фильмов
+      //           film.totalRange += ((11 - ratingFilm.position) * (user.ratingFilms.length / 10));
+      //         }
+      //         console.log('film.totalRange - ' + film.totalRange)
+      //       })
+      //     })
+      //     // film.totalRange.toFixed(2);
+      //     async function f() {
+      //       let promise = new Promise((resolve, reject) => {
+      //         api.updateFilm(film).then(res => resolve(res));
+      //       });
+      //       let newFilm = await promise;
+      //       console.log(newFilm)
+      //       return newFilm
+      //     }
+
+      //     return f()
+      //   })
+      // )
     }
   }
-  //  
-
+  // }, []);
 
   return (
     <div className="App">
