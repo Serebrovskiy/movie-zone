@@ -10,8 +10,7 @@ function RatingCard({
   isReduceCards,
   pathname
 }) {
-  // const [isDisabledUp, setIsDisabledUp] = React.useState(false);
-  // const [isDisabledDown, setIsDisabledDown] = React.useState(false);
+  console.log(pathname)
 
   const handleRemoveClick = () => {
     onRemoveRatingCard(item);
@@ -25,9 +24,14 @@ function RatingCard({
   }
 
   return (
-    <div className={`rating-card ${isReduceCards && "rating-card_reduce"}  ${item.new && "rating-card_new"}`}>
+    <div className={`rating-card ${isReduceCards && "rating-card_reduce"}  ${item.new && "rating-card_new"}  ${(pathname === '/rating-top') && "rating-card_top"}`}>
       {item.new && <p className={`rating-card_text-new ${isReduceCards && "rating-card_text-new_reduce"}`} >NEW!</p>}
-      <p className="rating-card__number">{item.position}</p>
+
+      <p className={`rating-card__number 
+      ${(pathname === '/rating-top' && (item.position === 1)) && "rating-card__number_first"} 
+      ${(pathname === '/rating-top' && (item.position === 2)) && "rating-card__number_second"}
+      ${(pathname === '/rating-top' && (item.position === 3)) && "rating-card__number_third"}
+      `}>{item.position}</p>
       <div className={`rating-card__container-center ${isReduceCards && "rating-card__container-center_reduce"}`}>
         <p className={`rating-card__name ${isReduceCards && "rating-card__name_reduce"}`}>{item.name}</p>
         <p className={`rating-card__date ${isReduceCards && "rating-card__date_reduce"}`}>{item.date} г.</p>

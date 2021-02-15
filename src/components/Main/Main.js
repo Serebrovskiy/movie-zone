@@ -37,7 +37,8 @@ function Main({
   onUserFollowings,
   followings,
   onUpdateAvatar,
-  isUserAdmin
+  isUserAdmin,
+  isLoading
 }) {
 
   // useEffect(() => {
@@ -109,6 +110,7 @@ function Main({
             onRemoveFilm={onRemoveFilm}
             onOpenPopupAddCard={onOpenPopupAddCard}
             isUserAdmin={isUserAdmin}
+            isLoading={isLoading}
           />
         </Route>
         {/* тут похоже проблемка */}
@@ -122,7 +124,10 @@ function Main({
         </Route>
 
         <Route path="/rating-top">
-          <RatingTop films={films} />
+          <RatingTop
+            films={films}
+            pathname={pathname}
+          />
         </Route>
         <Route path="/search">
           <Search films={films} />
