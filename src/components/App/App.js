@@ -51,13 +51,12 @@ function App() {
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
-    console.log('handleGetFilms')
+    // console.log('handleGetFilms')
     setIsLoading(true);
     api.getFilms()  //localStorage.token
       .then(res => {
         // console.log(res)
         setFilms(res
-          .sort(() => Math.random() - 0.5)
           .map(film => ({
             name: film.name,
             date: film.date,
@@ -96,6 +95,7 @@ function App() {
   const handleGetUsers = () => {
     api.getUsers(localStorage.token)
       .then(res => {
+        console.log(res)
         setUsers(res)  //обновляем юзеров 
         topRatingFilms(res) //вызываем top-10 с обновленными юзерами
       })
@@ -121,7 +121,7 @@ function App() {
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
     //handleGetFilms();
-    // console.log(films)
+    console.log(films)
   }, [films])
 
   useEffect(() => {
@@ -413,6 +413,7 @@ function App() {
     //id
   }) => {
 
+
     api
       .createFilm(
         name,
@@ -442,11 +443,10 @@ function App() {
           id: res._id
         }
         setFilms([...films, newFilm]);
-
+        handleGetFilms();
+        console.log(newFilm)
       })
       .catch((err) => console.error(err));
-
-    // handleGetFilms();
 
 
   }
@@ -503,6 +503,16 @@ function App() {
   //обновление аватара в настройках 
   const handleUpdateAvatar = (link) => {
     api.setAvatar(link, currentUser._id, localStorage.token)
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.error(err));
+    //  handleGetCurrentUser();  ??
+  }
+
+  const handleUpdateSocialLinks = (links) => {
+    console.log(links)
+    api.setSocialLinks(links, currentUser._id, localStorage.token)
       .then(res => {
         setCurrentUser(res);
       })
@@ -622,11 +632,16 @@ function App() {
           onUserFollowings={handleUserFollowings}
           followings={followings}
           onUpdateAvatar={handleUpdateAvatar}
+          onUpdateSocialLinks={handleUpdateSocialLinks}
           isUserAdmin={isUserAdmin}
           isLoading={isLoading}
+          onInfoTooltip={handleInfoClick}
         />
 
-        <InfoBlock />
+        <InfoBlock
+          loggedIn={loggedIn}
+          onSignOut={onSignOut}
+        />
         <Footer />
       </CurrentUserContext.Provider>
     </div>

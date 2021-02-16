@@ -64,6 +64,7 @@
   text-align: center;
   padding-right: 1px;
   margin-left: 40px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .rating-card__number_first {

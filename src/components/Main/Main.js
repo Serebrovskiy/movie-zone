@@ -37,8 +37,10 @@ function Main({
   onUserFollowings,
   followings,
   onUpdateAvatar,
+  onUpdateSocialLinks,
   isUserAdmin,
-  isLoading
+  isLoading,
+  onInfoTooltip
 }) {
 
   // useEffect(() => {
@@ -80,7 +82,8 @@ function Main({
           loggedIn={loggedIn}
           currentUser={currentUser}
           onUpdateAvatar={onUpdateAvatar}
-
+          onUpdateSocialLinks={onUpdateSocialLinks}
+          onInfoTooltip={onInfoTooltip}
         />
         <ProtectedRoute
           path="/admin"
@@ -120,6 +123,7 @@ function Main({
             users={users}
             handleGetFilms={handleGetFilms}
             currentUser={currentUser}
+            pathname={pathname}
           />
         </Route>
 
@@ -146,8 +150,8 @@ function Main({
           />
         </Route>
         {/* <Route path="/user">
-        <Redirect from="/user" to="/user/:_id" />
-      </Route> */}
+          <Redirect from="/user" to="/user/:_id" />
+        </Route> */}
         <Route path="/user/:_id">
           <ViewedUser
             users={users}
@@ -156,6 +160,7 @@ function Main({
             followings={followings}
             loggedIn={loggedIn}
             isOpenLogin={isOpenLogin}
+            pathname={pathname}
           />
         </Route>
       </Switch>

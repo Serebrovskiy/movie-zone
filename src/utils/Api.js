@@ -131,3 +131,17 @@ export const setAvatar = (avatar, userId, token) => {
   })
     .then(getResponse)
 }
+
+export const setSocialLinks = (links, userId, token) => {
+  console.log(links)
+  return fetch(`${BASE_URL_API}/users/social-links/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(links)
+  })
+    .then(getResponse)
+}

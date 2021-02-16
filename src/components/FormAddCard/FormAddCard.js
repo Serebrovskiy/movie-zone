@@ -135,6 +135,7 @@ function FormAddCard({
           director,
           actors,
           checked: true,
+          totalRange: cardChecking.totalRange,
           id: cardChecking.id //: Date.now(),  //?
         })
         onClose();

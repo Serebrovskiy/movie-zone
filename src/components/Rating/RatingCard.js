@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 import './RatingCard.css';
 
 function RatingCard({
@@ -10,8 +11,12 @@ function RatingCard({
   isReduceCards,
   pathname
 }) {
-  console.log(pathname)
 
+  // let { _id } = useParams();
+
+  console.log(pathname)
+  // console.log(_id)
+  // console.log(item)
   const handleRemoveClick = () => {
     onRemoveRatingCard(item);
   }
@@ -24,6 +29,8 @@ function RatingCard({
   }
 
   return (
+    // ссылка работает если заходим с /rating-top т.к там карточки из films, а тут у viewedUser из users.ratingCards следовательно разные id
+    // <Link to={pathname === "/rating-top" ? `films/${item.id}` : '#'} style={{ textDecoration: 'none' }}>
     <div className={`rating-card ${isReduceCards && "rating-card_reduce"}  ${item.new && "rating-card_new"}  ${(pathname === '/rating-top') && "rating-card_top"}`}>
       {item.new && <p className={`rating-card_text-new ${isReduceCards && "rating-card_text-new_reduce"}`} >NEW!</p>}
 
@@ -63,6 +70,7 @@ function RatingCard({
         </div>
       }
     </div>
+    // </Link>
   );
 }
 

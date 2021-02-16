@@ -1,23 +1,25 @@
 import React, { useRef, useState } from 'react';
 
 import './SettingProfile.css';
-import * as getImageGoogle from '../../utils/ApiGoogle';
 
-function SettingProfile({ loggedIn, currentUser, onUpdateAvatar }) {
-  const [avatar, setAvatar] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+function SettingProfile({
+  loggedIn,
+  currentUser,
+  onUpdateAvatar,
+  onUpdateSocialLinks,
+  onInfoTooltip
+}) {
+  const [avatar, setAvatar] = useState(currentUser.avatar); //currentUser.avatar
+  const [linkVk, setLinkVk] = useState(currentUser.socialLinks[0] || '');
+  const [linkFb, setLinkFb] = useState(currentUser.socialLinks[1] || '');
+  const [linkInst, setLinkInst] = useState(currentUser.socialLinks[2] || '');
+  const [linkYouTube, setLinkYouTube] = useState(currentUser.socialLinks[3] || '');
+  const [isDisabled, setIsDisabled] = useState(false);
   const inputAvatarRef = useRef('');
-
-  const [response, setResponse] = useState('');
-
-  function start() {
-
-    getImageGoogle.getImageGoogle('Марсианин ', "2015")
-      .then(res => {
-        console.log(res)
-        setResponse(res)
-      })
-  }
+  const inputlinkVkRef = useRef('');
+  const inputlinkFbRef = useRef('');
+  const inputlinkInstRef = useRef('');
+  const inputlinkYouTubeRef = useRef('');
 
   function handleCheckValidity() {
     inputAvatarRef.current.checkValidity()
@@ -27,15 +29,43 @@ function SettingProfile({ loggedIn, currentUser, onUpdateAvatar }) {
 
   function handleLinkAvatar(e) {
     setAvatar(e.target.value);
-    handleCheckValidity();
+    // handleCheckValidity();
+  }
+
+  function handleLinkVk(e) {
+    setLinkVk(e.target.value);
+    // handleCheckValidity();
+  }
+
+  function handleLinkFb(e) {
+    setLinkFb(e.target.value);
+    // handleCheckValidity();
+  }
+
+  function handleLinkInst(e) {
+    setLinkInst(e.target.value);
+    // handleCheckValidity();
+  }
+
+  function handleLinkYouTube(e) {
+    setLinkYouTube(e.target.value);
+    // handleCheckValidity();
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('отправляем')
 
-    onUpdateAvatar(avatar);
+    avatar !== '' && onUpdateAvatar(avatar);
+    onUpdateSocialLinks([linkVk, linkFb, linkInst, linkYouTube]);
 
-    setAvatar('');
+    onInfoTooltip("Данные успешно обновлены");
+
+    // setAvatar('');
+    // setLinkVk('');
+    // setLinkFb('');
+    // setLinkInst('');
+    // setLinkYouTube('');
   }
 
   return (
@@ -57,10 +87,75 @@ function SettingProfile({ loggedIn, currentUser, onUpdateAvatar }) {
               onChange={handleLinkAvatar}
               placeholder="Ссылка"
               minLength="2"
-              // autoComplete="off"
-              required
+            // autoComplete="off"
+            // required
             />
             <span className="setting-profile__text">Аватар</span>
+          </label>
+
+          <label className="setting-profile__label">
+            <input
+              className="setting-profile__input"
+              type="url"
+              name="inputLinkVk"
+              value={linkVk}
+              ref={inputlinkVkRef}
+              onChange={handleLinkVk}
+              placeholder="Ссылка"
+              minLength="2"
+            // autoComplete="off"
+            // required
+            />
+            <span className="setting-profile__text">Ссылка Вконтакте</span>
+          </label>
+
+
+          <label className="setting-profile__label">
+            <input
+              className="setting-profile__input"
+              type="url"
+              name="inputLinkFb"
+              value={linkFb}
+              ref={inputlinkFbRef}
+              onChange={handleLinkFb}
+              placeholder="Ссылка"
+              minLength="2"
+            // autoComplete="off"
+            // required
+            />
+            <span className="setting-profile__text">Ссылка Facebook</span>
+          </label>
+
+          <label className="setting-profile__label">
+            <input
+              className="setting-profile__input"
+              type="url"
+              name="inputLinkInst"
+              value={linkInst}
+              ref={inputlinkInstRef}
+              onChange={handleLinkInst}
+              placeholder="Ссылка"
+              minLength="2"
+            // autoComplete="off"
+            // required
+            />
+            <span className="setting-profile__text">Ссылка Instagram</span>
+          </label>
+
+          <label className="setting-profile__label">
+            <input
+              className="setting-profile__input"
+              type="url"
+              name="inputLinkYouTube"
+              value={linkYouTube}
+              ref={inputlinkYouTubeRef}
+              onChange={handleLinkYouTube}
+              placeholder="Ссылка"
+              minLength="2"
+            // autoComplete="off"
+            // required
+            />
+            <span className="setting-profile__text">Ссылка YouTube</span>
           </label>
 
           <button

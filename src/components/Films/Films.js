@@ -17,15 +17,17 @@ function Films({
       <div className="films__container">
         {isLoading && <Preloader />}
         {
-          films.map(elem =>
-            <FilmsItem
-              item={elem}
-              key={elem.id}
-              onRemoveFilm={onRemoveFilm}
-              onOpenPopupAddCard={onOpenPopupAddCard}
-              isUserAdmin={isUserAdmin}
-            />
-          )
+          films
+            .sort(() => Math.random() - 0.5)  //перемешиваем 
+            .map(elem =>
+              <FilmsItem
+                item={elem}
+                key={elem.id}
+                onRemoveFilm={onRemoveFilm}
+                onOpenPopupAddCard={onOpenPopupAddCard}
+                isUserAdmin={isUserAdmin}
+              />
+            )
         }
       </div>
     </div>

@@ -6,20 +6,33 @@ function FilmsPage({
   films,
   handleGetFilms,
   users,
-  currentUser
+  currentUser,
+  pathname
 }) {
   //const [viewedUser, setViewedUser] = React.useState({});
   //const [currentFilm, setCurrentFilm] = React.useState({});
+
+
 
   let { id } = useParams();
   const history = useHistory();
 
   let currentFilm;
 
-  console.log(users)
+  console.log(films)
+  console.log(pathname)
 
   if (films.length !== 0) {
-    currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
+    currentFilm = films
+      .sort(function (a, b) {     //сортируем по рейтингу и добавляем позицию к каждому фильму
+        return a.totalRange - b.totalRange;
+      })
+      .reverse()
+      .map((elem, index) => {
+        elem.position = index + 1;
+        return elem
+      })
+      .filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
     // setCurrentFilm(films.filter(elem => id === elem.id)[0])
   }
 
@@ -53,6 +66,7 @@ function FilmsPage({
   //грубая заглшка, films приходит пустой, то берем массив из localStorage
   //films.length === 0 && (films = JSON.parse(localStorage.getItem('films')));
 
+
   return (
     <div className="films-page">
       <button className="films-page__button-go-back" onClick={() => history.goBack()}>Назад</button>
@@ -84,6 +98,17 @@ function FilmsPage({
               {currentFilm && currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
             </div>
           </li>
+
+          <li className="films-page__about">
+            <p className="films-page__text">Место в рейтинге MZ:</p>
+            <div className="films-page__text-container">
+              {/* <p className="films-page__text-data">&nbsp;</p><br /> */}
+              <p className="films-page__text-data films-page__text-data_position">{currentFilm && currentFilm.position}</p>
+              {/* <p className="films-page__text-data">{currentFilm && positionFilm()}</p> */}
+
+            </div>
+          </li>
+
           <li className="films-page__about">
             <p className="films-page__text">Опубликовал:</p>
             <div className="films-page__text-container">

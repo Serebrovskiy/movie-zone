@@ -13,6 +13,8 @@ function Rating({
 
   const [isReduceCards, setIsReduceCards] = React.useState(false); //сжатие карочек 
 
+  console.log(pathname)
+
   function handleReduceCards() {
     setIsReduceCards(!isReduceCards);
   }
