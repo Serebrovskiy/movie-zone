@@ -29,6 +29,10 @@
   border: 1px solid rgba(155, 20, 20, 0.685);
 }
 
+.rating-card_top {
+  border: 2px solid rgba(218, 165, 32, 0.856);
+}
+
 .rating-card_text-new {
   font-size: 18px;
   font-weight: 600;
@@ -50,15 +54,34 @@
 
 .rating-card__number {
   font-size: 20px;
-  font-weight: 700;
+  line-height: 28px;
+  font-weight: 500;
   border: 1px solid rgb(175, 175, 175);
   background-color: #fff;
   border-radius: 50%;
   width: 32px;
   height: 31px;
   text-align: center;
-  /* padding-top: 6px; */
+  padding-right: 1px;
   margin-left: 40px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.rating-card__number_first {
+  border: 1px solid gold;
+  background-color: rgba(255, 217, 0, 0.3);
+  color: #000;
+  padding-right: 0px;
+}
+.rating-card__number_second {
+  border: 1px solid silver;
+  background-color: rgba(192, 192, 192, 0.5);
+  color: #000;
+}
+.rating-card__number_third {
+  border: 1px solid rgba(165, 56, 28, 0.664);
+  background-color: rgba(165, 56, 2, 0.3);
+  color: #000;
 }
 
 .rating-card__container-center {

@@ -1,0 +1,66 @@
+.preloader {
+  background-color: transparent;
+  margin: 0;
+  min-height: 282px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+}
+
+.preloader__circle {
+  width: 74px;
+  height: 74px;
+  border: 1px solid goldenrod;
+  border-bottom-color: #d6d5d1;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  z-index: 1;
+}
+
+.preloader__text {
+  font-family: Roboto;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #b6bcbf;
+  margin: 24px 0 0;
+}
+
+@media screen and (max-width: 900px) {
+  .preloader {
+    min-height: 250px;
+  }
+  .preloader__circle {
+    width: 70px;
+    height: 70px;
+  }
+  .preloader__text {
+    margin: 22px 0 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .preloader {
+    min-height: 200px;
+  }
+  .preloader__circle {
+    width: 60px;
+    height: 60px;
+  }
+  .preloader__text {
+    font-size: 16px;
+    line-height: 18px;
+    margin: 20px 0 0;
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

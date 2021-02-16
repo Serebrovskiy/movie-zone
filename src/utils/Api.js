@@ -67,14 +67,12 @@ export const deleteFilm = (filmId, token) => {
     .then(getResponse)
 };
 
-export const updateFilm = (film, token) => {
-  console.log(film.name)
+export const updateFilm = (film) => {
   return fetch(`${BASE_URL_API}/films/${film.id}`, {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(film)
   })
@@ -130,6 +128,20 @@ export const setAvatar = (avatar, userId, token) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ avatar })
+  })
+    .then(getResponse)
+}
+
+export const setSocialLinks = (links, userId, token) => {
+  console.log(links)
+  return fetch(`${BASE_URL_API}/users/social-links/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(links)
   })
     .then(getResponse)
 }

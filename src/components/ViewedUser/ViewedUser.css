@@ -52,7 +52,7 @@
   justify-content: center;
   align-items: center;
   list-style-type: none;
-  margin: 10px 0 15px 5px;
+  margin: 10px 0 15px -3px;
   padding: 0;
 }
 
@@ -67,12 +67,23 @@
 .viewed-user__social-icon {
   width: 30px;
   height: 30px;
-  opacity: 0.6;
+  opacity: 0.3;
+  border-radius: 5px;
 }
 
 .viewed-user__social-icon:hover {
+  /* cursor: pointer; */
+  /* opacity: 1; */
+}
+
+.viewed-user__social-icon_active {
+  opacity: 0.9;
+}
+
+.viewed-user__social-icon_active:hover {
   cursor: pointer;
-  opacity: 1;
+  /* border: 1px solid goldenrod; */
+  /* opacity: 1; */
 }
 
 .viewed-user__container {

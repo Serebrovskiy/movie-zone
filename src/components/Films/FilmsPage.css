@@ -50,6 +50,7 @@
   color: #555;
   font-size: 20px;
   min-width: 150px;
+  max-width: 160px;
   margin: 0;
 }
 
@@ -61,8 +62,12 @@
   max-width: 220px;
 }
 
+.films-page__text-data_position {
+  margin-top: 27px;
+}
+
 .films-page__text-data_link-user {
-  color: #333;
+  color: #666;
   /* text-decoration: none; */
   cursor: pointer;
 }

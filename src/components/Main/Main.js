@@ -37,7 +37,10 @@ function Main({
   onUserFollowings,
   followings,
   onUpdateAvatar,
-  isUserAdmin
+  onUpdateSocialLinks,
+  isUserAdmin,
+  isLoading,
+  onInfoTooltip
 }) {
 
   // useEffect(() => {
@@ -79,7 +82,8 @@ function Main({
           loggedIn={loggedIn}
           currentUser={currentUser}
           onUpdateAvatar={onUpdateAvatar}
-
+          onUpdateSocialLinks={onUpdateSocialLinks}
+          onInfoTooltip={onInfoTooltip}
         />
         <ProtectedRoute
           path="/admin"
@@ -109,6 +113,7 @@ function Main({
             onRemoveFilm={onRemoveFilm}
             onOpenPopupAddCard={onOpenPopupAddCard}
             isUserAdmin={isUserAdmin}
+            isLoading={isLoading}
           />
         </Route>
         {/* тут похоже проблемка */}
@@ -118,11 +123,15 @@ function Main({
             users={users}
             handleGetFilms={handleGetFilms}
             currentUser={currentUser}
+            pathname={pathname}
           />
         </Route>
 
         <Route path="/rating-top">
-          <RatingTop films={films} />
+          <RatingTop
+            films={films}
+            pathname={pathname}
+          />
         </Route>
         <Route path="/search">
           <Search films={films} />
@@ -141,8 +150,8 @@ function Main({
           />
         </Route>
         {/* <Route path="/user">
-        <Redirect from="/user" to="/user/:_id" />
-      </Route> */}
+          <Redirect from="/user" to="/user/:_id" />
+        </Route> */}
         <Route path="/user/:_id">
           <ViewedUser
             users={users}
@@ -151,6 +160,7 @@ function Main({
             followings={followings}
             loggedIn={loggedIn}
             isOpenLogin={isOpenLogin}
+            pathname={pathname}
           />
         </Route>
       </Switch>

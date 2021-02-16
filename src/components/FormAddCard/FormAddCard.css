@@ -6,7 +6,7 @@
   border-radius: 10px;
   z-index: 2;
   padding-top: 10px;
-  transition: 0.5s ease;
+  transition: 1s ease;
 }
 
 .formAddCard__form_hidden {
@@ -146,10 +146,6 @@
 
   overflow: hidden;
   opacity: 0;
-  /* transition: 1s ease; */
-  /* position: absolute; */
-  /* top: 0;
-  left: 0; */
   display: none;
 }
 

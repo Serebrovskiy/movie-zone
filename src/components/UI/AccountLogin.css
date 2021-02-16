@@ -1,17 +1,17 @@
 .account-login {
   height: 150px;
-  width: 200px;
+  width: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   /* margin: 15px 20px 25px; */
   border-bottom: 1px solid black;
 }
 
 .account-login_avatar {
-  width: 100px;
-  height: 60px;
+  width: 120px;
+  height: 80px;
   margin: 12px 0 0;
   object-fit: cover;
   object-position: center;
@@ -26,7 +26,7 @@
 }
 
 .account-login_button-enter {
-  margin: 5px;
+  margin: 5px 5px 5px 35px;
   /* width: 106px;
   height: 25px; */
   width: 100px;

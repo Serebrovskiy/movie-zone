@@ -33,6 +33,8 @@ function FormAddCard({
   const inputLinkRef = useRef('');
   const inputDateRef = useRef('');
 
+  let [count, setCount] = useState(0);
+
 
   //создаем массивы для жанров и актеров
   const handleActors = () => {   //  useCallback? 
@@ -104,8 +106,15 @@ function FormAddCard({
     // handleCheckValidity();
   }
 
+  //выводим или убираем инпуты
   function handleShowInputs() {
     setIsShowInputs(!isShowInputs)
+    if (!isShowInputs) {
+      let timerId = setInterval(() => setCount(count++), 100); //реализуем пошаговое появление
+      setTimeout(() => { clearInterval(timerId); }, 1000); //очищаем через 1 сек
+    } else {
+      setCount(0)
+    }
   }
 
   function handleSubmit(e) {
@@ -126,6 +135,7 @@ function FormAddCard({
           director,
           actors,
           checked: true,
+          totalRange: cardChecking.totalRange,
           id: cardChecking.id //: Date.now(),  //?
         })
         onClose();
@@ -206,15 +216,14 @@ function FormAddCard({
     }
   }, [cardChecking])
 
-  return (
 
+  return (
     <form
       // определяем размеры формы
       className={`formAddCard__form ${(!isShowInputs) && "formAddCard__form_hidden"} 
     ${(pathname === "/admin-films") && "formAddCard__form_admin"}`}
       onSubmit={handleSubmit}
     >
-      {/* <form className="formAddCard__form" onSubmit={handleSubmit} > */}
       <h2 className="formAddCard__title">Добавить новый фильм {!isAdmin && "в рейтинг"}</h2>
       <div className="formAddCard__container">
         <label className="formAddCard__label">
@@ -271,7 +280,7 @@ function FormAddCard({
           </label>
         }
         {/* ${(!isAdmin && !isShowInputs)} */}
-        <label className={`formAddCard__label  ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
+        <label className={`formAddCard__label  ${(!isAdmin && count < 1) && "formAddCard__label_hidden"}`}>
           <input
             className="formAddCard__input"
             type="url"
@@ -285,7 +294,7 @@ function FormAddCard({
           <span className="formAddCard__text">Ссылка на постер</span>
         </label>
 
-        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
+        <label className={`formAddCard__label ${(!isAdmin && count < 2) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -312,7 +321,7 @@ function FormAddCard({
             <span className="formAddCard__text">+</span>
           </label>
         }
-        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
+        <label className={`formAddCard__label ${(!isAdmin && count < 3) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -324,7 +333,7 @@ function FormAddCard({
           />
           <span className="formAddCard__text">Страна</span>
         </label>
-        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
+        <label className={`formAddCard__label ${(!isAdmin && count < 4) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -336,7 +345,7 @@ function FormAddCard({
           />
           <span className="formAddCard__text">Режиссер</span>
         </label>
-        <label className={`formAddCard__label ${(!isAdmin && !isShowInputs) && "formAddCard__label_hidden"}`}>
+        <label className={`formAddCard__label ${(!isAdmin && count < 5) && "formAddCard__label_hidden"}`}>
           <input
             type="text"
             className="formAddCard__input"
@@ -363,6 +372,7 @@ function FormAddCard({
             <span className="formAddCard__text">+</span>
           </label>
         }
+        {/* {() => handleShowInputs()} */}
 
         {!isAdmin &&
           <button
