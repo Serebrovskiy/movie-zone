@@ -15,7 +15,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build* root@134.0.118.249:/home/movie-zone/movie-zone-frontend/build"
   },
   "eslintConfig": {
     "extends": "react-app"

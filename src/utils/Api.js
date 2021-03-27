@@ -1,4 +1,4 @@
-const BASE_URL_API = 'http://localhost:3001'
+import { BASE_URL_API } from './config';
 
 const getResponse = (res) => {
   if (res.ok) {
