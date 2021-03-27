@@ -51,13 +51,16 @@ function App() {
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
+    let newFilms = [];
+
     // console.log('handleGetFilms')
     setIsLoading(true);
     api.getFilms()  //localStorage.token
       .then(res => {
-        // console.log(res)
-        setFilms(res
-          .map(film => ({
+
+        newFilms = res
+          .map(film =>
+          ({
             name: film.name,
             date: film.date,
             link: film.link,
@@ -69,12 +72,38 @@ function App() {
             totalRange: film.totalRange,
             id: film._id,
             owner: film.owner
-          })));
+          })
+
+          )
+        console.log(newFilms)
+
+        console.log(res)
+
+        // setFilms(res
+        //   .map(film =>
+        //     ({
+        //       name: film.name,
+        //       date: film.date,
+        //       link: film.link,
+        //       genres: film.genres,
+        //       country: film.country,
+        //       director: film.director,
+        //       actors: film.actors,
+        //       checked: film.checked,
+        //       totalRange: film.totalRange,
+        //       id: film._id,
+        //       owner: film.owner
+        //     })));
+
       })
+      .then(res => (setFilms([...newFilms])))
       .catch((err) => console.error(err))
       .finally(() => {
         setIsLoading(false);
       })
+
+
+
   }, []);
 
   //получаем текущего юзера и его карточки рейтинга
@@ -93,7 +122,7 @@ function App() {
 
   // получаем всех пользователей
   const handleGetUsers = () => {
-    api.getUsers(localStorage.token)
+    api.getUsers() //localStorage.token
       .then(res => {
         console.log(res)
         setUsers(res)  //обновляем юзеров 

@@ -1,4 +1,3 @@
-// export const BASE_URL = 'https://api.dipl.students.nomoreparties.space';
 import { BASE_URL_API } from './config';
 
 export const register = (password, email, userName) => {

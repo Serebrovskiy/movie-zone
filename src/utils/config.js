@@ -1,7 +1,5 @@
-
-//export const BASE_URL_MAIN = 'https://api.dipl.students.nomoreparties.space';
-export const BASE_URL_API = 'http://localhost:3001'
-
+// export const BASE_URL_API = 'http://localhost:3001'
+export const BASE_URL_API = 'https://api.movie-zone.ru'
 export const PLACEHOLDER_IMAGE = 'https://adhara.hr/web/wp-content/uploads/2015/05/adhara-nutricionizam-news.jpg';
 
 
