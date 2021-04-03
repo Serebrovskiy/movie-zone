@@ -70,57 +70,60 @@ function FilmsPage({
   return (
     <div className="films-page">
       <button className="films-page__button-go-back" onClick={() => history.goBack()}>Назад</button>
-      <img className="films-page__image" src={currentFilm && currentFilm.link} alt="" />
-      <div className="films-page__container">
+      <div className="films-page__container-main">
         <h3 className="films-page__name">{currentFilm && currentFilm.name}</h3>
-        <ul className="films-page__list">
-          <li className="films-page__about">
-            <p className="films-page__text">Премьера:</p>
-            <p className="films-page__text-data">{currentFilm && currentFilm.date} г.</p>
-          </li>
-          <li className="films-page__about">
-            <p className="films-page__text">Жанр:</p>
-            <div className="films-page__text-container">
-              {currentFilm && currentFilm.genres.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
-            </div>
-          </li>
-          <li className="films-page__about">
-            <p className="films-page__text">Страна:</p>
-            <p className="films-page__text-data">{currentFilm && currentFilm.country}</p>
-          </li>
-          <li className="films-page__about">
-            <p className="films-page__text">Режиссер:</p>
-            <p className="films-page__text-data">{currentFilm && currentFilm.director}</p>
-          </li>
-          <li className="films-page__about">
-            <p className="films-page__text">В ролях:</p>
-            <div className="films-page__text-container">
-              {currentFilm && currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
-            </div>
-          </li>
+        <div className="films-page__container">
+          <img className="films-page__image" src={currentFilm && currentFilm.link} alt="" />
+          {/* <h3 className="films-page__name">{currentFilm && currentFilm.name}</h3> */}
+          <ul className="films-page__list">
+            <li className="films-page__about">
+              <p className="films-page__text">Премьера:</p>
+              <p className="films-page__text-data">{currentFilm && currentFilm.date} г.</p>
+            </li>
+            <li className="films-page__about">
+              <p className="films-page__text">Жанр:</p>
+              <div className="films-page__text-container">
+                {currentFilm && currentFilm.genres.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
+              </div>
+            </li>
+            <li className="films-page__about">
+              <p className="films-page__text">Страна:</p>
+              <p className="films-page__text-data">{currentFilm && currentFilm.country}</p>
+            </li>
+            <li className="films-page__about">
+              <p className="films-page__text">Режиссер:</p>
+              <p className="films-page__text-data">{currentFilm && currentFilm.director}</p>
+            </li>
+            <li className="films-page__about">
+              <p className="films-page__text">В ролях:</p>
+              <div className="films-page__text-container">
+                {currentFilm && currentFilm.actors.map((elem, index) => <p className="films-page__text-data" key={index}>{elem}</p>)}
+              </div>
+            </li>
 
-          <li className="films-page__about">
-            <p className="films-page__text">Место в рейтинге MZ:</p>
-            <div className="films-page__text-container">
-              {/* <p className="films-page__text-data">&nbsp;</p><br /> */}
-              <p className="films-page__text-data films-page__text-data_position">{currentFilm && currentFilm.position}</p>
-              {/* <p className="films-page__text-data">{currentFilm && positionFilm()}</p> */}
+            <li className="films-page__about">
+              <p className="films-page__text">Место в рейтинге MZ:</p>
+              <div className="films-page__text-container">
+                {/* <p className="films-page__text-data">&nbsp;</p><br /> */}
+                <p className="films-page__text-data films-page__text-data_position">{currentFilm && currentFilm.position}</p>
+                {/* <p className="films-page__text-data">{currentFilm && positionFilm()}</p> */}
 
-            </div>
-          </li>
+              </div>
+            </li>
 
-          <li className="films-page__about">
-            <p className="films-page__text">Опубликовал:</p>
-            <div className="films-page__text-container">
-              {/* надо придумать защиту если юзера по каким то причинам нет */}
+            <li className="films-page__about">
+              <p className="films-page__text">Опубликовал:</p>
+              <div className="films-page__text-container">
+                {/* надо придумать защиту если юзера по каким то причинам нет */}
 
 
-              <Link to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} style={{ textDecoration: 'none' }}>
-                <p className="films-page__text-data films-page__text-data_link-user" >{currentFilm && viewedUser ? viewedUser.userName : "Movie-zone"}</p>
-              </Link>
-            </div>
-          </li>
-        </ul>
+                <Link to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} style={{ textDecoration: 'none' }}>
+                  <p className="films-page__text-data films-page__text-data_link-user" >{currentFilm && viewedUser ? viewedUser.userName : "Movie-zone"}</p>
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
