@@ -9,31 +9,47 @@
   position: relative;
 }
 
+.films-page__container-main {
+  border: 1px solid goldenrod;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 1000px;
+  margin: 50px;
+  background-color: #eee;
+}
+
 .films-page__container {
-  margin: 100px 0 0 30px;
+  margin: 40px 50px;
+  display: flex;
 }
 
 .films-page__image {
   width: 350px;
-  height: 500px;
+  height: 480px;
   border: 2px solid goldenrod;
-  margin: 100px 0 0 80px;
+  margin: 0px 40px 0 50px;
   object-fit: cover;
 }
 
 .films-page__list {
+  padding: 0;
   /* width: 360px; */
-  list-style: none;
+  border-top: 1px solid #aaa;
+  margin: 0px 50px 0 40px;
 }
 
 .films-page__about {
   display: flex;
   text-align: start;
-  margin: 30px 0 0;
+  margin: 15px 0;
+  padding: 0px 0 15px;
+  border-bottom: 1px solid #aaa;
 }
 
 .films-page__name {
-  margin: 0 0 10px 30px;
+  margin: 30px 0 0;
   font-size: 42px;
   font-weight: 600;
   color: #000;
@@ -49,9 +65,10 @@
   font-weight: 400;
   color: #555;
   font-size: 20px;
-  min-width: 150px;
-  max-width: 160px;
+  min-width: 140px;
+  max-width: 140px;
   margin: 0;
+  font-family: initial;
 }
 
 .films-page__text-data {
@@ -60,10 +77,12 @@
   color: #333;
   font-size: 20px;
   max-width: 220px;
+  font-family: initial;
+  min-width: 123px;
 }
 
 .films-page__text-data_position {
-  margin-top: 27px;
+  margin-top: 22px;
 }
 
 .films-page__text-data_link-user {
@@ -90,4 +109,42 @@
 .films-page__button-go-back:hover {
   cursor: pointer;
   background-color: goldenrod;
+}
+
+@media screen and (max-width: 1500px) {
+  .films-page__image {
+    width: 300px;
+    height: 410px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .films-page__image {
+    width: 250px;
+    height: 340px;
+    margin: 0px 30px 0 40px;
+  }
+  .films-page__list {
+    margin: 0px 40px 0 30px;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .films-page__image {
+    width: 200px;
+    height: 300px;
+    margin: 0px 25px 0 25px;
+  }
+  .films-page__list {
+    margin: 0px 30px 0 30px;
+  }
+  .films-page__text {
+    font-size: 18px;
+    min-width: 120px;
+    max-width: 120px;
+  }
+  .films-page__text-data {
+    font-size: 18px;
+  }
+  .films-page__container {
+    margin: 40px 30px;
+  }
 }

@@ -15,10 +15,10 @@
     'NavBar Footer Footer InfoBlock';
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .App {
-    grid-template-columns: 150px auto;
-    grid-template-rows: 100px auto auto 100px;
+    grid-template-columns: 210px auto;
+    grid-template-rows: 140px auto auto 100px;
     grid-template-areas:
       'Header Header'
       'NavBar Main'

@@ -276,44 +276,58 @@
   margin-right: 5px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1200px) {
   .rating-card {
-    width: 300px;
-    height: 100px;
+    min-width: 500px;
+    /* height: 100px; */
     margin: 15px auto 0;
   }
-  .rating-card__number {
-    font-size: 14px;
-    width: 20px;
-    height: 20px;
-    margin-left: 15px;
+  .rating-card__container-center {
+    margin-top: 25px;
   }
   .rating-card__name {
-    font-size: 16px;
-    width: 60px;
+    font-size: 20px;
+    line-height: 26px;
+    width: 150px;
+  }
+  .rating-card__number {
+    font-size: 20px;
+    line-height: 28px;
+    width: 32px;
+    height: 31px;
+    padding-right: 1px;
+    margin-left: 20px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .rating-card {
+    min-width: 470px;
   }
   .rating-card__image {
-    width: 90px;
-    height: 60px;
-    margin-right: 5px;
+    width: 150px;
+    height: 100px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .rating-card {
+    min-width: 500px;
+    /* height: 100px; */
+    margin: 15px auto 0;
+  }
+  .rating-card__container-center {
+    margin-top: 25px;
+  }
+  .rating-card__number {
+  }
+  .rating-card__name {
+  }
+  .rating-card__image {
   }
   .rating-card__button-up {
-    width: 20px;
-    height: 20px;
-    background-size: 20px;
-    margin-right: 5px;
   }
   .rating-card__button-down {
-    width: 20px;
-    height: 20px;
-    background-size: 20px;
-    margin-right: 5px;
   }
   .rating-card__button-delete {
-    width: 10px;
-    height: 10px;
-    background-size: 10px;
-    margin-right: 5px;
   }
 }
 
