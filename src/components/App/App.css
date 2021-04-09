@@ -26,3 +26,13 @@
       'Footer Footer';
   }
 }
+@media screen and (max-width: 500px) {
+  .App {
+    grid-template-columns: auto;
+    grid-template-rows: 140px auto 100px;
+    grid-template-areas:
+      'Header'
+      'Main'
+      'Footer';
+  }
+}

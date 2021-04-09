@@ -1,7 +1,7 @@
 .header {
   background-color: #000;
   grid-area: Header;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   text-align: center;
   color: #fff;
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 .header__title {
-  background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);   
+  background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);
   background-size: cover;
   color: transparent;
   -moz-background-clip: text;
@@ -22,5 +22,16 @@
   margin: 10px 0;
 }
 
+@media screen and (max-width: 1200px) {
+  .header__title {
+    font-size: 60px;
+    line-height: 0.9;
+  }
+}
+@media screen and (max-width: 500px) {
+  .header__title {
+    margin: 10px;
+  }
+}
 
-  /* https://i.gifer.com/75yc.gif   огонь*/
+/* https://i.gifer.com/75yc.gif   огонь*/
