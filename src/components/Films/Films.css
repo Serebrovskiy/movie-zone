@@ -35,3 +35,12 @@
     padding-left: 30px;
   }
 }
+@media screen and (max-width: 500px) {
+  .films__title {
+    line-height: 1.1;
+  }
+  .films__container {
+    justify-content: center;
+    padding-left: 0px;
+  }
+}
