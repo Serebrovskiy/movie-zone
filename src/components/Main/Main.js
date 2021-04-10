@@ -10,6 +10,7 @@ import FilmsPage from '../Films/FilmsPage'
 import Search from '../Search/Search'
 import Admin from '../Admin/Admin'
 import AdminFilms from '../Admin/AdminFilms'
+import AdminUsers from '../Admin/AdminUsers'
 import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
 import SettingProfile from '../SettingProfile/SettingProfile'
@@ -24,6 +25,7 @@ function Main({
   onRemoveFilm,
   onEditFilm,
   onOpenPopupAddCard,
+  onOpenPopupUserInfo,
   ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
@@ -147,6 +149,12 @@ function Main({
           <AdminFilms
             onOpenPopupAddCard={onOpenPopupAddCard}
             notCheckedFilms={notCheckedFilms}
+          />
+        </Route>
+        <Route path="/admin-users">
+          <AdminUsers
+            users={users}
+            onOpenPopupUserInfo={onOpenPopupUserInfo}
           />
         </Route>
         {/* <Route path="/user">

@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import InfoBlock from '../InfoBlock/InfoBlock';
 import PopupAddCard from '../PopupAddCard/PopupAddCard';
+import PopupUserInfo from '../PopupUserInfo/PopupUserInfo';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -27,7 +28,9 @@ function App() {
   const [users, setUsers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [cardChecking, setCardChecking] = useState(null);  //карточка которую мы проверяем
+  const [userCardChecking, setUserCardChecking] = useState(null);  //карточка юзера которую мы проверяем в админке
   const [isOpenPopupAddCard, setIsOpenPopupAddCard] = useState(false);
+  const [isOpenPopupUserInfo, setIsOpenPopupUserInfo] = React.useState(false);  //попап юзера в админке
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false);
   const [isOpenPopupLogin, setIsOpenPopupLogin] = React.useState(false);
   const [isOpenPopupRegister, setIsOpenPopupRegister] = React.useState(false);
@@ -161,7 +164,12 @@ function App() {
   function handlePopupAddCardClick(isAdminOpened, card) {
     setIsOpenPopupAddCard(true);
     setIsAdmin(isAdminOpened);  //это лишнее, нужно исправить
-    card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку   //не понял этот коммент
+    card && setCardChecking(card) //если открывает админ, значит редактируем эту карточку   //не понял этот коммент //аа понял
+  }
+
+  function handlePopupUserInfoClick(user) {
+    setIsOpenPopupUserInfo(true);
+    user && setUserCardChecking(user)
   }
 
   //попап авторизации
@@ -185,6 +193,7 @@ function App() {
 
   function closePopups() {
     setIsOpenPopupAddCard(false);
+    setIsOpenPopupUserInfo(false);
     setIsOpenPopupInfo(false)
     setIsOpenPopupLogin(false);
     setIsOpenPopupRegister(false);
@@ -510,6 +519,22 @@ function App() {
     handleGetFilms();
   }
 
+
+  //удаляем пользователя
+  const handleRemoveUser = (user) => {
+    api.deleteUser(user._id, localStorage.token)
+      .then((userForDelete) => {
+        const newUsers = users.filter((elem) => elem._id === user._id ? null : userForDelete);
+        setUsers(newUsers);
+      })
+      .then(() => {
+        handleInfoClick('Пользователь удален');
+        setIsOpenPopupUserInfo(false);
+      })
+      .catch((err) => console.error(err));
+  }
+
+
   //подписка на пользователя
   const handleUserFollowings = (userId, comand) => {
     let newFollowings = followings;
@@ -629,6 +654,13 @@ function App() {
           numberSection={numberSectionPopupAddCard}
           pathname={pathname}
         />
+        <PopupUserInfo
+          isOpen={isOpenPopupUserInfo}
+          onClose={closePopups}
+          onChangePopup={handlePopupUserInfoClick}
+          userCardChecking={userCardChecking}
+          onRemoveUser={handleRemoveUser}
+        />
         <InfoTooltip
           isOpen={isOpenPopupInfo}
           onClose={closePopupInfo}
@@ -648,6 +680,7 @@ function App() {
           onRemoveFilm={handleRemoveFilm}
           onEditFilm={editFilmHandler}
           onOpenPopupAddCard={handlePopupAddCardClick}
+          onOpenPopupUserInfo={handlePopupUserInfoClick}
           ratingCards={ratingCards}
           notCheckedFilms={notCheckedFilms}
           onRemoveRatingCard={handleRemoveRatingCard}
