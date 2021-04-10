@@ -29,22 +29,26 @@ function Popup({
           <button type="button" className="popup__button-close" onClick={onClose} />
           <h2 className="popup__title">{title}</h2>
           {children}
-          <div className="popup__container">
-            <span className="popup__messageError">{messageError}</span>
-            <button
-              type="submit"
-              className={`popup__button ${isDisabled && "popup__button_disabled"}`}
-              disabled={isDisabled}
-              onClick={messageError ? () => onInfoTooltip('непонятно что тут') : null}
-            >
-              {buttonName}
-            </button>
-          </div>
-          <p className="popup__text">или&nbsp;
+          {(buttonName !== 'UserInfo') &&
+            <>
+              <div className="popup__container">
+                <span className="popup__messageError">{messageError}</span>
+                <button
+                  type="submit"
+                  className={`popup__button ${isDisabled && "popup__button_disabled"}`}
+                  disabled={isDisabled}
+                  onClick={messageError ? () => onInfoTooltip('непонятно что тут') : null}
+                >
+                  {buttonName}
+                </button>
+              </div>
+              <p className="popup__text">или&nbsp;
             <span className="popup____text-link" onClick={onChangePopup}>
-              {linkName}
-            </span>
-          </p>
+                  {linkName}
+                </span>
+              </p>
+            </>
+          }
         </form>
       </div>
     </ >

@@ -13,6 +13,12 @@ function Admin({ notCheckedFilms }) {
         {notCheckedFilms.length !== 0 && <span className="admin__number-not-checked-films">{notCheckedFilms.length}</span>}
         </button>
       </Link>
+      <Link to="/admin-users">
+        <button className="admin__button-link">Пользователи
+    
+        </button>
+      </Link>
+
       {/* <Link to=to="/admin-reviews>
         <button className="admin__button-link">Кинообзоры</button>
       </Link> */}

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './FilmsPage.css';
 import { useParams, useHistory, Link, useRouteMatch } from 'react-router-dom';
+// import * as api from '../../utils/Api';
 
 function FilmsPage({
   films,
@@ -16,6 +17,20 @@ function FilmsPage({
 
   let { id } = useParams();
   const history = useHistory();
+
+  //Берем фильм напрямую из Api
+  // useEffect(() => {
+  //   console.log('hello')
+
+  //   async function f() {
+  //     console.log('async')
+
+  //     await api.getFilmById(id)
+  //       .then(res => setCurrentFilm(res))
+  //       .catch((err) => console.error(err));
+  //   }
+  //   f();
+  // }, [])
 
   let currentFilm;
 

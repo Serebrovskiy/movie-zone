@@ -20,6 +20,21 @@ export const getFilms = () => {
     .then(getResponse)
 };
 
+//возвращаем конкретный фильм
+export const getFilmById = (filmId) => {
+  console.log(filmId);
+  return fetch(`${BASE_URL_API}/films/${filmId}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      // Authorization: `Bearer ${token}`
+    },
+  })
+    .then(getResponse)
+};
+
+
 export const createFilm = (
   name,
   date,
@@ -101,6 +116,18 @@ export const getUsers = () => {
       'Content-Type': 'application/json',
       //    Authorization: `Bearer ${token}`
     },
+  })
+    .then(getResponse)
+};
+
+export const deleteUser = (userId, token) => {
+  return fetch(`${BASE_URL_API}/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
   })
     .then(getResponse)
 };
