@@ -5,7 +5,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 function FollowingItem({ user }) {
 
   const { url } = useRouteMatch();
-  // console.log(user)
 
   return (
     <div className="following-item">

@@ -45,13 +45,6 @@ function Main({
   onInfoTooltip
 }) {
 
-  // useEffect(() => {
-  //   console.log('useEffect')
-  //   handleGetFilms();
-  // }, [])
-
-  // console.log(loggedIn)
-
   return (
     <div className="main">
       <Switch>
@@ -92,6 +85,7 @@ function Main({
           component={Admin}
           loggedIn={loggedIn}
           notCheckedFilms={notCheckedFilms}
+          users={users}
         />
 
         <Route exact path="/">
@@ -138,11 +132,6 @@ function Main({
         <Route path="/search">
           <Search films={films} />
         </Route>
-        {/* <Route path="/admin">
-          <Admin
-            notCheckedFilms={notCheckedFilms}
-          />
-        </Route> */}
         <Route path="/admin-reviews">
         </Route>
         <Route path="/admin-films">
@@ -157,9 +146,6 @@ function Main({
             onOpenPopupUserInfo={onOpenPopupUserInfo}
           />
         </Route>
-        {/* <Route path="/user">
-          <Redirect from="/user" to="/user/:_id" />
-        </Route> */}
         <Route path="/user/:_id">
           <ViewedUser
             users={users}

@@ -40,6 +40,17 @@
   font-weight: 400;
 }
 
+.admin__number-users {
+  border-radius: 50%;
+  /* background-color: rgba(233, 47, 47, 0.7); */
+  border: 1px solid gray;
+  padding: 3px 8px;
+  margin-left: 20px;
+  color: #333;
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .admin__container {
   max-width: 600px;
   display: flex;

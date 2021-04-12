@@ -5,7 +5,6 @@ import FollowingItem from './FollowingItem';
 
 function Following({ users, followings }) {
 
-  console.log(users)
   return (
     <div className="following">
       <h1 className="following__title">Ваши подписки</h1>
