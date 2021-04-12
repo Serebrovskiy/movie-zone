@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 import './RatingCard.css';
 
 function RatingCard({
@@ -12,18 +11,12 @@ function RatingCard({
   pathname
 }) {
 
-  // let { _id } = useParams();
-
-  console.log(pathname)
-  // console.log(_id)
-  // console.log(item)
   const handleRemoveClick = () => {
     onRemoveRatingCard(item);
   }
   const handleArrowUpClick = () => {
     onUpRatingCard(item);
   }
-
   const handleArrowDownClick = () => {
     onDownRatingCard(item);
   }

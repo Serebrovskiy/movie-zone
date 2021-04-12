@@ -15,8 +15,6 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
 import * as getImageGoogle from '../../utils/ApiGoogle';
-// import { verifiedEmails } from '../../../verified_emails';
-
 
 function App() {
   const { pathname } = useLocation(); //расположение текущей странице
@@ -45,22 +43,17 @@ function App() {
 
   useEffect(() => {
     console.log(pathname)
-    //обнуление totalRange
-    // pathname === '/reviews' && setFilms(films.map(elem => {
-    //   elem.totalRange = 0;
-    //   return elem
-    // }));
-  }, [history])
+    pathname === '/films' && handleGetFilms();
+  }, [pathname])
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
+    console.log('handleGetFilms')
     let newFilms = [];
 
-    // console.log('handleGetFilms')
     setIsLoading(true);
-    api.getFilms()  //localStorage.token
+    api.getFilms()
       .then(res => {
-
         newFilms = res
           .map(film =>
           ({
@@ -76,28 +69,8 @@ function App() {
             id: film._id,
             owner: film.owner
           })
-
           )
         console.log(newFilms)
-
-        console.log(res)
-
-        // setFilms(res
-        //   .map(film =>
-        //     ({
-        //       name: film.name,
-        //       date: film.date,
-        //       link: film.link,
-        //       genres: film.genres,
-        //       country: film.country,
-        //       director: film.director,
-        //       actors: film.actors,
-        //       checked: film.checked,
-        //       totalRange: film.totalRange,
-        //       id: film._id,
-        //       owner: film.owner
-        //     })));
-
       })
       .then(res => (setFilms([...newFilms])))
       .catch((err) => console.error(err))
@@ -105,26 +78,11 @@ function App() {
         setIsLoading(false);
       })
 
-
-
   }, []);
-
-  //получаем текущего юзера и его карточки рейтинга
-  // const handleGetCurrentUser = useCallback(() => {
-  //   console.log('handleGetCurrentUser')
-  //   auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
-  //     .then(res => {
-  //       console.log(res)
-  //       setCurrentUser(res);
-  //       res.ratingFilms && setRatingCards(res.ratingFilms);  //забираем рейтинг фильмов
-  //       setFollowings(res.followings)  //забираем подписки
-  //       checkingAdminByEmail(res.email) //проверяем админ или нет
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [history]);
 
   // получаем всех пользователей
   const handleGetUsers = () => {
+    console.log('handleGetUsers')
     api.getUsers() //localStorage.token
       .then(res => {
         console.log(res)
@@ -136,8 +94,6 @@ function App() {
 
   useEffect(() => {
     handleGetUsers();  // обновляем список юзеров
-    // handleGetCurrentUser();
-
     tokenCheck();
     handleGetFilms();  // обновляем список фильмов
 
@@ -145,20 +101,12 @@ function App() {
 
     console.log('loggedIn - ' + loggedIn)
     console.log(currentUser)
-    // console.log(films)
-    // console.log(users)
   }, [])
 
 
   useEffect(() => {
     setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-    //handleGetFilms();
-    console.log(films)
   }, [films])
-
-  useEffect(() => {
-    // console.log(ratingCards)
-  }, [ratingCards])
 
   //открываем попап и определяем кто это дедает - точнее откуда
   function handlePopupAddCardClick(isAdminOpened, card) {
@@ -222,9 +170,6 @@ function App() {
 
         }
       })
-      // .then(() => {
-      //   handleLoginClick(); 
-      // })
       .catch((err) => {
         console.error(err);
         setMessageError(err.message);
@@ -254,16 +199,13 @@ function App() {
   }
 
   function tokenCheck() {
+    console.log('tokenCheck')
     if (localStorage.token) {
       auth.getContent(localStorage.token)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            // history.push('/');
-            // handleGetFilms();  // обновляем список фильмов
-            // handleGetCurrentUser();  // получаем текущего юзера
             handleGetUsers(); // обновляем список юзеров
-
             setCurrentUser(res);
             res.ratingFilms && setRatingCards(res.ratingFilms);  //забираем рейтинг фильмов
             setFollowings(res.followings)  //забираем подписки
@@ -382,12 +324,10 @@ function App() {
     }
     addRatingCard(); //вызываем асинхронную функцию
     handleGetFilms(); //обновляем фильмы
-
   }
 
   //удаление карточки рейтинга
   const handleRemoveRatingCard = (card) => {
-
     const ratingList = ratingCards
       .filter(elem => elem.name !== card.name) //раньше было по id, но имя тоже уникальное
       .map((elem, index) => {
@@ -485,8 +425,6 @@ function App() {
         console.log(newFilm)
       })
       .catch((err) => console.error(err));
-
-
   }
 
   //удаляем фильм из коллекции
@@ -534,7 +472,6 @@ function App() {
       .catch((err) => console.error(err));
   }
 
-
   //подписка на пользователя
   const handleUserFollowings = (userId, comand) => {
     let newFollowings = followings;
@@ -561,9 +498,9 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => console.error(err));
-    //  handleGetCurrentUser();  ??
   }
 
+  //обновление ссылок соц сетей в настройках 
   const handleUpdateSocialLinks = (links) => {
     console.log(links)
     api.setSocialLinks(links, currentUser._id, localStorage.token)
@@ -571,12 +508,12 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => console.error(err));
-    //  handleGetCurrentUser();  ??
   }
 
+  //обновляем топ 10 
   function topRatingFilms(newUsers) {
-    console.log(newUsers)
-    console.log(films)
+    console.log('topRatingFilms')
+    // console.log(films)
 
     if (films.length !== 0 && newUsers.length !== 0) {
       let newArr = films.map(film => {
@@ -584,12 +521,9 @@ function App() {
         newUsers.forEach(user => {
           user.ratingFilms.forEach(ratingFilm => {
             if (film.name === ratingFilm.name) {
-              // console.log('film.name - ' + film.name)
-              // console.log('user.name - ' + user.userName)
               //формула по которой определяется общий/топ рейтинг фильмов
               film.totalRange += ((11 - ratingFilm.position) * (user.ratingFilms.length / 10));
             }
-            // console.log('film.totalRange - ' + film.totalRange)
           })
         })
         api.updateFilm(film) //обновляем фильм, точнее его рейтинг
@@ -712,6 +646,21 @@ function App() {
 
 export default App;
 
+
+
+  //получаем текущего юзера и его карточки рейтинга
+  // const handleGetCurrentUser = useCallback(() => {
+  //   console.log('handleGetCurrentUser')
+  //   auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
+  //     .then(res => {
+  //       console.log(res)
+  //       setCurrentUser(res);
+  //       res.ratingFilms && setRatingCards(res.ratingFilms);  //забираем рейтинг фильмов
+  //       setFollowings(res.followings)  //забираем подписки
+  //       checkingAdminByEmail(res.email) //проверяем админ или нет
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [history]);
 
   // useEffect(() => {
   //   setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 

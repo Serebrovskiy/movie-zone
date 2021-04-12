@@ -8,14 +8,22 @@
 
 .popup-user-info__text {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
   color: #333;
   margin: 5px;
+  font-family: initial;
+}
+
+.popup-user-info__text-link {
+  text-align: left;
+  margin: 0;
+  text-decoration: underline;
+  color: #333;
 }
 
 .popup-user-info__avatar {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   margin: 25px 0;
   object-fit: cover;
 }

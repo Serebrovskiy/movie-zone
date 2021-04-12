@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Admin.css';
 
-function Admin({ notCheckedFilms }) {
+function Admin({ notCheckedFilms, users }) {
 
   return (
     <div className="admin">
@@ -15,7 +15,7 @@ function Admin({ notCheckedFilms }) {
       </Link>
       <Link to="/admin-users">
         <button className="admin__button-link">Пользователи
-    
+        {users.length !== 0 && <span className="admin__number-users">{users.length}</span>}
         </button>
       </Link>
 
