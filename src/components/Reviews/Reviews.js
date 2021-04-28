@@ -2,6 +2,7 @@ import React from 'react';
 import './Reviews.css';
 import ReviewItem from './ReviewItem';
 
+// @FIXME Пример хорошо вложенной компоненты
 function Reviews({ data }) {
   return (
     <div className="reviews">

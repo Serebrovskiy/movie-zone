@@ -14,6 +14,7 @@ function AdminFilms({ onOpenPopupAddCard, notCheckedFilms, onEditFilm }) {
             className="admin-films__card-button"
             type="button"
             key={elem.id}
+            // @FIXME при ререндере эта штука пересоздастся. + Нужно вынести в хэлпер
             onClick={() => onOpenPopupAddCard(true, elem)}
           // onClick={() => onEditFilm(elem)}
           >{elem.name}

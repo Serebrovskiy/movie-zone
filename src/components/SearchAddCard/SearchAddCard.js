@@ -31,6 +31,7 @@ function SearchAddCard({
   }
 
   function enterResultName(elem) {
+    // @FIXME тут правильно ругается IDE. false !== React.Node. Такое может породить ошибку. Также хранить компоненты в состоянии - это говнокод
     setHoverCard(
       <div className="searchAddCard__hover-card">
         <img className="searchAddCard__hover-card-image" src={elem.link} alt={elem.name} />

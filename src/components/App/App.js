@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from 'react-router-dom';
+
+// @FIXME неверный порядок импортов
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -12,6 +14,8 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+
+// @FIXME импорты через as
 import * as auth from '../../utils/Auth';
 import * as api from '../../utils/Api';
 import * as getImageGoogle from '../../utils/ApiGoogle';
@@ -20,6 +24,7 @@ function App() {
   const { pathname } = useLocation(); //расположение текущей странице
   const history = useHistory();
 
+  // @FIXME  много состояний
   const [films, setFilms] = useState([]);
   const [ratingCards, setRatingCards] = useState([]);
   const [notCheckedFilms, setNotCheckedFilms] = useState([]);  //список непроверенных карточек  //очень похожие названия
@@ -41,11 +46,13 @@ function App() {
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  // @FIXME  неверные зависимости
   useEffect(() => {
     console.log(pathname)
     pathname === '/films' && handleGetFilms();
   }, [pathname])
 
+  // @FIXME  Зачем тут useCallback ?
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
     console.log('handleGetFilms')
@@ -75,9 +82,10 @@ function App() {
       .then(res => (setFilms([...newFilms])))
       .catch((err) => console.error(err))
       .finally(() => {
+        // @FIXME  Что будет показано, если данные не пришли ?
         setIsLoading(false);
       })
-
+    // @FIXME  Нет зависимостей
   }, []);
 
   // получаем всех пользователей
@@ -86,9 +94,10 @@ function App() {
     api.getUsers() //localStorage.token
       .then(res => {
         console.log(res)
-        setUsers(res)  //обновляем юзеров 
+        setUsers(res)  //обновляем юзеров
         topRatingFilms(res) //вызываем top-10 с обновленными юзерами
       })
+        // @FIXME  catch везде одинаковый, можно засунуть в api
       .catch((err) => console.error(err));
   }
 
@@ -97,6 +106,7 @@ function App() {
     tokenCheck();
     handleGetFilms();  // обновляем список фильмов
 
+    // @FIXME  Не очень хороший синтаксис
     !ratingCards && setRatingCards([]);
 
     console.log('loggedIn - ' + loggedIn)
@@ -105,10 +115,12 @@ function App() {
 
 
   useEffect(() => {
-    setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
+    setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы
+    // @FIXME  Зависимости
   }, [films])
 
   //открываем попап и определяем кто это дедает - точнее откуда
+  // @FIXME  Синтаксис неоднородный function и () => {}
   function handlePopupAddCardClick(isAdminOpened, card) {
     setIsOpenPopupAddCard(true);
     setIsAdmin(isAdminOpened);  //это лишнее, нужно исправить
@@ -127,13 +139,13 @@ function App() {
     setIsOpenPopupInfo(false);
   }
 
-  //попап регистрации 
+  //попап регистрации
   function handleRegisterClick() {
     setIsOpenPopupRegister(true);
     setIsOpenPopupLogin(false);
   }
 
-  //попап с информацией 
+  //попап с информацией
   function handleInfoClick(message) {
     setIsOpenPopupInfo(true);
     setInfoTooltip(message);
@@ -164,10 +176,9 @@ function App() {
     auth
       .register(password, email, userName)
       .then((res) => {
-        if (res.statusCode !== 400) {
+          if (res.statusCode !== 400) {
           //history.push('/');
           handleInfoClick('Вы успешно зарегистрировались!');
-
         }
       })
       .catch((err) => {
@@ -182,6 +193,7 @@ function App() {
       .authorize(password, email)
       .then((data) => {
         if (!data) {
+          // @FIXME  Или newError или console.log. Может стоит сделать нотификатор ошибок
           throw new Error('Что-то пошло не так!');
         }
         if (data.token) {
@@ -241,6 +253,7 @@ function App() {
   //проверка является ли юзер админом
   function checkingAdminByEmail(userEmail) {
     //используем переменную окружения
+    // @FIXME  Такое лучше делать через бэк. Админ - пользователь с отдельной ролью
     process.env.REACT_APP_VERIFIED_EMAILS.includes(userEmail)
       && setIsUserAdmin(true)
   }
@@ -254,6 +267,7 @@ function App() {
       });
   }
 
+  // @FIXME  Супер-большой и страшный обработчик
   //добавление карточки рейтинга
   const addRatingCardsHandler = ({
     name,
@@ -289,6 +303,7 @@ function App() {
       // console.log(newRatingCard);
 
       //заглушка для картинки
+      // @FIXME  Нельзя подменять данные с сервера
       newRatingCard.link === '' && (newRatingCard.link = "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg")
       newRatingCard.date === '' && (newRatingCard.date = "Неизвестно")
 
@@ -337,9 +352,11 @@ function App() {
     handleRatingCardsApi(ratingList);
   }
 
+  // @FIXME  Этот обработчик должен быть на бэке. Фронт не должен работать с данными
   //поднимаем карточку вверх на один пункт
   const handleUpRatingCard = (card) => {
     //кастомный метод для замены объектов в массиве
+    // @FIXME  Названия переменных
     const templeFun = (arr) => {
       let arrCopy = {}
       arrCopy = Object.assign({}, arr[card.position - 2])
@@ -534,6 +551,7 @@ function App() {
     }
   }
 
+  // @FIXME  Для этого есть библиотеки. А с самописным закрытием вне модалки постоянно бывают баги
   //закрытие попапа щелчком вне формы
   React.useEffect(() => {
     const handleMouseClose = (evt) => {
@@ -543,6 +561,7 @@ function App() {
     return () => document.removeEventListener("mousedown", handleMouseClose);
   }, []);
 
+  // @FIXME  Из-за того, что вся логика лежит в app - тут слишком много пропсов
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
@@ -636,6 +655,7 @@ function App() {
 
         <InfoBlock
           loggedIn={loggedIn}
+            // @FIXME  onAction = { handleAction }
           onSignOut={onSignOut}
         />
         <Footer />

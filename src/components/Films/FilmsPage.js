@@ -16,6 +16,7 @@ function FilmsPage({
   let { id } = useParams();
   const history = useHistory();
 
+  // @FIXME лучше не использовать let переменные в react компонентах. Это получилось из-за того, что логика отображение смешана с логикой данных
   let currentFilm;
 
   if (films.length !== 0) {
@@ -138,6 +139,7 @@ function FilmsPage({
                   <div className="films-page__text-container">
                     {
                       viewedUser ? /*если юзера по каким то причинам нет */
+                          // @FIXME лучше такое выносить в отдельные хэлпер функции или передумать логику
                         <Link to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} style={{ textDecoration: 'none' }}>
                           <p className="films-page__text-data films-page__text-data_link-user" >{viewedUser.userName}</p>
                         </Link>

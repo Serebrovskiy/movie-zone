@@ -7,6 +7,8 @@ function InfoBlock({ loggedIn, onSignOut }) {
     <div className="info-block">
       <div className="info-block__container">
         {
+          /* @FIXME тебе приходится такое городить, потому что info-block__account это не отдельная компонента. В идеале должно было быть так:
+          *   loggedIn && <InfoBlockAccount onSignOut={onSignOut} />  */
           loggedIn
           &&
           <div className="info-block__account">

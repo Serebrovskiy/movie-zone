@@ -1,3 +1,5 @@
+// @FIXME это не утилзы, а моковые данные. Нужно класть в папку mocks
+
 const filmsDate = () => {
     const someDate = new Date(2020, 8, 3);
 

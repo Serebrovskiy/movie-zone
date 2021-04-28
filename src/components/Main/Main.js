@@ -18,6 +18,8 @@ import RatingTop from '../RatingTop/RatingTop'
 
 import { initialReviewItems } from '../../utils/utils';
 
+// @FIXME это файл Routes и он не должен получать никаких пропсов.
+
 function Main({
   onAddFilm,
   films,
@@ -44,7 +46,6 @@ function Main({
   isLoading,
   onInfoTooltip
 }) {
-
   return (
     <div className="main">
       <Switch>

@@ -23,6 +23,7 @@ function NavBar({
           currentUser={currentUser}
         />
         {loggedIn && <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>}
+        {/*@FIXME Лучше не использовать спец. символы по типу &nbsp;. Обычного пробела должно хватить */}
         {loggedIn && <NavLink to="/following" className="menu__link" activeClassName="menu__link_active">Подписки&nbsp;
         {/* {followings.length !== 0 && <span className="menu__link_followings">{followings.length}</span>} */}
         </NavLink>}

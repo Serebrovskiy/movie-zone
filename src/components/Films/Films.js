@@ -11,13 +11,18 @@ function Films({
   isUserAdmin,
   isLoading
 }) {
-  return (
+    // @FIXME precondition rendering
+  if (isLoading) {
+      return <Preloader />
+  }
+
+  return  (
     <div className="films">
       <h1 className="films__title">Коллекция фильмов</h1>
       <div className="films__container">
-        {isLoading && <Preloader />}
         {
           films
+              // @FIXME логика отображения и работы с данными
             .sort(() => Math.random() - 0.5)  //перемешиваем 
             .map(elem =>
               <FilmsItem
