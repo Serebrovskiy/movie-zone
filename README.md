@@ -1,8 +1,13 @@
 # MOVIE-ZONE
 
-### Интерактивный проект позволяющий создавать индивидуальные рейтинги фильмов.
+<p>
+    <img src="https://img.shields.io/github/languages/top/Serebrovskiy/movie-zone?style=flat&color=yellow">
+    <img src="https://img.shields.io/github/issues-pr-closed/Serebrovskiy/movie-zone?style=flat&color=orange">
+    <img src="https://img.shields.io/badge/version-1.0.0-blue">
+    <img src="https://img.shields.io/github/stars/Serebrovskiy/movie-zone.svg?style=flat&color=green">
+</p>
 
-### v 1.0
+### Интерактивный проект позволяющий создавать индивидуальные рейтинги фильмов.
 
 #### Домен приложения: https://movie-zone.ru
 
