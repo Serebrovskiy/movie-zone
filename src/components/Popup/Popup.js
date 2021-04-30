@@ -37,6 +37,7 @@ function Popup({
                   type="submit"
                   className={`popup__button ${isDisabled && "popup__button_disabled"}`}
                   disabled={isDisabled}
+                  // @FIXME onClick не принимает null
                   onClick={messageError ? () => onInfoTooltip('непонятно что тут') : null}
                 >
                   {buttonName}

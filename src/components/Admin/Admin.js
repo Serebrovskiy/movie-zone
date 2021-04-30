@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Admin.css';
 
+// @FIXME компонент знает о модели данных, хотя ему нужна пара полей
 function Admin({ notCheckedFilms, users }) {
 
   return (
@@ -10,7 +11,8 @@ function Admin({ notCheckedFilms, users }) {
 
       <Link to="/admin-films">
         <button className="admin__button-link">Коллекция
-        {notCheckedFilms.length !== 0 && <span className="admin__number-not-checked-films">{notCheckedFilms.length}</span>}
+            {/* @FIXME не очень понимаю этот кондишенел рендеринг. Проще просто кидать notCheckedFilms.length*/}
+            {notCheckedFilms.length !== 0 && <span className="admin__number-not-checked-films">{notCheckedFilms.length}</span>}
         </button>
       </Link>
       <Link to="/admin-users">

@@ -12,6 +12,7 @@ import instIcon from '../../images/inst_icon.png';
 import youTubeIconColor from '../../images/youTube_icon_color.png';
 import youTubeIcon from '../../images/youTube_icon.png';
 
+// @FIXME В этой компоненте что-то страшное в рендере. Нужно вынести все по компонентам
 function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn, isOpenLogin, pathname }) {
   const history = useHistory();
   let { _id } = useParams();

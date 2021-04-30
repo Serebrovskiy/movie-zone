@@ -11,7 +11,7 @@ function PopupUserInfo({
   onRemoveUser,
 }) {
 
-
+    // @FIXME Придирка скорее, но обычно пишут или e или event
   function handleSubmit(evt) {
     evt.preventDefault();
 
@@ -36,6 +36,7 @@ function PopupUserInfo({
             <p className="popup-user-info__text">Кол-во фильмов в рейтинге: {userCardChecking.ratingFilms.length}</p>
             <p className="popup-user-info__text">Кол-во подписок: {userCardChecking.followings.length}</p>
             <Link className="popup-user-info__text-link" to={`/user/${userCardChecking._id}`} onClick={onClose}>
+              {/*@FIXME Браузер понимает ⤏ */}
               <p className="popup-user-info__text">Ссылка на страницу &#10511;</p>
             </Link>
 
