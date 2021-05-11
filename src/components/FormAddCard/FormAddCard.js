@@ -198,21 +198,16 @@ function FormAddCard({
 
   //карточка идет на проверку
   useEffect(() => {
-    // console.log(genre1)
-    // console.log(cardChecking)
     if (cardChecking) {
       setName(cardChecking.name);
       setDate(cardChecking.date);
       setLink(cardChecking.link);
-      // setGenre1(genres.length !== 0 ? cardChecking.genres[0] : '');
       cardChecking.genres[0] && setGenre1(cardChecking.genres[0]);
       cardChecking.genres[1] && setGenre2(cardChecking.genres[1]);
-      // setGenre2(cardChecking.genres[1]);
       setСountry(cardChecking.country);
       setDirector(cardChecking.director);
       cardChecking.actors[0] && setActor1(cardChecking.actors[0]);
       cardChecking.actors[1] && setActor2(cardChecking.actors[1]);
-      // setActor2(cardChecking.actors[1]);
     }
   }, [cardChecking])
 
@@ -316,7 +311,6 @@ function FormAddCard({
               value={genre2}
               onChange={handleChangeInputGenre2}
               placeholder="мелодрама"
-            // required={isAdmin}
             />
             <span className="formAddCard__text">+</span>
           </label>
@@ -367,13 +361,10 @@ function FormAddCard({
               value={actor2}
               onChange={handleChangeInputActor2}
               placeholder="Кейт Уинслет"
-            // required={isAdmin}
             />
             <span className="formAddCard__text">+</span>
           </label>
         }
-        {/* {() => handleShowInputs()} */}
-
         {!isAdmin &&
           <button
             type="button"

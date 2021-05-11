@@ -9,7 +9,6 @@ const filmsDate = () => {
     return date;
 };
 
-
 export const initialFilmsItems = [
     {
         name: 'Довод',
@@ -51,9 +50,7 @@ export const initialFilmsItems = [
         cast: "Леонардо ДиКаприо",
         id: 3
     },
-
 ];
-
 
 export const initialReviewItems = [
     {

@@ -115,6 +115,10 @@
   outline: none;
 }
 
+.films-item__link {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 1500px) {
   .films-item {
     width: 220px;

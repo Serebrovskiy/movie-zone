@@ -1,8 +1,7 @@
 import React from 'react';
-import './Films.css';
 import FilmsItem from './FilmsItem';
 import Preloader from '../Preloader/Preloader';
-
+import './Films.css';
 
 function Films({
   films,
@@ -11,11 +10,14 @@ function Films({
   isUserAdmin,
   isLoading
 }) {
+  if (isLoading) {
+    return <Preloader />
+  }
   return (
+
     <div className="films">
       <h1 className="films__title">Коллекция фильмов</h1>
       <div className="films__container">
-        {isLoading && <Preloader />}
         {
           films
             .sort(() => Math.random() - 0.5)  //перемешиваем 

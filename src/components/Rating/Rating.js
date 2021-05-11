@@ -1,6 +1,6 @@
 import React from 'react';
-import './Rating.css';
 import RatingCard from './RatingCard'
+import './Rating.css';
 
 function Rating({
   onOpenPopupAddCard,

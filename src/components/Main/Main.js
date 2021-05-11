@@ -1,6 +1,5 @@
-import React from 'react'; //, { useEffect }
+import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import './Main.css';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Reviews from '../Reviews/Reviews'
 import ReviewItemPage from '../Reviews/ReviewItemPage'
@@ -15,15 +14,13 @@ import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
 import SettingProfile from '../SettingProfile/SettingProfile'
 import RatingTop from '../RatingTop/RatingTop'
-
 import { initialReviewItems } from '../../utils/utils';
+import './Main.css';
 
 function Main({
-  onAddFilm,
   films,
   users,
   onRemoveFilm,
-  onEditFilm,
   onOpenPopupAddCard,
   onOpenPopupUserInfo,
   ratingCards,
@@ -33,7 +30,6 @@ function Main({
   notCheckedFilms,
   handleGetFilms,
   pathname,
-  currentUser,
   loggedIn,
   isOpenLogin,
   onUserFollowings,
@@ -52,7 +48,6 @@ function Main({
           exact path="/rating"
           component={Rating}
           loggedIn={loggedIn}
-          currentUser={currentUser}
           pathname={pathname}
           isOpenLogin={isOpenLogin}
           onOpenPopupAddCard={onOpenPopupAddCard}
@@ -65,7 +60,6 @@ function Main({
           exact path="/following"
           component={Following}
           loggedIn={loggedIn}
-          currentUser={currentUser}
           pathname={pathname}
           isOpenLogin={isOpenLogin}
           users={users}
@@ -75,7 +69,6 @@ function Main({
           exact path="/setting-profile"
           component={SettingProfile}
           loggedIn={loggedIn}
-          currentUser={currentUser}
           onUpdateAvatar={onUpdateAvatar}
           onUpdateSocialLinks={onUpdateSocialLinks}
           onInfoTooltip={onInfoTooltip}
@@ -112,13 +105,11 @@ function Main({
             isLoading={isLoading}
           />
         </Route>
-        {/* тут похоже проблемка */}
         <Route path="/films/:id">
           <FilmsPage
             films={films}
             users={users}
             handleGetFilms={handleGetFilms}
-            currentUser={currentUser}
             pathname={pathname}
           />
         </Route>

@@ -1,6 +1,6 @@
 import React from 'react';
-import './RatingTop.css';
 import RatingCard from '../Rating/RatingCard'
+import './RatingTop.css';
 
 function RatingTop({
   ratingCards,

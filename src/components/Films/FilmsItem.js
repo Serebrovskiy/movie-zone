@@ -1,6 +1,6 @@
 import React from 'react';
-import './FilmsItem.css';
 import { Link, useRouteMatch } from 'react-router-dom';
+import './FilmsItem.css';
 
 function FilmsItem({ item, onRemoveFilm, onOpenPopupAddCard, isUserAdmin }) {
 
@@ -14,7 +14,7 @@ function FilmsItem({ item, onRemoveFilm, onOpenPopupAddCard, isUserAdmin }) {
           <button className="films-item__button-edit" onClick={() => onOpenPopupAddCard(true, item)} />
         </>
       }
-      <Link to={`${url}/${item.id}`} style={{ textDecoration: 'none' }}>
+      <Link className="films-item__link" to={`${url}/${item.id}`}>
         <img className="films-item__image" src={item.link || "https://www.startfilm.ru/images/base/film/31_03_12/big_86561_15636.jpg"} alt="" />
         <div className="films-item__container">
           <h3 className="films-item__name">{item.name || "Премьера"}</h3>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import './Login.css';
 import Popup from '../Popup/Popup';
 import ValidationForm from '../../utils/ValidationForm';
+import './Login.css';
 
 function Login({
   isOpen,

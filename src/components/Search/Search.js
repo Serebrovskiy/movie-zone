@@ -1,6 +1,6 @@
 import React from 'react';
-import './Search.css';
 import FilmsItem from '../Films/FilmsItem'
+import './Search.css';
 
 function Search({ films }) {
   const [value, setValue] = React.useState('');
@@ -21,7 +21,6 @@ function Search({ films }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
   }
 
   return (

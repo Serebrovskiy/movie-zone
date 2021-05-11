@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import './FilmsPage.css';
-import { useParams, useHistory, Link, useRouteMatch } from 'react-router-dom';
-// import * as api from '../../utils/Api';
 
 function FilmsPage({
   films,
-  handleGetFilms,
   users,
-  currentUser,
-  pathname
 }) {
-  //const [viewedUser, setViewedUser] = React.useState({});
-  //const [currentFilm, setCurrentFilm] = React.useState({});
-
+  const currentUser = React.useContext(CurrentUserContext);
   let { id } = useParams();
   const history = useHistory();
 
@@ -29,7 +24,6 @@ function FilmsPage({
         return elem
       })
       .filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
-    // setCurrentFilm(films.filter(elem => id === elem.id)[0])
   }
 
   //получаем юзера которого просматриваем
@@ -38,54 +32,6 @@ function FilmsPage({
       return elem._id === currentFilm.owner
     }
   });
-
-
-
-
-  //Берем фильм напрямую из Api
-  // useEffect(() => {
-  //   console.log('hello')
-
-  //   async function f() {
-  //     console.log('async')
-
-  //     await api.getFilmById(id)
-  //       .then(res => setCurrentFilm(res))
-  //       .catch((err) => console.error(err));
-  //   }
-  //   f();
-  // }, [])
-
-  // useEffect(() => {
-  //   if (films.length !== 0) {
-  //     // currentFilm = films.filter(elem => id === elem.id)[0];  //получаем актуальный фильм 
-  //     //  setCurrentFilm(films.filter(elem => id === elem.id)[0])
-  //   }
-  //   setViewedUser(users.find(elem => elem._id === currentFilm.owner));
-  // }, [])
-
-  //получаем юзера который создал карточку
-
-  //console.log(films)
-  // console.log(currentFilm)
-  // console.log(currentUser)
-
-  // console.log(viewedUser)
-  //как то не очень работает
-  // else {
-  //   showFilms()
-  //     .then(res => {
-  //       currentFilm = res.filter(elem => id === elem._id)[0];
-  //     })
-  // }
-  // async function showFilms() {
-  //   let response = await api.getFilms()
-  //   return response;
-  // }
-
-  //грубая заглшка, films приходит пустой, то берем массив из localStorage
-  //films.length === 0 && (films = JSON.parse(localStorage.getItem('films')));
-
 
   return (
     <>
@@ -96,7 +42,6 @@ function FilmsPage({
             <h3 className="films-page__name">{currentFilm.name}</h3>
             <div className="films-page__container">
               <img className="films-page__image" src={currentFilm.link} alt="" />
-              {/* <h3 className="films-page__name">{currentFilm && currentFilm.name}</h3> */}
               <ul className="films-page__list">
                 <li className="films-page__about">
                   <p className="films-page__text">Премьера:</p>
@@ -126,10 +71,7 @@ function FilmsPage({
                 <li className="films-page__about">
                   <p className="films-page__text">Место в рейтинге MZ:</p>
                   <div className="films-page__text-container">
-                    {/* <p className="films-page__text-data">&nbsp;</p><br /> */}
                     <p className="films-page__text-data films-page__text-data_position">{currentFilm.position}</p>
-                    {/* <p className="films-page__text-data">{currentFilm && positionFilm()}</p> */}
-
                   </div>
                 </li>
 
@@ -138,7 +80,7 @@ function FilmsPage({
                   <div className="films-page__text-container">
                     {
                       viewedUser ? /*если юзера по каким то причинам нет */
-                        <Link to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} style={{ textDecoration: 'none' }}>
+                        <Link className="films-page__link" to={(viewedUser._id === currentUser._id) ? "/rating" : `/user/${viewedUser._id}`} >
                           <p className="films-page__text-data films-page__text-data_link-user" >{viewedUser.userName}</p>
                         </Link>
                         :
