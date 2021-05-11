@@ -1,6 +1,6 @@
 .preloader {
   background-color: transparent;
-  margin: 0;
+  margin: auto;
   min-height: 282px;
   display: flex;
   flex-direction: column;

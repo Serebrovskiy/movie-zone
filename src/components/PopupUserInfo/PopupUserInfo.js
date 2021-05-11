@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './PopupUserInfo.css';
 import Popup from '../Popup/Popup';
+import './PopupUserInfo.css';
 
 function PopupUserInfo({
   isOpen,
@@ -11,10 +11,8 @@ function PopupUserInfo({
   onRemoveUser,
 }) {
 
-
   function handleSubmit(evt) {
     evt.preventDefault();
-
   }
 
   return (
@@ -36,7 +34,7 @@ function PopupUserInfo({
             <p className="popup-user-info__text">Кол-во фильмов в рейтинге: {userCardChecking.ratingFilms.length}</p>
             <p className="popup-user-info__text">Кол-во подписок: {userCardChecking.followings.length}</p>
             <Link className="popup-user-info__text-link" to={`/user/${userCardChecking._id}`} onClick={onClose}>
-              <p className="popup-user-info__text">Ссылка на страницу &#10511;</p>
+              <p className="popup-user-info__text">Ссылка на страницу ⤏</p>
             </Link>
 
             <button

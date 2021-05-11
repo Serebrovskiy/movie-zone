@@ -1,15 +1,15 @@
 import React, { useRef, useState } from 'react';
-
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import './SettingProfile.css';
 
 function SettingProfile({
-  loggedIn,
-  currentUser,
   onUpdateAvatar,
   onUpdateSocialLinks,
   onInfoTooltip
 }) {
-  const [avatar, setAvatar] = useState(currentUser.avatar); //currentUser.avatar
+  const currentUser = React.useContext(CurrentUserContext);
+
+  const [avatar, setAvatar] = useState(currentUser.avatar);
   const [linkVk, setLinkVk] = useState(currentUser.socialLinks[0] || '');
   const [linkFb, setLinkFb] = useState(currentUser.socialLinks[1] || '');
   const [linkInst, setLinkInst] = useState(currentUser.socialLinks[2] || '');
@@ -21,35 +21,31 @@ function SettingProfile({
   const inputlinkInstRef = useRef('');
   const inputlinkYouTubeRef = useRef('');
 
-  function handleCheckValidity() {
-    inputAvatarRef.current.checkValidity()
-      ?
-      setIsDisabled(false) : setIsDisabled(true);
-  }
+
+  // function handleCheckValidity() {
+  //   inputAvatarRef.current.checkValidity()
+  //     ?
+  //     setIsDisabled(false) : setIsDisabled(true);
+  // }
 
   function handleLinkAvatar(e) {
     setAvatar(e.target.value);
-    // handleCheckValidity();
   }
 
   function handleLinkVk(e) {
     setLinkVk(e.target.value);
-    // handleCheckValidity();
   }
 
   function handleLinkFb(e) {
     setLinkFb(e.target.value);
-    // handleCheckValidity();
   }
 
   function handleLinkInst(e) {
     setLinkInst(e.target.value);
-    // handleCheckValidity();
   }
 
   function handleLinkYouTube(e) {
     setLinkYouTube(e.target.value);
-    // handleCheckValidity();
   }
 
   function handleSubmit(e) {
@@ -72,7 +68,6 @@ function SettingProfile({
     <div className="setting-profile">
       <h1 className="setting-profile__title">Настройки профиля</h1>
       <div className="setting-profile__container">
-        {/* {currentUser.userName} */}
         <form
           className="setting-profile__form"
           onSubmit={handleSubmit}
@@ -103,8 +98,6 @@ function SettingProfile({
               onChange={handleLinkVk}
               placeholder="Ссылка"
               minLength="2"
-            // autoComplete="off"
-            // required
             />
             <span className="setting-profile__text">Ссылка Вконтакте</span>
           </label>
@@ -120,8 +113,6 @@ function SettingProfile({
               onChange={handleLinkFb}
               placeholder="Ссылка"
               minLength="2"
-            // autoComplete="off"
-            // required
             />
             <span className="setting-profile__text">Ссылка Facebook</span>
           </label>
@@ -136,8 +127,6 @@ function SettingProfile({
               onChange={handleLinkInst}
               placeholder="Ссылка"
               minLength="2"
-            // autoComplete="off"
-            // required
             />
             <span className="setting-profile__text">Ссылка Instagram</span>
           </label>
@@ -152,8 +141,6 @@ function SettingProfile({
               onChange={handleLinkYouTube}
               placeholder="Ссылка"
               minLength="2"
-            // autoComplete="off"
-            // required
             />
             <span className="setting-profile__text">Ссылка YouTube</span>
           </label>
@@ -172,3 +159,28 @@ function SettingProfile({
 }
 
 export default SettingProfile;
+
+
+
+// test API
+// import * as getMovieApi from '../../utils/ApiGoogle';
+// const [filmsApi, setFilmsApi] = useState([]);
+// function clickApi() {
+//   console.log('clickApi')
+//   getMovieApi.getMovieApi()
+//     .then(res => {
+//       // const newFilms = res.results;
+//       console.log(res.person.name)
+//       // setFilmsApi(newFilms);
+//     })
+//     .catch((err) => console.error(err));
+// }
+{/* <button type="button" onClick={clickApi}>Push me</button>
+        {
+          filmsApi &&
+          filmsApi.map(elem =>
+            <p key={elem.id}>
+              {elem.job}
+            </p>
+          )
+        } */}

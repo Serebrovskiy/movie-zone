@@ -1,7 +1,7 @@
 import React from 'react';
-import './PopupAddCard.css';
 import FormAddCard from '../FormAddCard/FormAddCard'
 import SearchAddCard from '../SearchAddCard/SearchAddCard'
+import './PopupAddCard.css';
 
 function PopupAddCard({
   isOpen,

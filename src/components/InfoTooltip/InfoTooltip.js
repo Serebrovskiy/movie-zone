@@ -1,6 +1,5 @@
 import React from 'react';
 import './InfoTooltip.css';
-// import { Link } from 'react-router-dom';
 
 function InfoTooltip({
   isOpen,
@@ -28,8 +27,6 @@ function InfoTooltip({
           (infoTooltip === 'Вы успешно зарегистрировались!') &&
           <button type="button" className="infoTooltip__button" onClick={isOpenLogin}>Авторизоваться</button>
         }
-
-        {/* <Link className="infoTooltip__link" onClick={onLogin} to="/"> </Link> */}
       </div>
     </div>
   );

@@ -111,6 +111,10 @@
   background-color: goldenrod;
 }
 
+.films-page__link {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 1500px) {
   .films-page__image {
     width: 300px;

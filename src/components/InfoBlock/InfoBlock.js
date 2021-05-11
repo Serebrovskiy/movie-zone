@@ -12,7 +12,7 @@ function InfoBlock({ loggedIn, onSignOut }) {
           <div className="info-block__account">
 
             <>
-              <Link to="/setting-profile" style={{ textDecoration: 'none' }}>
+              <Link className="info-block__link" to="/setting-profile">
                 <button type="button" className="info-block__button-setting">настройки</button>
               </Link>
               <button type="button" className="info-block__button-out" onClick={onSignOut}>выход</button>

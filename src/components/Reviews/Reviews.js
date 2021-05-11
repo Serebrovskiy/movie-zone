@@ -1,6 +1,6 @@
 import React from 'react';
-import './Reviews.css';
 import ReviewItem from './ReviewItem';
+import './Reviews.css';
 
 function Reviews({ data }) {
   return (

@@ -18,11 +18,6 @@ function Admin({ notCheckedFilms, users }) {
         {users.length !== 0 && <span className="admin__number-users">{users.length}</span>}
         </button>
       </Link>
-
-      {/* <Link to=to="/admin-reviews>
-        <button className="admin__button-link">Кинообзоры</button>
-      </Link> */}
-
     </div>
   );
 }

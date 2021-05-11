@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from 'react-router-dom';
-import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -12,9 +11,21 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import * as auth from '../../utils/Auth';
-import * as api from '../../utils/Api';
-import * as getImageGoogle from '../../utils/ApiGoogle';
+import { register, authorize, getContent } from '../../utils/Auth';
+import {
+  getFilms,
+  createFilm,
+  deleteFilm,
+  updateFilm,
+  updateUser,
+  getUsers,
+  deleteUser,
+  userAddFollowing,
+  setAvatar,
+  setSocialLinks
+} from '../../utils/Api';
+import { getImageGoogle } from '../../utils/ApiGoogle';
+import './App.css';
 
 function App() {
   const { pathname } = useLocation(); //расположение текущей странице
@@ -41,18 +52,17 @@ function App() {
   const [numberSectionPopupAddCard, setNumberSectionPopupAddCard] = useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  useEffect(() => {
-    console.log(pathname)
-    pathname === '/films' && handleGetFilms();
-  }, [pathname])
+  // useEffect(() => {
+  //   console.log(pathname)
+  //   pathname === '/films' && handleGetFilms();
+  // }, [pathname])
 
   //получаем фильмы коллекции
   const handleGetFilms = useCallback(() => {
-    console.log('handleGetFilms')
     let newFilms = [];
 
     setIsLoading(true);
-    api.getFilms()
+    getFilms()
       .then(res => {
         newFilms = res
           .map(film =>
@@ -70,7 +80,6 @@ function App() {
             owner: film.owner
           })
           )
-        console.log(newFilms)
       })
       .then(res => (setFilms([...newFilms])))
       .catch((err) => console.error(err))
@@ -82,10 +91,8 @@ function App() {
 
   // получаем всех пользователей
   const handleGetUsers = () => {
-    console.log('handleGetUsers')
-    api.getUsers() //localStorage.token
+    getUsers() //localStorage.token
       .then(res => {
-        console.log(res)
         setUsers(res)  //обновляем юзеров 
         topRatingFilms(res) //вызываем top-10 с обновленными юзерами
       })
@@ -97,10 +104,9 @@ function App() {
     tokenCheck();
     handleGetFilms();  // обновляем список фильмов
 
-    !ratingCards && setRatingCards([]);
+    if (!ratingCards) setRatingCards([]);
 
     console.log('loggedIn - ' + loggedIn)
-    console.log(currentUser)
   }, [])
 
 
@@ -161,8 +167,7 @@ function App() {
 
   //регистрация пользователя
   function handleRegister(password, email, userName) {
-    auth
-      .register(password, email, userName)
+    register(password, email, userName)
       .then((res) => {
         if (res.statusCode !== 400) {
           //history.push('/');
@@ -178,11 +183,10 @@ function App() {
 
   //авторизация пользователя
   function handleLogin(password, email) {
-    return auth
-      .authorize(password, email)
+    return authorize(password, email)
       .then((data) => {
         if (!data) {
-          throw new Error('Что-то пошло не так!');
+          console.log('Что-то пошло не так!');
         }
         if (data.token) {
           setLoggedIn(true);
@@ -199,9 +203,8 @@ function App() {
   }
 
   function tokenCheck() {
-    console.log('tokenCheck')
     if (localStorage.token) {
-      auth.getContent(localStorage.token)
+      getContent(localStorage.token)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
@@ -247,7 +250,7 @@ function App() {
 
   //обновление карточек рейтинга в Api
   function handleRatingCardsApi(ratingList) {
-    api.updateUser(ratingList, currentUser._id, localStorage.token)
+    updateUser(ratingList, currentUser._id, localStorage.token)
       .then(res => {
         setRatingCards(res);
         handleGetUsers();
@@ -255,7 +258,7 @@ function App() {
   }
 
   //добавление карточки рейтинга
-  const addRatingCardsHandler = ({
+  function addRatingCardsHandler({
     name,
     date,
     link,
@@ -266,12 +269,12 @@ function App() {
     actors,
     checked,
     id,
-  }, fromSearch) => {
+  }, fromSearch) {
 
     async function addRatingCard() {
       //получаем ссылку на картинку из googleApi
       let promise = new Promise((resolve, reject) => {
-        getImageGoogle.getImageGoogle(name, date)
+        getImageGoogle(name, date)
           .then(res => {
             return {
               name,
@@ -327,7 +330,7 @@ function App() {
   }
 
   //удаление карточки рейтинга
-  const handleRemoveRatingCard = (card) => {
+  function handleRemoveRatingCard(card) {
     const ratingList = ratingCards
       .filter(elem => elem.name !== card.name) //раньше было по id, но имя тоже уникальное
       .map((elem, index) => {
@@ -338,9 +341,9 @@ function App() {
   }
 
   //поднимаем карточку вверх на один пункт
-  const handleUpRatingCard = (card) => {
+  function handleUpRatingCard(card) {
     //кастомный метод для замены объектов в массиве
-    const templeFun = (arr) => {
+    function templeFun(arr) {
       let arrCopy = {}
       arrCopy = Object.assign({}, arr[card.position - 2])
       arr[card.position - 2] = Object.assign({}, arr[card.position - 1])
@@ -359,8 +362,8 @@ function App() {
   }
 
   //опускаем карточку вниз на один пункт
-  const handleDownRatingCard = (card) => {
-    const templeFun = (arr) => {
+  function handleDownRatingCard(card) {
+    function templeFun(arr) {
       let arrCopy = {}
       arrCopy = Object.assign({}, arr[card.position])
       arr[card.position] = Object.assign({}, arr[card.position - 1])
@@ -379,7 +382,7 @@ function App() {
   }
 
   //добавляем фильм только в коллекцию, для админа
-  const addFilmHandler = ({
+  function addFilmHandler({
     name,
     date,
     link,
@@ -389,22 +392,21 @@ function App() {
     actors,
     checked,
     //id
-  }) => {
+  }) {
 
 
-    api
-      .createFilm(
-        name,
-        date,
-        link,
-        genres || [],
-        country || '',
-        director || '',
-        actors || '',
-        checked || false,
-        //id //= films.length
-        localStorage.token,
-      )
+    createFilm(
+      name,
+      date,
+      link,
+      genres || [],
+      country || '',
+      director || '',
+      actors || '',
+      checked || false,
+      //id //= films.length
+      localStorage.token,
+    )
       .then((res) => {
         // console.log(res)
         const newFilm = {
@@ -428,9 +430,9 @@ function App() {
   }
 
   //удаляем фильм из коллекции
-  const handleRemoveFilm = (film) => {
+  function handleRemoveFilm(film) {
     // console.log(film)
-    api.deleteFilm(film.id, localStorage.token)
+    deleteFilm(film.id, localStorage.token)
       .then((filmForDelete) => {
         const newFilms = films.filter((elem) => elem.id === film.id ? null : filmForDelete);
         setFilms(newFilms);
@@ -439,7 +441,7 @@ function App() {
   }
 
   //удаляем или одобряем/обновляем фильм
-  const editFilmHandler = (card, remove) => {
+  function editFilmHandler(card, remove) {
     //если админ нажал "отклонить"(remove) удаляем из коллекции и из рейтинга
     if (remove) {
       handleRemoveFilm(card);
@@ -447,7 +449,7 @@ function App() {
       closePopups();
     } else {
 
-      api.updateFilm(card, localStorage.token)  //недоделано! 
+      updateFilm(card, localStorage.token)  //недоделано! 
       // .then(film => {
       //   console.log(film)
       // })
@@ -459,8 +461,8 @@ function App() {
 
 
   //удаляем пользователя
-  const handleRemoveUser = (user) => {
-    api.deleteUser(user._id, localStorage.token)
+  function handleRemoveUser(user) {
+    deleteUser(user._id, localStorage.token)
       .then((userForDelete) => {
         const newUsers = users.filter((elem) => elem._id === user._id ? null : userForDelete);
         setUsers(newUsers);
@@ -473,7 +475,7 @@ function App() {
   }
 
   //подписка на пользователя
-  const handleUserFollowings = (userId, comand) => {
+  function handleUserFollowings(userId, comand) {
     let newFollowings = followings;
 
     if (comand) { //какую кнопку нажали 
@@ -484,7 +486,7 @@ function App() {
       newFollowings = followings.filter(id => id !== userId) //удаляем
     }
 
-    api.userAddFollowing(newFollowings, currentUser._id, localStorage.token)
+    userAddFollowing(newFollowings, currentUser._id, localStorage.token)
       .then((res) => {
         setFollowings(res)
       })
@@ -492,8 +494,8 @@ function App() {
   }
 
   //обновление аватара в настройках 
-  const handleUpdateAvatar = (link) => {
-    api.setAvatar(link, currentUser._id, localStorage.token)
+  function handleUpdateAvatar(link) {
+    setAvatar(link, currentUser._id, localStorage.token)
       .then(res => {
         setCurrentUser(res);
       })
@@ -501,9 +503,9 @@ function App() {
   }
 
   //обновление ссылок соц сетей в настройках 
-  const handleUpdateSocialLinks = (links) => {
+  function handleUpdateSocialLinks(links) {
     console.log(links)
-    api.setSocialLinks(links, currentUser._id, localStorage.token)
+    setSocialLinks(links, currentUser._id, localStorage.token)
       .then(res => {
         setCurrentUser(res);
       })
@@ -512,9 +514,6 @@ function App() {
 
   //обновляем топ 10 
   function topRatingFilms(newUsers) {
-    console.log('topRatingFilms')
-    // console.log(films)
-
     if (films.length !== 0 && newUsers.length !== 0) {
       let newArr = films.map(film => {
         film.totalRange = 0;
@@ -526,7 +525,7 @@ function App() {
             }
           })
         })
-        api.updateFilm(film) //обновляем фильм, точнее его рейтинг
+        updateFilm(film) //обновляем фильм, точнее его рейтинг
         return film
       }
       )
@@ -536,7 +535,7 @@ function App() {
 
   //закрытие попапа щелчком вне формы
   React.useEffect(() => {
-    const handleMouseClose = (evt) => {
+    function handleMouseClose(evt) {
       if (evt.target.classList.contains("infoTooltip_opened")) closePopupInfo();
     }
     document.addEventListener("mousedown", handleMouseClose);
@@ -551,7 +550,6 @@ function App() {
           onLogin={handleLoginClick}
           onSignOut={onSignOut}
           loggedIn={loggedIn}
-          currentUser={currentUser}
           followings={followings}
           isUserAdmin={isUserAdmin}
         />
@@ -622,7 +620,6 @@ function App() {
           onDownRatingCard={handleDownRatingCard}
           handleGetFilms={handleGetFilms}
           pathname={pathname}
-          currentUser={currentUser}
           loggedIn={loggedIn}
           isOpenLogin={handleLoginClick}
           onUserFollowings={handleUserFollowings}
@@ -645,46 +642,3 @@ function App() {
 }
 
 export default App;
-
-
-
-  //получаем текущего юзера и его карточки рейтинга
-  // const handleGetCurrentUser = useCallback(() => {
-  //   console.log('handleGetCurrentUser')
-  //   auth.getContent(localStorage.token) //, api.getFilms(localStorage.token)
-  //     .then(res => {
-  //       console.log(res)
-  //       setCurrentUser(res);
-  //       res.ratingFilms && setRatingCards(res.ratingFilms);  //забираем рейтинг фильмов
-  //       setFollowings(res.followings)  //забираем подписки
-  //       checkingAdminByEmail(res.email) //проверяем админ или нет
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [history]);
-
-  // useEffect(() => {
-  //   setNotCheckedFilms(films.filter(elem => !elem.checked))  //определяем непроверенные фильмы 
-  //   localStorage.setItem('films', JSON.stringify(films));
-  //   console.log(films)
-
-  //   // if (ratingCards.length === 0) {
-  //   //   console.log('ratingCards.length === 0')
-  //   //   const savedRatingCards = films.map((elem, index) => {
-  //   //     elem.position = index + 1;
-  //   //     return elem;
-  //   //   })
-
-  //   setRatingCards(savedRatingCards);
-  //   console.log(savedRatingCards)
-  //   //}
-  // }, [films])
-
-
-      //  const savedFilms = JSON.parse(localStorage.getItem('films') || '[]');
-    // setFilms(savedFilms
-    //   .sort(() => Math.random() - 0.5)
-    //   .map((elem, index) => {
-    //     return elem
-    //   }));
-
-      // localStorage.setItem('films', JSON.stringify(films));

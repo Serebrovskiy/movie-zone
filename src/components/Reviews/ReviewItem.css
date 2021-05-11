@@ -66,6 +66,10 @@
   background-color: goldenrod;
 }
 
+.review-item__link {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 1400px) {
   .review-item__image {
     width: 300px;

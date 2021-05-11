@@ -68,3 +68,7 @@
   margin: 30px 10px 30px;
   border: 2px solid black;
 }
+
+.info-block__link {
+  text-decoration: none;
+}

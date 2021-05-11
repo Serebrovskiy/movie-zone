@@ -20,8 +20,6 @@ function Popup({
     setTimeout(messageErrorReset, 2000);
   }, [messageError]);
 
-  //useEffect(messageErrorReset, [messageError])
-
   return (
     < >
       <div className={`popup ${isOpen && "popup_opened"}`}>

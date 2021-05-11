@@ -1,8 +1,6 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import './ViewedUser.css';
 import RatingCard from '../Rating/RatingCard'
-
 import vkIconColor from '../../images/vk_icon_color.png';
 import vkIcon from '../../images/vk_icon.png';
 import fbIconColor from '../../images/fb_icon_color.png';
@@ -11,6 +9,7 @@ import instIconColor from '../../images/inst_icon_color.png';
 import instIcon from '../../images/inst_icon.png';
 import youTubeIconColor from '../../images/youTube_icon_color.png';
 import youTubeIcon from '../../images/youTube_icon.png';
+import './ViewedUser.css';
 
 function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn, isOpenLogin, pathname }) {
   const history = useHistory();

@@ -1,6 +1,6 @@
 import React from 'react';
-import './ReviewItemPage.css';
 import { useParams, useHistory } from 'react-router-dom';
+import './ReviewItemPage.css';
 
 function ReviewItemPage({ data }) {
 

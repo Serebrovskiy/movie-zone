@@ -1,15 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './NavBar.css';
 import AccountLogin from '../UI/AccountLogin'
-
+import './NavBar.css';
 
 function NavBar({
   notCheckedFilms,
   onLogin,
   onSignOut,
   loggedIn,
-  currentUser,
   followings,
   isUserAdmin
 }) {
@@ -20,10 +18,9 @@ function NavBar({
           onLogin={onLogin}
           onSignOut={onSignOut}
           loggedIn={loggedIn}
-          currentUser={currentUser}
         />
         {loggedIn && <NavLink to="/rating" className="menu__link" activeClassName="menu__link_active">Рейтинг</NavLink>}
-        {loggedIn && <NavLink to="/following" className="menu__link" activeClassName="menu__link_active">Подписки&nbsp;
+        {loggedIn && <NavLink to="/following" className="menu__link" activeClassName="menu__link_active">Подписки
         {/* {followings.length !== 0 && <span className="menu__link_followings">{followings.length}</span>} */}
         </NavLink>}
         <NavLink to="/rating-top" className="menu__link" activeClassName="menu__link_active">ТОП-10</NavLink>
