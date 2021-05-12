@@ -1,12 +1,14 @@
 import React from 'react';
 import RatingCard from '../Rating/RatingCard'
+import FilmsContext from '../../contexts/FilmsContext';
 import './RatingTop.css';
 
 function RatingTop({
   ratingCards,
-  pathname,
-  films
+  pathname
 }) {
+  const films = React.useContext(FilmsContext);
+
   return (
     <div className="rating-top">
       <p className="rating-top__text">ТОП-10  фильмов</p>

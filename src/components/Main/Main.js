@@ -18,12 +18,9 @@ import { initialReviewItems } from '../../utils/utils';
 import './Main.css';
 
 function Main({
-  films,
-  users,
   onRemoveFilm,
   onOpenPopupAddCard,
   onOpenPopupUserInfo,
-  ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
   onDownRatingCard,
@@ -51,7 +48,6 @@ function Main({
           pathname={pathname}
           isOpenLogin={isOpenLogin}
           onOpenPopupAddCard={onOpenPopupAddCard}
-          ratingCards={ratingCards}
           onRemoveRatingCard={onRemoveRatingCard}
           onUpRatingCard={onUpRatingCard}
           onDownRatingCard={onDownRatingCard}
@@ -62,7 +58,6 @@ function Main({
           loggedIn={loggedIn}
           pathname={pathname}
           isOpenLogin={isOpenLogin}
-          users={users}
           followings={followings}
         />
         <ProtectedRoute
@@ -78,7 +73,6 @@ function Main({
           component={Admin}
           loggedIn={loggedIn}
           notCheckedFilms={notCheckedFilms}
-          users={users}
         />
 
         <Route exact path="/">
@@ -98,7 +92,6 @@ function Main({
         </Route>
         <Route exact path="/films">
           <Films
-            films={films}
             onRemoveFilm={onRemoveFilm}
             onOpenPopupAddCard={onOpenPopupAddCard}
             isUserAdmin={isUserAdmin}
@@ -107,8 +100,6 @@ function Main({
         </Route>
         <Route path="/films/:id">
           <FilmsPage
-            films={films}
-            users={users}
             handleGetFilms={handleGetFilms}
             pathname={pathname}
           />
@@ -116,12 +107,11 @@ function Main({
 
         <Route path="/rating-top">
           <RatingTop
-            films={films}
             pathname={pathname}
           />
         </Route>
         <Route path="/search">
-          <Search films={films} />
+          <Search />
         </Route>
         <Route path="/admin-reviews">
         </Route>
@@ -133,14 +123,11 @@ function Main({
         </Route>
         <Route path="/admin-users">
           <AdminUsers
-            users={users}
             onOpenPopupUserInfo={onOpenPopupUserInfo}
           />
         </Route>
         <Route path="/user/:_id">
           <ViewedUser
-            users={users}
-            ratingCards={ratingCards}
             onUserFollowings={onUserFollowings}
             followings={followings}
             loggedIn={loggedIn}

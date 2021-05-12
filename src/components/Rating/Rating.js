@@ -1,15 +1,16 @@
 import React from 'react';
 import RatingCard from './RatingCard'
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import './Rating.css';
 
 function Rating({
   onOpenPopupAddCard,
-  ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
   onDownRatingCard,
   pathname
 }) {
+  const ratingCards = React.useContext(RatingCardsContext);
   const [isReduceCards, setIsReduceCards] = React.useState(false); //сжатие карочек 
 
   function handleReduceCards() {
@@ -33,7 +34,6 @@ function Rating({
               <RatingCard
                 item={elem}
                 key={elem._id}
-                ratingCards={ratingCards}
                 onRemoveRatingCard={onRemoveRatingCard}
                 onUpRatingCard={onUpRatingCard}
                 onDownRatingCard={onDownRatingCard}

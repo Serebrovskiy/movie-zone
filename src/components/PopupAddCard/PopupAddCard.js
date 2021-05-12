@@ -8,8 +8,6 @@ function PopupAddCard({
   onClose,
   onAddFilm,
   onAddRatingCards,
-  films,
-  ratingCards,
   isAdmin,
   cardChecking,
   onEditFilm,
@@ -61,8 +59,6 @@ function PopupAddCard({
             <SearchAddCard
               onClose={onClose}
               onAddRatingCards={onAddRatingCards}
-              films={films}
-              ratingCards={ratingCards}
               onInfoTooltip={onInfoTooltip}
             />
             :
@@ -70,8 +66,6 @@ function PopupAddCard({
               onClose={onClose}
               onAddFilm={onAddFilm}
               onAddRatingCards={onAddRatingCards}
-              films={films}
-              ratingCards={ratingCards}
               isAdmin={isAdmin}
               cardChecking={cardChecking}
               onEditFilm={onEditFilm}

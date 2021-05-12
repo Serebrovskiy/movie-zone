@@ -11,6 +11,9 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import UsersContext from '../../contexts/UsersContext';
+import FilmsContext from '../../contexts/FilmsContext';
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import { register, authorize, getContent } from '../../utils/Auth';
 import {
   getFilms,
@@ -545,97 +548,97 @@ function App() {
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
-        <NavBar
-          notCheckedFilms={notCheckedFilms}
-          onLogin={handleLoginClick}
-          onSignOut={onSignOut}
-          loggedIn={loggedIn}
-          followings={followings}
-          isUserAdmin={isUserAdmin}
-        />
+        <UsersContext.Provider value={users}>
+          <FilmsContext.Provider value={films}>
+            <RatingCardsContext.Provider value={ratingCards}>
+              <NavBar
+                notCheckedFilms={notCheckedFilms}
+                onLogin={handleLoginClick}
+                onSignOut={onSignOut}
+                loggedIn={loggedIn}
+                followings={followings}
+                isUserAdmin={isUserAdmin}
+              />
+              <Login
+                isOpen={isOpenPopupLogin}
+                onClose={closePopups}
+                onChangePopup={handleRegisterClick}
+                onLogin={handleLogin}
+                messageError={messageError}
+                messageErrorReset={messageErrorReset}
+              />
+              <Register
+                isOpen={isOpenPopupRegister}
+                onClose={closePopups}
+                onChangePopup={handleLoginClick}
+                onInfoTooltip={handleInfoClick}
+                onRegister={handleRegister}
+                messageError={messageError}
+                messageErrorReset={messageErrorReset}
+              />
+              <PopupAddCard
+                isOpen={isOpenPopupAddCard}
+                onClose={closePopups}
+                onAddFilm={addFilmHandler}
+                onAddRatingCards={addRatingCardsHandler}
+                isAdmin={isAdmin}
+                cardChecking={cardChecking}
+                onEditFilm={editFilmHandler}
+                onInfoTooltip={handleInfoClick}
+                onChangeSection={handleChangeSectionPopupAdd}
+                numberSection={numberSectionPopupAddCard}
+                pathname={pathname}
+              />
+              <PopupUserInfo
+                isOpen={isOpenPopupUserInfo}
+                onClose={closePopups}
+                onChangePopup={handlePopupUserInfoClick}
+                userCardChecking={userCardChecking}
+                onRemoveUser={handleRemoveUser}
+              />
+              <InfoTooltip
+                isOpen={isOpenPopupInfo}
+                onClose={closePopupInfo}
+                infoTooltip={infoTooltip}
+                isAdmin={isAdmin}
+                onChangeSection={handleChangeSectionPopupAdd}
+                numberSection={numberSectionPopupAddCard}
+                isOpenPopupAddCard={isOpenPopupAddCard}
+                isOpenLogin={handleLoginClick}
+              />
+              <Header />
 
-        <Login
-          isOpen={isOpenPopupLogin}
-          onClose={closePopups}
-          onChangePopup={handleRegisterClick}
-          onLogin={handleLogin}
-          messageError={messageError}
-          messageErrorReset={messageErrorReset}
-        />
-        <Register
-          isOpen={isOpenPopupRegister}
-          onClose={closePopups}
-          onChangePopup={handleLoginClick}
-          onInfoTooltip={handleInfoClick}
-          onRegister={handleRegister}
-          messageError={messageError}
-          messageErrorReset={messageErrorReset}
-        />
-        <PopupAddCard
-          isOpen={isOpenPopupAddCard}
-          onClose={closePopups}
-          onAddFilm={addFilmHandler}
-          onAddRatingCards={addRatingCardsHandler}
-          films={films}
-          ratingCards={ratingCards}
-          isAdmin={isAdmin}
-          cardChecking={cardChecking}
-          onEditFilm={editFilmHandler}
-          onInfoTooltip={handleInfoClick}
-          onChangeSection={handleChangeSectionPopupAdd}
-          numberSection={numberSectionPopupAddCard}
-          pathname={pathname}
-        />
-        <PopupUserInfo
-          isOpen={isOpenPopupUserInfo}
-          onClose={closePopups}
-          onChangePopup={handlePopupUserInfoClick}
-          userCardChecking={userCardChecking}
-          onRemoveUser={handleRemoveUser}
-        />
-        <InfoTooltip
-          isOpen={isOpenPopupInfo}
-          onClose={closePopupInfo}
-          infoTooltip={infoTooltip}
-          isAdmin={isAdmin}
-          onChangeSection={handleChangeSectionPopupAdd}
-          numberSection={numberSectionPopupAddCard}
-          isOpenPopupAddCard={isOpenPopupAddCard}
-          isOpenLogin={handleLoginClick}
-        />
-        <Header />
+              <Main
+                onAddFilm={addFilmHandler}
+                onRemoveFilm={handleRemoveFilm}
+                onEditFilm={editFilmHandler}
+                onOpenPopupAddCard={handlePopupAddCardClick}
+                onOpenPopupUserInfo={handlePopupUserInfoClick}
+                notCheckedFilms={notCheckedFilms}
+                onRemoveRatingCard={handleRemoveRatingCard}
+                onUpRatingCard={handleUpRatingCard}
+                onDownRatingCard={handleDownRatingCard}
+                handleGetFilms={handleGetFilms}
+                pathname={pathname}
+                loggedIn={loggedIn}
+                isOpenLogin={handleLoginClick}
+                onUserFollowings={handleUserFollowings}
+                followings={followings}
+                onUpdateAvatar={handleUpdateAvatar}
+                onUpdateSocialLinks={handleUpdateSocialLinks}
+                isUserAdmin={isUserAdmin}
+                isLoading={isLoading}
+                onInfoTooltip={handleInfoClick}
+              />
 
-        <Main
-          onAddFilm={addFilmHandler}
-          films={films}
-          users={users}
-          onRemoveFilm={handleRemoveFilm}
-          onEditFilm={editFilmHandler}
-          onOpenPopupAddCard={handlePopupAddCardClick}
-          onOpenPopupUserInfo={handlePopupUserInfoClick}
-          ratingCards={ratingCards}
-          notCheckedFilms={notCheckedFilms}
-          onRemoveRatingCard={handleRemoveRatingCard}
-          onUpRatingCard={handleUpRatingCard}
-          onDownRatingCard={handleDownRatingCard}
-          handleGetFilms={handleGetFilms}
-          pathname={pathname}
-          loggedIn={loggedIn}
-          isOpenLogin={handleLoginClick}
-          onUserFollowings={handleUserFollowings}
-          followings={followings}
-          onUpdateAvatar={handleUpdateAvatar}
-          onUpdateSocialLinks={handleUpdateSocialLinks}
-          isUserAdmin={isUserAdmin}
-          isLoading={isLoading}
-          onInfoTooltip={handleInfoClick}
-        />
-
-        <InfoBlock
-          loggedIn={loggedIn}
-          onSignOut={onSignOut}
-        />
-        <Footer />
+              <InfoBlock
+                loggedIn={loggedIn}
+                onSignOut={onSignOut}
+              />
+              <Footer />
+            </RatingCardsContext.Provider>
+          </FilmsContext.Provider>
+        </UsersContext.Provider>
       </CurrentUserContext.Provider>
     </div>
   );

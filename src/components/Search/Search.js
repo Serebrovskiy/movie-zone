@@ -1,8 +1,11 @@
 import React from 'react';
 import FilmsItem from '../Films/FilmsItem'
+import FilmsContext from '../../contexts/FilmsContext';
 import './Search.css';
 
-function Search({ films }) {
+function Search() {
+  const films = React.useContext(FilmsContext);
+
   const [value, setValue] = React.useState('');
   const [valueRes, setValueRes] = React.useState([]);
 

@@ -1,7 +1,9 @@
 import React from 'react';
+import UsersContext from '../../contexts/UsersContext';
 import './AdminUsers.css';
 
-function AdminUsers({ users, onOpenPopupUserInfo }) {
+function AdminUsers({ onOpenPopupUserInfo }) {
+  const users = React.useContext(UsersContext);
 
   return (
     <div className="admin-users">

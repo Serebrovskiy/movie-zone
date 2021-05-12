@@ -1,15 +1,16 @@
 import React from 'react';
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import './RatingCard.css';
 
 function RatingCard({
   item,
-  ratingCards,
   onRemoveRatingCard,
   onUpRatingCard,
   onDownRatingCard,
   isReduceCards,
   pathname
 }) {
+  const ratingCards = React.useContext(RatingCardsContext);
 
   const handleRemoveClick = () => {
     onRemoveRatingCard(item);
