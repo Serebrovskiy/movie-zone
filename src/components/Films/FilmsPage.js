@@ -1,13 +1,15 @@
 import React from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import UsersContext from '../../contexts/UsersContext';
+import FilmsContext from '../../contexts/FilmsContext';
 import './FilmsPage.css';
 
-function FilmsPage({
-  films,
-  users,
-}) {
+function FilmsPage() {
   const currentUser = React.useContext(CurrentUserContext);
+  const users = React.useContext(UsersContext);
+  const films = React.useContext(FilmsContext);
+
   let { id } = useParams();
   const history = useHistory();
 

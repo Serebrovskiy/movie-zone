@@ -1,8 +1,11 @@
 import React from 'react';
 import FollowingItem from './FollowingItem';
+import UsersContext from '../../contexts/UsersContext';
 import './Following.css';
 
-function Following({ users, followings }) {
+function Following({ followings }) {
+  const users = React.useContext(UsersContext);
+
   if (!followings.length) {
     return <p className="following__text" >У вас пока нет подписок</p>
   }

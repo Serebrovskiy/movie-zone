@@ -9,9 +9,14 @@ import instIconColor from '../../images/inst_icon_color.png';
 import instIcon from '../../images/inst_icon.png';
 import youTubeIconColor from '../../images/youTube_icon_color.png';
 import youTubeIcon from '../../images/youTube_icon.png';
+import UsersContext from '../../contexts/UsersContext';
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import './ViewedUser.css';
 
-function ViewedUser({ users, ratingCards, onUserFollowings, followings, loggedIn, isOpenLogin, pathname }) {
+function ViewedUser({ onUserFollowings, followings, loggedIn, isOpenLogin, pathname }) {
+  const users = React.useContext(UsersContext);
+  const ratingCards = React.useContext(RatingCardsContext);
+
   const history = useHistory();
   let { _id } = useParams();
   console.log(_id)

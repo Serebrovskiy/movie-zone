@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
+import FilmsContext from '../../contexts/FilmsContext';
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import './FormAddCard.css';
 
 function FormAddCard({
   onClose,
   onAddFilm,
   onAddRatingCards,
-  films,
-  ratingCards,
   isAdmin,
   cardChecking,
   onEditFilm,
   onInfoTooltip,
   pathname
 }) {
+  const films = React.useContext(FilmsContext);
+  const ratingCards = React.useContext(RatingCardsContext);
 
   const [name, setName] = useState('');
   const [link, setLink] = useState('');

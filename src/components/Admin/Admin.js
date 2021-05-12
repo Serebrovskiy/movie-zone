@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import UsersContext from '../../contexts/UsersContext';
 import './Admin.css';
 
-function Admin({ notCheckedFilms, users }) {
+function Admin({ notCheckedFilms }) {
+  const users = React.useContext(UsersContext);
 
   return (
     <div className="admin">

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import FilmsContext from '../../contexts/FilmsContext';
+import RatingCardsContext from '../../contexts/RatingCardsContext';
 import './SearchAddCard.css';
 
 function SearchAddCard({
   onClose,
   onAddRatingCards,
-  films,
-  ratingCards,
   onInfoTooltip
 }) {
+  const films = React.useContext(FilmsContext);
+  const ratingCards = React.useContext(RatingCardsContext);
 
   const [valueRes, setValueRes] = React.useState([]);
   const [name, setName] = useState('');
