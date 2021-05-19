@@ -1,4 +1,4 @@
-import { BASE_URL_API } from './config';
+import { BASE_URL_API } from '../config/config';
 
 export const register = (password, email, userName) => {
   return fetch(`${BASE_URL_API}/signup`, {

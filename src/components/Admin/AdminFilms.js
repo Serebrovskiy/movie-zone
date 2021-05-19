@@ -1,7 +1,7 @@
 import React from 'react';
 import './AdminFilms.css';
 
-function AdminFilms({ onOpenPopupAddCard, notCheckedFilms, onEditFilm }) {
+function AdminFilms({ onOpenPopupAddCard, notCheckedFilms }) {
 
   return (
     <div className="admin-films">
@@ -15,7 +15,6 @@ function AdminFilms({ onOpenPopupAddCard, notCheckedFilms, onEditFilm }) {
             type="button"
             key={elem.id}
             onClick={() => onOpenPopupAddCard(true, elem)}
-          // onClick={() => onEditFilm(elem)}
           >{elem.name}
           </button>
         )}

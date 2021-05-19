@@ -1,4 +1,4 @@
-import { BASE_URL_API } from './config';
+import { BASE_URL_API } from '../config/config';
 
 const getResponse = (res) => {
   if (res.ok) {

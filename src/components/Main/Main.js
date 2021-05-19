@@ -14,7 +14,7 @@ import ViewedUser from '../ViewedUser/ViewedUser'
 import Following from '../Following/Following'
 import SettingProfile from '../SettingProfile/SettingProfile'
 import RatingTop from '../RatingTop/RatingTop'
-import { initialReviewItems } from '../../utils/utils';
+import { initialReviewItems } from '../../mocks/mocks';
 import './Main.css';
 
 function Main({

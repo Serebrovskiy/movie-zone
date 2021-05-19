@@ -3,10 +3,13 @@
   height: 400px;
   margin: 30px 30px 30px 30px;
   border: 2px solid goldenrod;
-  box-shadow: 3px 3px 5px 4px rgb(197, 197, 197);
+  /* box-shadow: 3px 3px 5px 4px rgb(197 197 197); */
   position: relative;
   animation: showBlock 1s linear forwards;
   transition: 0.7s ease;
+  border-radius: 25px;
+  overflow: hidden;
+  background: #fff;
 }
 
 .films-item:hover {
