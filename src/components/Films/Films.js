@@ -4,15 +4,16 @@ import Preloader from '../Preloader/Preloader';
 import FilmsContext from '../../contexts/FilmsContext';
 import './Films.css';
 
-function Films({
-  onRemoveFilm,
-  onOpenPopupAddCard,
-  isUserAdmin,
-  isLoading
-}) {
+// function Films({
+//   onRemoveFilm,
+//   onOpenPopupAddCard,
+//   isUserAdmin,
+//   isLoading
+// }) {
+function Films(props) {
   const films = React.useContext(FilmsContext);
 
-  if (isLoading) {
+  if (props.isLoading) {
     return <Preloader />
   }
   return (
@@ -26,9 +27,9 @@ function Films({
               <FilmsItem
                 item={elem}
                 key={elem.id}
-                onRemoveFilm={onRemoveFilm}
-                onOpenPopupAddCard={onOpenPopupAddCard}
-                isUserAdmin={isUserAdmin}
+                onRemoveFilm={props.onRemoveFilm}
+                onOpenPopupAddCard={props.onOpenPopupAddCard}
+                isUserAdmin={props.isUserAdmin}
               />
             )
         }
